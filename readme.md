@@ -18,9 +18,11 @@
     gcc -g -o mysql-c-ancestry $(mysql_config --cflags) mysql-c-ancestry.c $(mysql_config --libs) cs50.c rf50.c
 #### Log:
     14-Jul-2021 started
+    15-Jul-2021 fix the age formula to account for months and days
+    15-Jul-2021 add cohort table and listing option
 #### Enhancements: (0)
-    remove the temporarily disabled password
     create loop around printing person list options
-    fix the age formula to account for months and days
     enable options
     add generational logic for baby boomers, millenials, gen-X'ers etc
+    remove the temporarily disabled password
+    send or show reminders of upcoming birthdays and events via emial

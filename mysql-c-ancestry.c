@@ -253,9 +253,9 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     printf("\n");
     printf("Main Menu > List People > People names ...");
     printf("\n\n");
-    printf("(A)ll, (M)ales, (F)emales, (L)iving, (D)eceased, (G)enerational or E(x)it");
+    printf("(A)ll, (M)ales, (F)emales, (L)iving, (D)eceased, (C)ohort or E(x)it");
     printf("\n\n");
-    while(strchr("aAmMfFlLdDgGxX", cQueryFilterchoice) == NULL)
+    while(strchr("aAmMfFlLdDcCxX", cQueryFilterchoice) == NULL)
     {
         printf("Choice: ");
         cQueryFilterchoice = toupper(GetChar());
@@ -270,7 +270,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                             ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
                             ", AP.`Gender` "
                             ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
-                            ", IF(AP.`Deceased` = 0, YEAR(CURRENT_DATE()) - YEAR(AP.`Born On`), YEAR(AP.`Deceased On`) - YEAR(AP.`Born On`)) AS 'Age' "
+                            ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
                             "  FROM risingfast.`Ancestry People` AP"
                             "  WHERE AP.`Person ID` != 10"
                             "  ORDER BY AP.`Person ID` %s", caOrder)
@@ -282,7 +282,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                             ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
                             ", AP.`Gender` "
                             ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
-                            ", IF(AP.`Deceased` = 0, YEAR(CURRENT_DATE()) - YEAR(AP.`Born On`), YEAR(AP.`Deceased On`) - YEAR(AP.`Born On`)) AS 'Age' "
+                            ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
                             "  FROM risingfast.`Ancestry People` AP"
                             "  WHERE AP.`Person ID` != 10"
                             "  AND AP.`Gender` = 'Male'"
@@ -295,7 +295,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                             ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
                             ", AP.`Gender` "
                             ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
-                            ", IF(AP.`Deceased` = 0, YEAR(CURRENT_DATE()) - YEAR(AP.`Born On`), YEAR(AP.`Deceased On`) - YEAR(AP.`Born On`)) AS 'Age' "
+                            ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
                             "  FROM risingfast.`Ancestry People` AP"
                             "  WHERE AP.`Person ID` != 10"
                             "  AND AP.`Gender` = 'Female'"
@@ -308,7 +308,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                             ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
                             ", AP.`Gender` "
                             ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
-                            ", IF(AP.`Deceased` = 0, YEAR(CURRENT_DATE()) - YEAR(AP.`Born On`), YEAR(AP.`Deceased On`) - YEAR(AP.`Born On`)) AS 'Age' "
+                            ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
                             "  FROM risingfast.`Ancestry People` AP"
                             "  WHERE AP.`Person ID` != 10"
                             "  AND AP.`Deceased` = 0"
@@ -321,25 +321,29 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                             ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
                             ", AP.`Gender` "
                             ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
-                            ", IF(AP.`Deceased` = 0, YEAR(CURRENT_DATE()) - YEAR(AP.`Born On`), YEAR(AP.`Deceased On`) - YEAR(AP.`Born On`)) AS 'Age' "
+                            ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
                             "  FROM risingfast.`Ancestry People` AP"
                             "  WHERE AP.`Person ID` != 10"
                             "  AND AP.`Deceased` = 1"
                             "  ORDER BY AP.`Person ID` %s", caOrder)
                             ;
     }
-    else if(cQueryFilterchoice == 'G')
+    else if(cQueryFilterchoice == 'C')
     {
-        sprintf(caSQL, "SELECT AP.`Person ID` "
-                            ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
-                            ", AP.`Gender` "
-                            ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
-                            ", IF(AP.`Deceased` = 0, YEAR(CURRENT_DATE()) - YEAR(AP.`Born On`), YEAR(AP.`Deceased On`) - YEAR(AP.`Born On`)) AS 'Age' "
-                            "  FROM risingfast.`Ancestry People` AP"
-                            "  WHERE AP.`Person ID` != 10"
-                            "  ORDER BY AP.`Person ID` %s", caOrder)
+        sprintf(caSQL, "select AP.`Person ID` as 'ID' "
+                            ", AP.`First Name` as 'First' "
+                            ", AP.`Middle Names` as 'Middle' "
+                            ", AP.`Last Name` as 'Last' "
+                            ", AP.`Born On` as 'Born' "
+                            ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
+                            ", AP.`Deceased On` as 'Deceased On' "
+                            ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
+                            ", AC.Cohort "
+                            "  from risingfast.`Ancestry People` AP "
+                            "  left join risingfast.`Ancestry Cohorts` AC on (AP.`Born On` >= AC.`Start`) and (AP.`Born On` <= AC.`Finish`) ")
                             ;
     }
+
 // execute the query and check for no result
 
     if(mysql_query(conn, caSQL) != 0)
@@ -399,7 +403,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     printf("\n");
     if(*pcDisplayPageWidth == 'W')
     {
-        printf("   ID  Person                       Gender   Status     Age");
+        printf("   ID  Person                       Gender   Status       Age");
     }
     else if(*pcDisplayPageWidth == 'N')
     {

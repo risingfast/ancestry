@@ -1,0 +1,231 @@
+SELECT * FROM risingfast.`Ancestry People`;
+
+-- export all people and parents
+
+select AP.`Person ID`
+      , concat(AP.`First Name`, ' ', AP.`Last Name`) as `Person`
+--     , AP.`Middle Names`
+--     , AP.`Last Name`
+     , AP.`Gender`
+     , concat(AF.`First Name`, ' ', AF.`Last Name`) as 'Father'
+     , concat(AM.`First Name`, ' ', AM.`Last Name`) as 'Mother'
+     , AP.`Born On`
+     , AP.`Birth Place`
+     , AP.`Deceased On`
+     , AP.`Deceased Place`
+     , AP.`Cause of Death`
+     , AP.`Profile`
+     , AP.`Education`
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AF on AP.`Father ID` = AF.`Person ID`
+left join risingfast.`Ancestry People` AM on AP.`Mother ID` = AM.`Person ID`
+;
+
+-- export all people and parents (includes maiden name and mother/father id's)
+
+select AP.`Person ID`
+      , concat(AP.`First Name`, ' ', AP.`Last Name`) as `Person`
+--     , AP.`Middle Names`
+--     , AP.`Last Name`
+     , AP.`Birth Last Name` as 'nee'
+     , AP.`Gender`
+     , AF.`Person ID` as 'Father ID'
+     , concat(AF.`First Name`, ' ', AF.`Last Name`) as 'Father'
+     , AM.`Person ID` as 'Mother ID'
+     , concat(AM.`First Name`, ' ', AM.`Last Name`) as 'Mother'
+     , AP.`Born On`
+     , AP.`Birth Place`
+     , AP.`Deceased On`
+     , AP.`Deceased Place`
+     , AP.`Cause of Death`
+     , AP.`Profile`
+     , AP.`Education`
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AF on AP.`Father ID` = AF.`Person ID`
+left join risingfast.`Ancestry People` AM on AP.`Mother ID` = AM.`Person ID`
+;
+
+-- export all people and parents (includes middle names
+
+select AP.`Person ID`
+      , concat(AP.`First Name`, ' ', AP.`Last Name`) as `Person`
+      , AP.`Middle Names` as 'Middle'
+--     , AP.`Last Name`
+     , AP.`Birth Last Name` as 'Nee'
+     , AP.`Gender`
+     , AF.`Person ID` as 'Father ID'
+     , concat(AF.`First Name`, ' ', AF.`Last Name`) as 'Father'
+     , AM.`Person ID` as 'Mother ID'
+     , concat(AM.`First Name`, ' ', AM.`Last Name`) as 'Mother'
+     , AP.`Born On`
+     , AP.`Birth Place`
+     , AP.`Deceased On`
+     , AP.`Deceased Place`
+     , AP.`Cause of Death`
+     , AP.`Profile`
+     , AP.`Education`
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AF on AP.`Father ID` = AF.`Person ID`
+left join risingfast.`Ancestry People` AM on AP.`Mother ID` = AM.`Person ID`
+;
+
+-- single person profile
+
+select AP.`Person ID` as 'ID'
+     , AP.`First Name` as 'First'
+     , AP.`Middle Names` as 'Middle'
+     , AP.`Last Name` as 'Last'
+     , AP.`Born On` as 'Born'
+     , AP.`Birth Place` as 'Born In'
+     , IF(AP.`Deceased` = 1, 'Deceased', 'Living') as 'Status'
+     , AP.`Deceased On` as 'Deceased On'
+     , AP.`Deceased Place` as 'Deceased Place'
+     , AP.`Cause of Death` as 'Cause of Death'
+     , IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' 
+     , AP.`Profile`
+     , AP.`Education`
+from risingfast.`Ancestry People` AP
+where AP.`Person ID` IN (3, 1, 4, 9)
+;
+
+-- person's mother list
+
+select AP.`Person ID` as 'Person ID'
+     , 'Mother' as 'Relation'
+     , AM.`Person ID` as 'Parent ID'    
+     , AM.`First Name` as 'First'
+     , AM.`Last Name` as 'Last'
+     , AP.`Born On` as 'Born'
+     , AP.`Birth Place` as 'Birth Place'
+     , IF(AM.`Deceased` = 1, 'Deceased', 'Living') as 'Status'
+     , AM.`Deceased On` as 'Deceased On'
+     , AM.`Deceased Place` as 'Deceased Place'
+     , AM.`Cause of Death` as 'Cause of Death'
+     , IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' 
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AM on AP.`Mother ID` = AM.`Person ID`
+where  AP.`Person ID` in (1, 4);
+
+-- person's father list
+
+select AP.`Person ID` as 'Person ID'
+     , 'Father' as 'Relation'
+     , AF.`Person ID` as 'Parent ID'
+     , AF.`First Name` as 'First'
+     , AF.`Last Name` as 'Last'
+     , AP.`Born On` as 'Born'
+     , AF.`Birth Place` as 'Birth Place'
+     , IF(AF.`Deceased` = 1, 'Deceased', 'Living') as 'Status'
+     , AF.`Deceased On` as 'Deceased On'
+     , AF.`Deceased Place` as 'Deceased Place'
+     , AF.`Cause of Death` as 'Cause of Death'
+     , IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' 
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AF on AP.`Father ID` = AF.`Person ID`
+where  AP.`Person ID` IN (1, 4); 
+
+-- person's parents list
+
+select AP.`Person ID` as 'Person ID'
+     , 'Mother' as 'Relation'
+     , AM.`Person ID` as 'Parent ID'
+     , AM.`First Name` as 'First'
+     , AM.`Last Name` as 'Last'
+     , AP.`Born On` as 'Born'
+     , AP.`Birth Place` as 'Birth Place'
+     , IF(AM.`Deceased` = 1, 'Deceased', 'Living') as 'Status'
+     , AM.`Deceased On` as 'Deceased On'
+     , AM.`Deceased Place` as 'Deceased Place'
+     , AM.`Cause of Death` as 'Cause of Death'
+     , IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' 
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AM on AP.`Mother ID` = AM.`Person ID`
+where  AP.`Person ID` in (1)
+union distinct
+select AP.`Person ID` as 'Person ID'
+     , 'Father' as 'Relation'
+     , AF.`Person ID` as 'Parent ID'
+     , AF.`First Name` as 'First'
+     , AF.`Last Name` as 'Last'
+     , AP.`Born On` as 'Born'
+     , AF.`Birth Place` as 'Birth Place'
+     , IF(AF.`Deceased` = 1, 'Deceased', 'Living') as 'Status'
+     , AF.`Deceased On` as 'Deceased On'
+     , AF.`Deceased Place` as 'Deceased Place'
+     , AF.`Cause of Death` as 'Cause of Death'
+     , IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' 
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AF on AP.`Father ID` = AF.`Person ID`
+where  AP.`Person ID` IN (1)
+; 
+
+-- person's children list
+
+select AP.`Person ID` as 'Person ID'
+     , 'Child' as 'Relation'
+     , AC.`Person ID`
+     , AC.`First Name` as 'First'
+     , AC.`Last Name` as 'Last'
+     , AC.`Born On` as 'Born'
+     , AC.`Birth Place` as 'Birth Place'
+     , IF(AC.`Deceased` = 1, 'Deceased', 'Living') as 'Status'
+     , AC.`Deceased On` as 'Deceased On'
+     , AC.`Deceased Place` as 'Deceased Place'
+     , AC.`Cause of Death` as 'Cause of Death'
+     , IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' 
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AC on AP.`Person ID` = AC.`Father ID`
+where AP.`Person ID` in (1, 17)
+and AP.`Gender` = 'Male';
+
+-- person's siblings list
+
+select AP.`Person ID` as 'Person ID'
+     , 'Sibling' as 'Relation'
+     , AC.`Person ID` as 'Sibling ID'
+     , AC.`First Name` as 'First'
+     , AC.`Last Name` as 'Last'
+     , AC.`Born On` as 'Born'
+     , AC.`Birth Place` as 'Birth Place'
+     , IF(AC.`Deceased` = 1, 'Deceased', 'Living') as 'Status'
+     , AC.`Deceased On` as 'Deceased On'
+     , AC.`Deceased Place` as 'Deceased Place'
+     , AC.`Cause of Death` as 'Cause of Death'
+     , IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' 
+     from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AC on AP.`Mother ID` = AC.`Mother ID` and AP.`Father ID` = AC.`Father ID`
+where  AP.`Person ID` in (1)
+and AP.`Person ID` != AC.`Person ID`
+;
+
+-- persons and their cohort
+
+select AP.`Person ID` as 'ID'
+     , AP.`First Name` as 'First'
+     , AP.`Middle Names` as 'Middle'
+     , AP.`Last Name` as 'Last'
+     , AP.`Born On` as 'Born'
+     , IF(AP.`Deceased` = 1, 'Deceased', 'Living') as 'Status'
+     , AP.`Deceased On` as 'Deceased On'
+     , IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age'
+     , AC.Cohort
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry Cohorts` AC on (AP.`Born On` >= AC.`Start`) and (AP.`Born On` <= AC.`Finish`)
+-- where AP.`Person ID` IN (3, 1, 4, 9)
+;
+
+-- export all ancestry events
+
+select AE.`Event ID`
+,      AE.`Event Type`
+,      AE.`Event Date`
+,      concat(AP1.`First Name`, ' ', AP1.`Last Name`) as 'First Person'
+,      concat(AP2.`First Name`, ' ', AP2.`Last Name`) as 'Second Person'
+,      AE.`Event Place`
+,      AC.`Country Name`
+,      AE.`Event Description`
+from risingfast.`Ancestry Events` AE
+left join risingfast.`Ancestry People` AP1 on AE.`Event First Person ID` = AP1.`Person ID`
+left join risingfast.`Ancestry People` AP2 on AE.`Event Second Person ID` = AP2.`Person ID`
+left join risingfast.`Ancestry Countries` AC on AE.`Event Country ID` = AC.`Country ID`
+;
