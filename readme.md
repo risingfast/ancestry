@@ -20,9 +20,10 @@
     14-Jul-2021 started
     15-Jul-2021 fix the age formula to account for months and days
     15-Jul-2021 add cohort table and listing option
+    15-Jul-2021 create loop around printing person list options
+    15-Jul-2021 enable options
 #### Enhancements: (0)
-    create loop around printing person list options
-    enable options
-    add generational logic for baby boomers, millenials, gen-X'ers etc
-    remove the temporarily disabled password
+    add upcoming birthdays to the list functions
+    add intelligent headings on listings
     send or show reminders of upcoming birthdays and events via emial
+    remove the temporarily disabled password
