@@ -10,13 +10,15 @@
 #include <stdbool.h>
 
 #define SQL_LEN 5000
+#define HDG_LEN 1000
 
 // function declarations
 
 void fShowMainMenu(void);                                                                 // show the main console menu
 void fGetPwdFromConsole(void);                                                       // get a password from the console
 void fListPeople(char *, int *, char *, char *, char *);                                    // display a list of people
-void fPrintListHeading(char *);                                                 // print the heading for a console list
+void fListEvents(char *, int *, char *, char *, char *);                                    // display a list of events
+void fPrintListHeading(char *, char*);                                          // print the heading for a console list
 void fSetOptions(char *, int *, char *, char *, char *);                                    // main menu to set options
 
 // global declarations
@@ -33,7 +35,7 @@ int main(int argc, char **argv)
 
 // declarations
 
-    char *sPrgNme = strcat(argv[0] + 2, " -- Library and reading log");                                 // program name
+    char *sPrgNme = strcat(argv[0] + 2, " -- Jarman family and relatives");                             // program name
     bool bHelp = false;                                                                  // help flag to show help text
     bool bExitMainMenu = false;                                                             // flag to exit the program
     char cMainChoice = '0';                                                                         // main menu choice
@@ -114,11 +116,10 @@ int main(int argc, char **argv)
         else if(strchr("2eE", cMainChoice) != NULL)
         {
             printf("\n");
-            printf("You chose: 2eE");
+            fListEvents(sPrgNme, &iDisplayPageLength, &cDisplayPageWidth, &cDisplayPageFormat, &cDisplayOrder);
             printf("\n");
             cMainChoice = '0';
             bExitMainMenu = false;
-            fPressEnterToContinue();
         }
         else if(strchr("3pP", cMainChoice) != NULL)
         {
@@ -238,6 +239,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     char caSQL[SQL_LEN] = {'\0'};
     bool bEndOfPrintBlock = false;
     bool bExitListMenu = false;
+    char caListHeading[HDG_LEN] = {'\0'};
 
     MYSQL_RES *res;
     MYSQL_ROW row;
@@ -281,6 +283,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                                 "  ORDER BY AP.`Person ID` %s", caOrder)
                                 ;
             cQueryFilterchoice = '0';
+            strcpy(caListHeading, "ID/Person/Gender/Status/Age");
         }
         else if(cQueryFilterchoice == 'M')
         {
@@ -295,6 +298,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                                 "  ORDER BY AP.`Person ID` %s", caOrder)
                                 ;
             cQueryFilterchoice = '0';
+            strcpy(caListHeading, "ID/Person/Gender/Status/Age");
         }
         else if(cQueryFilterchoice == 'F')
         {
@@ -309,6 +313,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                                 "  ORDER BY AP.`Person ID` %s", caOrder)
                                 ;
             cQueryFilterchoice = '0';
+            strcpy(caListHeading, "ID/Person/Gender/Status/Age");
         }
         else if(cQueryFilterchoice == 'L')
         {
@@ -323,6 +328,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                                 "  ORDER BY AP.`Person ID` %s", caOrder)
                                 ;
             cQueryFilterchoice = '0';
+            strcpy(caListHeading, "ID/Person/Gender/Status/Age");
         }
         else if(cQueryFilterchoice == 'D')
         {
@@ -337,35 +343,38 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                                 "  ORDER BY AP.`Person ID` %s", caOrder)
                                 ;
             cQueryFilterchoice = '0';
+            strcpy(caListHeading, "ID/Person/Gender/Status/AgeAtDeath");
         }
         else if(cQueryFilterchoice == 'C')
         {
-            sprintf(caSQL, "select AP.`Person ID` as 'ID' "
+            sprintf(caSQL, "SELECT AP.`Person ID` as 'ID' "
                                 ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
                                 ", AP.`Gender` "
-                                ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
-                                ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
+                                ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
+                                ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) AS 'Age' "
                                 ", AC.Cohort "
-                                "  from risingfast.`Ancestry People` AP "
-                                "  left join risingfast.`Ancestry Cohorts` AC on (AP.`Born On` >= AC.`Start`) and (AP.`Born On` <= AC.`Finish`) ")
+                                "  FROM risingfast.`Ancestry People` AP "
+                                "  LEFT JOIN risingfast.`Ancestry Cohorts` AC on (AP.`Born On` >= AC.`Start`) and (AP.`Born On` <= AC.`Finish`) ")
                                 ;
             cQueryFilterchoice = '0';
+            strcpy(caListHeading, "ID/Person/Gender/Status/Age/Cohort");
         }
         else if(cQueryFilterchoice == 'B')
         {
-            sprintf(caSQL, " select AP.`Person ID` as 'ID' "
-                                 ", concat(AP.`First Name`, ' ', AP.`Last Name`) as `Person` "
-                                 ", AP.`Gender` "
-                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
-                                 ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 0), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 0)) as 'Current Age' "
-                                 ", AP.`Born On` "
-                                 ", IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) 'Mths Away' "
-                                 "  from risingfast.`Ancestry People` AP "
-                                 "  where IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) < 8 "
-                                 " and AP.`Deceased` = 0 "
-                                 " order by IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) asc ")
-                                 ;
+            sprintf(caSQL, "SELECT AP.`Person ID` as 'ID' "
+                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", AP.`Gender` "
+                                ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
+                                ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 0), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 0)) AS 'Current Age' "
+                                ", AP.`Born On` "
+                                ", IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) 'Mths Away' "
+                                "  FROM risingfast.`Ancestry People` AP "
+                                "  WHERE IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) < 12 "
+                                "  AND AP.`Deceased` = 0 "
+                                "  ORDER BY IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) asc ")
+                                ;
             cQueryFilterchoice = '0';
+            strcpy(caListHeading, "ID/Person/Gender/Status/Age/Birthday/MonthsAway");
         }
     
     // execute the query and check for no result
@@ -424,7 +433,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     
 // print a heading 
     
-        fPrintListHeading(pcDisplayPageWidth);
+        fPrintListHeading(pcDisplayPageWidth, caListHeading);
    
 // print each row of results
 
@@ -436,7 +445,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
 //                bEndOfPrintBlock = false;
                 for(int i = 0; i < iColCount; i++)
                 {
-                    if((i == 0) || (i == 4))
+                    if((i == 0) || (i == 4) || (i == 6))
                     {
                         printf("  %*s", iLengths[i] + 1, row[i] ? row[i] : "");
                     }
@@ -459,7 +468,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                     printf("\n\n");
                     printf("Choice: ");
                     printf("\n");
-                    fPrintListHeading(pcDisplayPageWidth);
+                    fPrintListHeading(pcDisplayPageWidth, caListHeading);
                     iRowCount = 0;
                 }
             }
@@ -501,12 +510,12 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     return;
 }
 
-void fPrintListHeading(char *pcDisplayPageWidth)
+void fPrintListHeading(char *pcDisplayPageWidth, char caListHeading[])
 {
     printf("\n");
     if(*pcDisplayPageWidth == 'W')
     {
-        printf("   ID  Person                       Gender   Status       Age");
+        printf("%s", caListHeading);
     }
     else if(*pcDisplayPageWidth == 'N')
     {
@@ -669,6 +678,221 @@ void fSetOptions(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         fRetitleConsole(sPrgNme);
     }
 
+    return;
+}
+
+void fListEvents(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWidth, char *pcDisplayPageFormat, char *pcDisplayOrder)
+{
+    int iColCount = 0;
+    int *iLengths = NULL;
+    int iRowCount = 0;
+    char cQueryFilterchoice = '0';
+    char caOrder[6] = {'D', 'E', 'S', 'C', '\0'};
+    char caSQL[SQL_LEN] = {'\0'};
+    bool bEndOfPrintBlock = false;
+    bool bExitListMenu = false;
+    char caListHeading[HDG_LEN] = {'\0'};
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    if(*pcDisplayOrder == 'A')
+    {
+            strcpy(caOrder, "ASC");
+        }
+        else if(*pcDisplayOrder == 'D')
+        {
+            strcpy(caOrder, "DESC");
+        }
+    
+    while(bExitListMenu == false)
+    {
+        fRetitleConsole(sPrgNme);
+        printf("\n");
+        printf("Main Menu > List Events ...");
+        printf("\n\n");
+        printf("(A)ll, (U)pcoming or E(x)it");
+        printf("\n\n");
+        while(strchr("aAuUxX", cQueryFilterchoice) == NULL)
+        {
+            printf("Choice: ");
+            cQueryFilterchoice = toupper(GetChar());
+        }
+        if(toupper(cQueryFilterchoice) == 'X')
+        {
+            bExitListMenu = true;
+            return;
+        }
+        else if(cQueryFilterchoice == 'A')
+        {
+            sprintf(caSQL, "SELECT AE.`Event ID` "
+                                ", AE.`Event Type` "
+                                ", CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`) AS `First Person` "
+                                ", CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`) AS `First Person` "
+                                ", AE.`Event Date` "
+                                ", AE.`Event Place` "
+                                ", AC.`Country Abbreviation` "
+                                "  FROM risingfast.`Ancestry Events` AE "
+                                "  LEFT JOIN risingfast.`Ancestry People` AP1 on AE.`Event First Person ID` = AP1.`Person ID` "
+                                "  LEFT JOIN risingfast.`Ancestry People` AP2 on AE.`Event Second Person ID` = AP2.`Person ID` "
+                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AE.`Event Country ID` = AC.`Country ID`")
+                                ;
+
+            cQueryFilterchoice = '0';
+            strcpy(caListHeading, "EventID/Event/FirstPerson/SecondPerson/Date/Place/Country");
+        }
+        else if(cQueryFilterchoice == 'U')
+        {
+            sprintf(caSQL, "SELECT AE.`Event ID` "
+                                ", AE.`Event Type` "
+                                ", CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`) AS `First Person` "
+                                ", CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`) AS `First Person` "
+                                ", AE.`Event Date` "
+                                ", AE.`Event Place` "
+                                ", AC.`Country Abbreviation` "
+                                ", IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) AS 'Mths Away' "
+                                "  FROM risingfast.`Ancestry Events` AE "
+                                "  LEFT JOIN risingfast.`Ancestry People` AP1 on AE.`Event First Person ID` = AP1.`Person ID` "
+                                "  LEFT JOIN risingfast.`Ancestry People` AP2 on AE.`Event Second Person ID` = AP2.`Person ID` "
+                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AE.`Event Country ID` = AC.`Country ID` "
+                                "  WHERE IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) < 12 "
+                                "  ORDER BY IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) asc ")
+                                ;
+
+            cQueryFilterchoice = '0';
+            strcpy(caListHeading, "EventID/Event/FirstPerson/SecondPerson/Date/Place/Country/MthsAway");
+        }
+    
+    // execute the query and check for no result
+    
+        if(mysql_query(conn, caSQL) != 0)
+        {
+            printf("\n");
+            printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+            printf("\n\n");
+            fPressEnterToContinue();
+            return;
+        }
+
+// store the result of the query
+
+        res = mysql_store_result(conn);
+        if(res == NULL)
+        {
+            printf("%s() -- no results returned", __func__);
+            printf("\n");
+    
+            mysql_free_result(res);
+            return;
+        }
+    
+// fetch the number of fields in the result
+    
+        if(*pcDisplayPageWidth == 'W')
+        {
+            iColCount = mysql_num_fields(res);
+        }
+        else if(*pcDisplayPageWidth == 'N')
+        {
+            iColCount = mysql_num_fields(res) - 3;
+        }
+    
+// fetch the max width of each column
+    
+        iLengths = (int *)calloc(iColCount, sizeof(int));
+    
+        while(row = mysql_fetch_row(res))
+        {
+            for (int k = 0; k < iColCount; k++)
+            {
+                if(row[k] != NULL)
+                {
+                    if(strlen(row[k]) > iLengths[k])
+                    {
+                         iLengths[k] = strlen(row[k]);
+                    }
+                }
+            }
+        }
+    
+        mysql_data_seek(res, 0);
+    
+// print a heading 
+    
+        fPrintListHeading(pcDisplayPageWidth, caListHeading);
+   
+// print each row of results
+
+        iRowCount = 0;
+        while(row = mysql_fetch_row(res))
+        {
+            if(*pcDisplayPageFormat == 'T')
+            {
+//                bEndOfPrintBlock = false;
+                for(int i = 0; i < iColCount; i++)
+                {
+                    if((i == 0) || (i == 4) || (i == 7))
+                    {
+                        printf("  %*s", iLengths[i] + 1, row[i] ? row[i] : "");
+                    }
+                    else
+                    {
+                        printf("  %-*s", iLengths[i] + 1, row[i] ? row[i] : "");
+                    }
+                }
+                iRowCount++;
+                printf("\n");
+                if(iRowCount >= *piDisplayPageLength)
+                {
+                    printf("\n");
+                    fPressEnterToContinue();
+                    fRetitleConsole(sPrgNme);
+                    printf("\n");
+                    printf("Main Menu > List People > People names ...");
+                    printf("\n\n");
+                    printf("(A)ll, (U)pcoming or E(x)it");
+                    printf("\n\n");
+                    printf("Choice: ");
+                    printf("\n");
+                    fPrintListHeading(pcDisplayPageWidth, caListHeading);
+                    iRowCount = 0;
+                }
+            }
+            else
+            {
+                for(int i = 0; i < iColCount; i++)
+                {
+                    if(i == 0)
+                    {
+                        printf("     ");
+                    }
+                    else if(i == 3)
+                    {
+                        continue;
+                    }
+                    else if(row[i])
+                    {
+                        printf("%s, ", row[i]);
+                    }
+                    else
+                    {
+                        printf("%s", "");
+                    }
+                }
+                printf("\n");
+            }
+        }
+
+        printf("\n");
+        if(bEndOfPrintBlock == false)
+        {
+            fPressEnterToContinue();
+        }
+    }
+
+    fRetitleConsole(sPrgNme);
+    free(iLengths);
+    mysql_free_result(res);
     return;
 }
 

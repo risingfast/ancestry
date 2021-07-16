@@ -23,7 +23,7 @@
     15-Jul-2021 create loop around printing person list options
     15-Jul-2021 enable options
     16-Jul-2021 add upcoming birthdays to the list functions
+    16-Jul-2021 add intelligent headings on listings
 #### Enhancements: (0)
-    add intelligent headings on listings
     send or show reminders of upcoming birthdays and events via emial
     remove the temporarily disabled password
