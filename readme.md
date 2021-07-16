@@ -22,8 +22,8 @@
     15-Jul-2021 add cohort table and listing option
     15-Jul-2021 create loop around printing person list options
     15-Jul-2021 enable options
+    16-Jul-2021 add upcoming birthdays to the list functions
 #### Enhancements: (0)
-    add upcoming birthdays to the list functions
     add intelligent headings on listings
     send or show reminders of upcoming birthdays and events via emial
     remove the temporarily disabled password

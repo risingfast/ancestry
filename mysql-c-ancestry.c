@@ -257,9 +257,9 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         printf("\n");
         printf("Main Menu > List People > People names ...");
         printf("\n\n");
-        printf("(A)ll, (M)ales, (F)emales, (L)iving, (D)eceased, (C)ohort or E(x)it");
+        printf("(A)ll, (M)ales, (F)emales, (L)iving, (D)eceased, (C)ohort, (B)irthdays or E(x)it");
         printf("\n\n");
-        while(strchr("aAmMfFlLdDcCxX", cQueryFilterchoice) == NULL)
+        while(strchr("aAmMfFlLdDcCbBxX", cQueryFilterchoice) == NULL)
         {
             printf("Choice: ");
             cQueryFilterchoice = toupper(GetChar());
@@ -351,6 +351,22 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                                 ;
             cQueryFilterchoice = '0';
         }
+        else if(cQueryFilterchoice == 'B')
+        {
+            sprintf(caSQL, " select AP.`Person ID` as 'ID' "
+                                 ", concat(AP.`First Name`, ' ', AP.`Last Name`) as `Person` "
+                                 ", AP.`Gender` "
+                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
+                                 ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 0), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 0)) as 'Current Age' "
+                                 ", AP.`Born On` "
+                                 ", IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) 'Mths Away' "
+                                 "  from risingfast.`Ancestry People` AP "
+                                 "  where IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) < 8 "
+                                 " and AP.`Deceased` = 0 "
+                                 " order by IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) asc ")
+                                 ;
+            cQueryFilterchoice = '0';
+        }
     
     // execute the query and check for no result
     
@@ -439,7 +455,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                     printf("\n");
                     printf("Main Menu > List People > People names ...");
                     printf("\n\n");
-                    printf("(A)ll, (M)ales, (F)emales, (L)iving, (D)eceased, (C)ohort or E(x)it");
+                    printf("(A)ll, (M)ales, (F)emales, (L)iving, (D)eceased, (C)ohort, (B)irthdays or E(x)it");
                     printf("\n\n");
                     printf("Choice: ");
                     printf("\n");
