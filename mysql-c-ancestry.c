@@ -22,7 +22,12 @@ void fListEvents(char *, int *, char *, char *, char *);                        
 void fPrintListHeading(char *, char*);                                          // print the heading for a console list
 void fSetOptions(char *, int *, char *, char *, char *);                                    // main menu to set options
 void fShowPersonProfile(char *, int *, char *, char *, char *);                              // show a person's profile
-int  fGetTableLength(char *sTblNme);                                                       // count the rows in a table
+int  fGetTableLength(char *);                                                              // count the rows in a table
+void fPrintPersonProfile(char *, int);                                       // print a person's profile to the console
+void fPrintPersonSearch(char *, int *);                                    // print a person search list to the console
+void fPrintParents(char *, int);                                                            // print a person's parents
+void fPrintSiblings(char *, int);                                                           // print a person's parents
+void fPrintChildren(char *, int);                                                         //  print a person's children
 
 // global declarations
 
@@ -927,156 +932,29 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
         else if(cProfileMenuChoice == 'S')
         {
             cProfileMenuChoice = '0';
-
-            fRetitleConsole(sPrgNme);
             printf("\n");
-            printf("Main Menu > Person Profile > Show ...");
-            printf("\n\n");
 
             do {
-                printf("Person iD (1 - %d): ", fGetTableLength("Ancestry People"));
+                printf("Person ID (1 - %d): ", fGetTableLength("Ancestry People"));
                 iPersonID = GetInt();
                 printf("\n");
             } while(iPersonID < 1 || iPersonID > 85);
 
-
-            sprintf(caSQL, "select AP.`Person ID` as 'ID' "
-                                ", AP.`First Name` as 'First' "
-                                ", AP.`Middle Names` as 'Middle' "
-                                ", AP.`Last Name` as 'Last' "
-                                ", AP.`Born On` as 'Born' "
-                                ", AP.`Birth Place` as 'Born In' "
-                                ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
-                                ", AP.`Deceased On` as 'Deceased On' "
-                                ", AP.`Deceased Place` as 'Deceased Place' "
-                                ", AP.`Cause of Death` as 'Cause of Death' "
-                                ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
-                                ", AP.`Profile` "
-                                ", AP.`Education` "
-                                " from risingfast.`Ancestry People` AP "
-                                " where AP.`Person ID` = %d", iPersonID);
-
-// execute the query and check for no result
-    
-            if(mysql_query(conn, caSQL) != 0)
-            {
-                printf("\n");
-                printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
-                printf("\n\n");
-                fPressEnterToContinue();
-                return;
-            }
-
-// store the result of the query
-
-            res = mysql_store_result(conn);
-            if(res == NULL)
-            {
-                printf("%s() -- no results returned", __func__);
-                printf("\n");
-
-                mysql_free_result(res);
-                return;
-            }
-
-// print the profile
-
-            row = mysql_fetch_row(res);
-
-            printf("Person ID:      %s", (row[0] == NULL) ? sSingleSpace : row[0]);
-            printf("\n");
-            printf("First Name:     %s", (row[1] == NULL) ? sSingleSpace : row[1]);
-            printf("\n");
-            printf("Middle Name:    %s", (row[2] == NULL) ? sSingleSpace : row[2]);
-            printf("\n");
-            printf("Last Name:      %s", (row[3] == NULL) ? sSingleSpace : row[3]);
-            printf("\n");
-            printf("Born on:        %s", (row[4] == NULL) ? sSingleSpace : row[4]);
-            printf("\n");
-            printf("Birth Place:    %s", (row[5] == NULL) ? sSingleSpace : row[5]);
-            printf("\n");
-            printf("Status:         %s", (row[6] == NULL) ? sSingleSpace : row[6]);
-            printf("\n");
-            printf("Deceased On:    %s", (row[7] == NULL) ? sSingleSpace : row[7]);
-            printf("\n");
-            printf("Deceased At:    %s", (row[8] == NULL) ? sSingleSpace : row[8]);
-            printf("\n");
-            printf("Cause of Death: %s", (row[9] == NULL) ? sSingleSpace : row[9]);
-            printf("\n");
-            printf("Age:            %s", (row[10] == NULL) ? sSingleSpace : row[10]);
-            printf("\n");
-            printf("Education:      %s", (row[11] == NULL) ? sSingleSpace : row[11]);
-            printf("\n");
-            printf("Profile:        %s", (row[12] == NULL) ? sSingleSpace : row[12]);
-            printf("\n\n");
+            fPrintPersonProfile(sPrgNme, iPersonID);
+            fPrintParents(sPrgNme, iPersonID);
+            fPrintSiblings(sPrgNme, iPersonID);
+            fPrintChildren(sPrgNme, iPersonID);
             fPressEnterToContinue();
-
             fRetitleConsole(sPrgNme);
-            mysql_free_result(res);
         }
 
         else if(cProfileMenuChoice == 'R')
         {
             cProfileMenuChoice = '0';
-
-            fRetitleConsole(sPrgNme);
+            fPrintPersonSearch(sPrgNme, piDisplayPageLength);
             printf("\n");
-            printf("Main Menu > Person Profile > Search ...");
-            printf("\n\n");
-
-            sprintf(caSQL,"SELECT LPAD(AP.`Person ID`, 4, ' ') "
-                        ", REPLACE(CONCAT(COALESCE(AP.`First Name`, ''), ' ', COALESCE(AP.`Middle Names`, ''), ' ',"
-                        " COALESCE(AP.`Last Name`, '')), '  ', ' ')"
-                        " FROM risingfast.`Ancestry People` AP "
-                        " ORDER BY AP.`Person ID` ASC" );
-
-// execute the query and check for no result
-
-            if(mysql_query(conn, caSQL) != 0)
-            {
-                printf("\n");
-                printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
-                printf("\n\n");
-                fPressEnterToContinue();
-                return;
-            }
-
-// store the result of the query
-
-            res = mysql_store_result(conn);
-            if(res == NULL)
-            {
-                printf("%s() -- no results returned", __func__);
-                printf("\n");
-
-                mysql_free_result(res);
-                return;
-            }
-
-// print each row of results
-
-            iRowCount = 0;
-            while(row = mysql_fetch_row(res))
-            {
-                printf("  %s", row[0]);
-                printf("  %s", row[1]);
-
-                iRowCount++;
-                printf("\n");
-                if(iRowCount >= *piDisplayPageLength)
-                {
-                    printf("\n");
-                    fPressEnterToContinue();
-                    fRetitleConsole(sPrgNme);
-                    printf("\n");
-                    printf("Main Menu > Person Profile > Search ...");
-                    printf("\n\n");
-                    iRowCount = 0;
-                }
-            }
             fPressEnterToContinue();
             fRetitleConsole(sPrgNme);
-            mysql_free_result(res);
         }
     }
     return;
@@ -1122,5 +1000,371 @@ int fGetTableLength(char *sTblNme)
 
     mysql_free_result(res);
     return (int) strtol(row[0], &ptr, 10);
+}
+
+void fPrintPersonProfile(char *sPrgNme, int iPersonID)
+{
+    char caSQL[SQL_LEN] = {'\0'};
+    char *sSingleSpace = " ";
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    fRetitleConsole(sPrgNme);
+    printf("\n");
+    printf("Main Menu > Person Profile > Show ...");
+    printf("\n\n");
+
+    sprintf(caSQL, "select AP.`Person ID` as 'ID' "
+                        ", AP.`First Name` as 'First' "
+                        ", AP.`Middle Names` as 'Middle' "
+                        ", AP.`Last Name` as 'Last' "
+                        ", AP.`Born On` as 'Born' "
+                        ", AP.`Birth Place` as 'Born In' "
+                        ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
+                        ", AP.`Deceased On` as 'Deceased On' "
+                        ", AP.`Deceased Place` as 'Deceased Place' "
+                        ", AP.`Cause of Death` as 'Cause of Death' "
+                        ", IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)) as 'Age' "
+                        ", AP.`Profile` "
+                        ", AP.`Education` "
+                        " from risingfast.`Ancestry People` AP "
+                        " where AP.`Person ID` = %d", iPersonID);
+
+// execute the query and check for no result
+    
+    if(mysql_query(conn, caSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        fPressEnterToContinue();
+        return;
+    }
+
+// store the result of the query
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+
+        mysql_free_result(res);
+        return;
+    }
+
+// print the profile
+
+    row = mysql_fetch_row(res);
+    printf("Profile:");
+    printf("\n\n");
+    printf("  Person ID:      %s", (row[0] == NULL) ? sSingleSpace : row[0]);
+    printf("\n");
+    printf("  First Name:     %s", (row[1] == NULL) ? sSingleSpace : row[1]);
+    printf("\n");
+    printf("  Middle Name:    %s", (row[2] == NULL) ? sSingleSpace : row[2]);
+    printf("\n");
+    printf("  Last Name:      %s", (row[3] == NULL) ? sSingleSpace : row[3]);
+    printf("\n");
+    printf("  Born on:        %s", (row[4] == NULL) ? sSingleSpace : row[4]);
+    printf("\n");
+    printf("  Birth Place:    %s", (row[5] == NULL) ? sSingleSpace : row[5]);
+    printf("\n");
+    printf("  Status:         %s", (row[6] == NULL) ? sSingleSpace : row[6]);
+    printf("\n");
+    printf("  Deceased On:    %s", (row[7] == NULL) ? sSingleSpace : row[7]);
+    printf("\n");
+    printf("  Deceased At:    %s", (row[8] == NULL) ? sSingleSpace : row[8]);
+    printf("\n");
+    printf("  Cause of Death: %s", (row[9] == NULL) ? sSingleSpace : row[9]);
+    printf("\n");
+    printf("  Age:            %s", (row[10] == NULL) ? sSingleSpace : row[10]);
+    printf("\n");
+    printf("  Education:      %s", (row[11] == NULL) ? sSingleSpace : row[11]);
+    printf("\n");
+    printf("  Profile:        %s", (row[12] == NULL) ? sSingleSpace : row[12]);
+    printf("\n\n");
+
+    mysql_free_result(res);
+    
+    return;
+}
+
+void fPrintPersonSearch(char *sPrgNme, int *piDisplayPageLength)
+{
+    char caSQL[SQL_LEN] = {'\0'};
+    int  iRowCount = 0;
+    int  iColCount = 0;
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    fRetitleConsole(sPrgNme);
+    printf("\n");
+    printf("Main Menu > Person Profile > Search ...");
+    printf("\n\n");
+
+    sprintf(caSQL,"SELECT LPAD(AP.`Person ID`, 4, ' ') "
+                ", REPLACE(CONCAT(COALESCE(AP.`First Name`, ''), ' ', COALESCE(AP.`Middle Names`, ''), ' ',"
+                " COALESCE(AP.`Last Name`, '')), '  ', ' ')"
+                " FROM risingfast.`Ancestry People` AP "
+                " ORDER BY AP.`Person ID` ASC" );
+
+// execute the query and check for no result
+
+    if(mysql_query(conn, caSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        fPressEnterToContinue();
+        return;
+    }
+
+// store the result of the query
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+
+        mysql_free_result(res);
+        return;
+    }
+
+// print each row of results
+
+    iRowCount = 0;
+    while(row = mysql_fetch_row(res))
+    {
+        printf("  %s", row[0]);
+        printf("  %s", row[1]);
+
+        iRowCount++;
+        printf("\n");
+    }
+    if (iRowCount < *piDisplayPageLength)
+    {
+        printf("\n");
+    }
+    mysql_free_result(res);
+    return;
+}
+
+void fPrintParents(char *sPrgNme, int iPersonID)
+{
+    char caSQL[SQL_LEN] = {'\0'};
+    int  iRowCount = 0;
+    int  iColCount = 0;
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    printf("Parents:");
+    printf("\n\n");
+
+    sprintf(caSQL, "SELECT AM.`Person ID` AS 'Parent ID' "
+                      " , 'Mother' as 'Relation' "
+                      " , AM.`First Name` AS 'First' "
+                      " , AM.`Last Name` AS 'Last' "
+                      " , IF(AM.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
+                      " , IF(AM.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AM.`Born On`)/365, 1), ROUND(DATEDIFF(AM.`Deceased On`, AM.`Born On`)/365, 1)) as 'Age' "
+                   "FROM risingfast.`Ancestry People` AP "
+                   "LEFT join risingfast.`Ancestry People` AM ON AP.`Mother ID` = AM.`Person ID` "
+                   "WHERE  AP.`Person ID` = %d "
+                   "UNION DISTINCT "
+                   "SELECT AF.`Person ID` AS 'Parent ID' "
+                   ", 'Father' AS 'Relation' "
+                   ", AF.`First Name` AS 'First' "
+                   ", AF.`Last Name` AS 'Last' "
+                   ", IF(AF.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
+                   ", IF(AF.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AF.`Born On`)/365, 1), ROUND(DATEDIFF(AF.`Deceased On`, AF.`Born On`)/365, 1)) AS 'Age' "
+                   "FROM risingfast.`Ancestry People` AP "
+                   "LEFT JOIN risingfast.`Ancestry People` AF ON AP.`Father ID` = AF.`Person ID` "
+                   "WHERE  AP.`Person ID` = %d", iPersonID, iPersonID);
+
+// execute the query and check for no result
+
+    if(mysql_query(conn, caSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        fPressEnterToContinue();
+        return;
+    }
+
+// store the result of the query
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+
+        mysql_free_result(res);
+        return;
+    }
+
+// print each row of results
+
+    iRowCount = 0;
+    while(row = mysql_fetch_row(res))
+    {
+        printf("  %s", row[0]);
+        printf("  %s", row[1]);
+        printf("  %s", row[2]);
+        printf("  %s", row[3]);
+        printf("  %s", row[4]);
+        printf("  %s", row[5]);
+
+        iRowCount++;
+        printf("\n");
+    }
+    printf("\n");
+    mysql_free_result(res);
+    return;
+}
+
+void fPrintSiblings(char *sPrgNme, int iPersonID )
+{
+    char caSQL[SQL_LEN] = {'\0'};
+    int  iRowCount = 0;
+    int  iColCount = 0;
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    printf("Siblings:");
+    printf("\n\n");
+
+    sprintf(caSQL, "SELECT AC.`Person ID` AS 'Sibling ID' "
+                       ", 'Sibling' AS 'Relation' "
+                       " , AC.`First Name` AS 'First' "
+                       " , AC.`Last Name` as 'Last' "
+                       " , IF(AC.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
+                       " , IF(AC.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AC.`Born On`)/365, 1), ROUND(DATEDIFF(AC.`Deceased On`, AC.`Born On`)/365, 1)) AS 'Age' "
+                   "FROM risingfast.`Ancestry People` AP "
+                   "LEFT JOIN risingfast.`Ancestry People` AC on AP.`Mother ID` = AC.`Mother ID` and AP.`Father ID` = AC.`Father ID` "
+                   "WHERE  AP.`Person ID` in (%d) "
+                   "AND AP.`Person ID` != AC.`Person ID`", iPersonID);
+
+// execute the query and check for no result
+
+    if(mysql_query(conn, caSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        fPressEnterToContinue();
+        return;
+    }
+
+// store the result of the query
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+
+        mysql_free_result(res);
+        return;
+    }
+
+// print each row of results
+
+    iRowCount = 0;
+    while(row = mysql_fetch_row(res))
+    {
+        printf("  %s", row[0]);
+        printf("  %s", row[1]);
+        printf("  %s", row[2]);
+        printf("  %s", row[3]);
+        printf("  %s", row[4]);
+        printf("  %s", row[5]);
+
+        iRowCount++;
+        printf("\n");
+    }
+    printf("\n");
+    mysql_free_result(res);
+    return;
+}
+
+void fPrintChildren(char *sprgNme, int iPersonID)
+{
+    char caSQL[SQL_LEN] = {'\0'};
+    int  iRowCount = 0;
+    int  iColCount = 0;
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    printf("Children:");
+    printf("\n\n");
+
+    sprintf(caSQL, "SELECT AC.`Person ID`  AP"
+                      " , 'Child' AS 'Relation' "
+                      " , AC.`First Name` AS 'First' "
+                      ",  AC.`Last Name` AS 'Last' "
+                      ",  IF(AC.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
+                      ",  IF(AC.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AC.`Born On`)/365, 1), ROUND(DATEDIFF(AC.`Deceased On`, AC.`Born On`)/365, 1)) AS 'Age' "
+                   " FROM risingfast.`Ancestry People` AP "
+                   " LEFT JOIN risingfast.`Ancestry People` AC ON AP.`Person ID` = AC.`Father ID` "
+                   " WHERE AP.`Person ID` = %d "
+                   " UNION ALL "
+                   "SELECT AC.`Person ID`  AP"
+                      " , 'Child' AS 'Relation' "
+                      " , AC.`First Name` AS 'First' "
+                      ",  AC.`Last Name` AS 'Last' "
+                      ",  IF(AC.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
+                      ", IF(AC.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AC.`Born On`)/365, 1), ROUND(DATEDIFF(AC.`Deceased On`, AC.`Born On`)/365, 1)) AS 'Age' "
+                   " FROM risingfast.`Ancestry People` AP "
+                   " LEFT JOIN risingfast.`Ancestry People` AC ON AP.`Person ID` = AC.`Mother ID` "
+                   " WHERE AP.`Person ID` = %d", iPersonID, iPersonID);
+
+// execute the query and check for no result
+
+    if(mysql_query(conn, caSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        fPressEnterToContinue();
+        return;
+    }
+
+// store the result of the query
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+        mysql_free_result(res);
+        return;
+    }
+
+// print each row of results
+
+    iRowCount = 0;
+    while(row = mysql_fetch_row(res))
+    {
+        printf("  %s", row[0]);
+        printf("  %s", row[1]);
+        printf("  %s", row[2]);
+        printf("  %s", row[3]);
+        printf("  %s", row[4]);
+        printf("  %s", row[5]);
+
+        iRowCount++;
+        printf("\n");
+    }
+    printf("\n");
+    mysql_free_result(res);
+    return;
 }
 
