@@ -8,6 +8,7 @@
 #include "rf50.h"
 #include <ctype.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define SQL_LEN 5000
 #define HDG_LEN 1000
@@ -21,6 +22,7 @@ void fListEvents(char *, int *, char *, char *, char *);                        
 void fPrintListHeading(char *, char*);                                          // print the heading for a console list
 void fSetOptions(char *, int *, char *, char *, char *);                                    // main menu to set options
 void fShowPersonProfile(char *, int *, char *, char *, char *);                              // show a person's profile
+int  fGetTableLength(char *sTblNme);                                                       // count the rows in a table
 
 // global declarations
 
@@ -896,9 +898,9 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
     char cProfileMenuChoice = 'O';
     bool bExitProfileMenu  = false;
     char caSQL[SQL_LEN] = {'\0'};
+    char *sSingleSpace = " ";
     int  iRowCount = 0;
     int  iColCount = 0;
-    int *iLengths = NULL;
     int  iPersonID = 0;
 
     MYSQL_RES *res;
@@ -926,9 +928,13 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
         {
             cProfileMenuChoice = '0';
 
+            fRetitleConsole(sPrgNme);
             printf("\n");
+            printf("Main Menu > Person Profile > Show ...");
+            printf("\n\n");
+
             do {
-                printf("Person iD (1 - 85): ");
+                printf("Person iD (1 - %d): ", fGetTableLength("Ancestry People"));
                 iPersonID = GetInt();
                 printf("\n");
             } while(iPersonID < 1 || iPersonID > 85);
@@ -977,53 +983,52 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
 
             row = mysql_fetch_row(res);
 
-            printf("Person ID:      %s", row[0]);
+            printf("Person ID:      %s", (row[0] == NULL) ? sSingleSpace : row[0]);
             printf("\n");
-            printf("First Name:     %s", row[1]);
+            printf("First Name:     %s", (row[1] == NULL) ? sSingleSpace : row[1]);
             printf("\n");
-            printf("Middle Name:    %s", row[2]);
+            printf("Middle Name:    %s", (row[2] == NULL) ? sSingleSpace : row[2]);
             printf("\n");
-            printf("Last Name:      %s", row[3]);
+            printf("Last Name:      %s", (row[3] == NULL) ? sSingleSpace : row[3]);
             printf("\n");
-            printf("Born on:        %s", row[4]);
+            printf("Born on:        %s", (row[4] == NULL) ? sSingleSpace : row[4]);
             printf("\n");
-            printf("Birth at:       %s", row[5]);
+            printf("Birth Place:    %s", (row[5] == NULL) ? sSingleSpace : row[5]);
             printf("\n");
-            printf("Status:         %s", row[6]);
+            printf("Status:         %s", (row[6] == NULL) ? sSingleSpace : row[6]);
             printf("\n");
-            printf("Deceased on:    %s", row[7]);
+            printf("Deceased On:    %s", (row[7] == NULL) ? sSingleSpace : row[7]);
             printf("\n");
-            printf("Deceased at:    %s", row[8]);
+            printf("Deceased At:    %s", (row[8] == NULL) ? sSingleSpace : row[8]);
             printf("\n");
-            printf("Cause of Death: %s", row[9]);
+            printf("Cause of Death: %s", (row[9] == NULL) ? sSingleSpace : row[9]);
             printf("\n");
-            printf("Age:            %s", row[10]);
+            printf("Age:            %s", (row[10] == NULL) ? sSingleSpace : row[10]);
             printf("\n");
-            printf("Profile:        %s", row[11]);
+            printf("Education:      %s", (row[11] == NULL) ? sSingleSpace : row[11]);
             printf("\n");
-            printf("Education:      %s", row[12]);
+            printf("Profile:        %s", (row[12] == NULL) ? sSingleSpace : row[12]);
             printf("\n\n");
             fPressEnterToContinue();
+
+            fRetitleConsole(sPrgNme);
+            mysql_free_result(res);
         }
 
         else if(cProfileMenuChoice == 'R')
         {
             cProfileMenuChoice = '0';
-            sprintf(caSQL, "SELECT AE.`Event ID` "
-                                ", AE.`Event Type` "
-                                ", CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`) AS `First Person` "
-                                ", CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`) AS `First Person` "
-                                ", AE.`Event Date` "
-                                ", AE.`Event Place` "
-                                ", AC.`Country Abbreviation` "
-                                ", IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) AS 'Mths Away' "
-                                "  FROM risingfast.`Ancestry Events` AE "
-                                "  LEFT JOIN risingfast.`Ancestry People` AP1 on AE.`Event First Person ID` = AP1.`Person ID` "
-                                "  LEFT JOIN risingfast.`Ancestry People` AP2 on AE.`Event Second Person ID` = AP2.`Person ID` "
-                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AE.`Event Country ID` = AC.`Country ID` "
-                                "  WHERE IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) < 12 "
-                                "  ORDER BY IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) asc ")
-                                ;
+
+            fRetitleConsole(sPrgNme);
+            printf("\n");
+            printf("Main Menu > Person Profile > Search ...");
+            printf("\n\n");
+
+            sprintf(caSQL,"SELECT LPAD(AP.`Person ID`, 4, ' ') "
+                        ", REPLACE(CONCAT(COALESCE(AP.`First Name`, ''), ' ', COALESCE(AP.`Middle Names`, ''), ' ',"
+                        " COALESCE(AP.`Last Name`, '')), '  ', ' ')"
+                        " FROM risingfast.`Ancestry People` AP "
+                        " ORDER BY AP.`Person ID` ASC" );
 
 // execute the query and check for no result
 
@@ -1053,17 +1058,9 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
             iRowCount = 0;
             while(row = mysql_fetch_row(res))
             {
-                for(int i = 0; i < iColCount; i++)
-                {
-                    if((i == 0) || (i == 4) || (i == 7))
-                    {
-                        printf("  %*s", iLengths[i] + 1, row[i] ? row[i] : "");
-                    }
-                    else
-                    {
-                        printf("  %-*s", iLengths[i] + 1, row[i] ? row[i] : "");
-                    }
-                }
+                printf("  %s", row[0]);
+                printf("  %s", row[1]);
+
                 iRowCount++;
                 printf("\n");
                 if(iRowCount >= *piDisplayPageLength)
@@ -1072,24 +1069,58 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
                     fPressEnterToContinue();
                     fRetitleConsole(sPrgNme);
                     printf("\n");
-                    printf("Main Menu > Person Profile ...");
+                    printf("Main Menu > Person Profile > Search ...");
                     printf("\n\n");
-                    printf("(S)how, Sea(r)ch or E(x)it");
-                    printf("\n\n");
-                    printf("Choice: ");
-                    printf("\n");
                     iRowCount = 0;
                 }
             }
-
-            printf("\n");
             fPressEnterToContinue();
+            fRetitleConsole(sPrgNme);
+            mysql_free_result(res);
         }
     }
-
-    fRetitleConsole(sPrgNme);
-    free(iLengths);
-    mysql_free_result(res);
     return;
+}
+
+
+int fGetTableLength(char *sTblNme)
+{
+    char caSQL[SQL_LEN] = {'\0'};
+    char *ptr;
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    sprintf(caSQL, "SELECT COUNT(*) FROM risingfast.`%s`", sTblNme);
+
+// execute the query and check for no result
+    
+        if(mysql_query(conn, caSQL) != 0)
+        {
+            printf("\n");
+            printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+            printf("\n\n");
+            fPressEnterToContinue();
+            return -1;
+        }
+
+// store the result of the query
+
+        res = mysql_store_result(conn);
+        if(res == NULL)
+        {
+            printf("%s() -- no results returned", __func__);
+            printf("\n");
+    
+            mysql_free_result(res);
+            return -1;
+        }
+    
+// print each row of results
+
+    row = mysql_fetch_row(res);
+
+    mysql_free_result(res);
+    return (int) strtol(row[0], &ptr, 10);
 }
 

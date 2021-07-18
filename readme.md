@@ -25,9 +25,9 @@
     16-Jul-2021 add upcoming birthdays to the list functions
     16-Jul-2021 add intelligent headings on listings
     16-Jul-2021 start personal profile
+    16-Jul-2021 add dynamic limit to entering person id on personal profile
+    16-Jul-2021 add search to personal profile menu
 #### Enhancements: (0)
-    add dynamic limit to entering person id on personal profile
     add information to personal profile
-    add search to personal profile menu
     send or show reminders of upcoming birthdays and events via emial
     remove the temporarily disabled password

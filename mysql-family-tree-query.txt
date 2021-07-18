@@ -276,3 +276,17 @@ where IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Dat
 order by IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) asc
 ;
 
+-- list full names including middle names
+
+select AP.`Person ID`
+, replace(concat(coalesce(AP.`First Name`, ''), ' ', coalesce(AP.`Middle Names`, ''), ' ', coalesce(AP.`Last Name`, '')), "  ", " ")
+from risingfast.`Ancestry People` AP
+order by AP.`Person ID` ASC;
+
+-- list full names and order by last/first name asc
+
+select AP.`Person ID`
+, replace(concat(coalesce(AP.`First Name`, ''), ' ', coalesce(AP.`Middle Names`, ''), ' ', coalesce(AP.`Last Name`, '')), "  ", " ")
+from risingfast.`Ancestry People` AP
+order by AP.`Last Name`, AP.`First Name` ASC;
+
