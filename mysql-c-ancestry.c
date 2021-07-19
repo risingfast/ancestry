@@ -1324,10 +1324,13 @@ void fPrintSiblings(char *sPrgNme, int iPersonID )
                        " , COALESCE(IF(AC.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AC.`Born On`)/365, 1), "
                        "   ROUND(DATEDIFF(AC.`Deceased On`, AC.`Born On`)/365, 1)), '') as 'Age' "
                    "FROM risingfast.`Ancestry People` AP "
-                   "LEFT JOIN risingfast.`Ancestry People` AC on AP.`Mother ID` = AC.`Mother ID` "
-                   "AND AP.`Father ID` = AC.`Father ID` "
+                   "LEFT JOIN risingfast.`Ancestry People` AC on AP.`Mother ID` = AC.`Mother ID` AND AP.`Father ID` = AC.`Father ID` "
+                   "LEFT JOIN risingfast.`Ancestry People` AM on AP.`Mother ID` = AM.`Person ID` "
+                   "LEFT JOIN risingfast.`Ancestry People` AF on AP.`Father ID` = AF.`Person ID` "
                    "WHERE  AP.`Person ID` in (%d) "
                    "AND AC.`Actual` = TRUE "
+                   "AND AM.`Actual` = TRUE "
+                   "AND AF.`Actual` = TRUE "
                    "AND AP.`Person ID` != AC.`Person ID`", iPersonID);
 
 // execute the query and check for no result

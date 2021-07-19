@@ -32,7 +32,7 @@
     19-Jul-2021 exclude Unknown
     19-Jul-2021 add events to personal profiles
 #### Enhancements: (0)
-    add middle and maiden names to people listings
+    add middle and maiden names to all people listings
     fix the date ordering on the birthday listing to take day into account along with month
     send or show reminders of upcoming birthdays and events via email
     remove the temporarily disabled password
