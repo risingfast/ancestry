@@ -28,9 +28,10 @@
     16-Jul-2021 add dynamic limit to entering person id on personal profile
     16-Jul-2021 add search to personal profile menu
     16-Jul-2021 add information to personal profile
+    19-Jul-2021 suppress printing (null)
 #### Enhancements: (0)
     exclude unknown from personal profile listings and searches
-    suppress printing (null)
+    add events to personal profiles
     add middle and maiden names to people listings
     send or show reminders of upcoming birthdays and events via email
     remove the temporarily disabled password
