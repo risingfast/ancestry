@@ -32,7 +32,9 @@
     19-Jul-2021 exclude Unknown
     19-Jul-2021 add events to personal profiles
 #### Enhancements: (0)
+    add the children of Martha Whonsbon 94
     add middle and maiden names to all people listings
+    add query for half-siblings for Uncle Charlie and Maggie
     fix the date ordering on the birthday listing to take day into account along with month
     send or show reminders of upcoming birthdays and events via email
     remove the temporarily disabled password
