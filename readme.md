@@ -37,6 +37,7 @@
     22-Jul-2021 add known addresses
     22-Jul-2021 add search on text with wildcards
 #### Enhancements: (0)
+    fix nickname and Jr/Sr Suffix in table and queryies
     add the children of Martha Whonsbon 94
     add query for half-siblings for Uncle Charlie and Maggie
     fix the date ordering on the birthday listing to take day into account along with month
