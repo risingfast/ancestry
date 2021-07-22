@@ -18,7 +18,7 @@
 void fShowMainMenu(void);                                                                 // show the main console menu
 void fGetPwdFromConsole(void);                                                       // get a password from the console
 void fListPeople(char *, int *, char *, char *, char *);                                    // display a list of people
-void fListEvents(char *, int *, char *, char *, char *);                                    // display a list of events
+void fListMarriages(char *, int *, char *, char *, char *);                              // display a list of marriages
 void fPrintListHeading(char *, char*);                                          // print the heading for a console list
 void fSetOptions(char *, int *, char *, char *, char *);                                    // main menu to set options
 void fShowPersonProfile(char *, int *, char *, char *, char *);                              // show a person's profile
@@ -30,7 +30,8 @@ void fPrintPersonSearch(char *, int *);                                    // pr
 void fPrintParents(char *, int);                                                            // print a person's parents
 void fPrintSiblings(char *, int);                                                           // print a person's parents
 void fPrintChildren(char *, int);                                                          // print a person's children
-void fPrintAssociations(char *, int);                                                  // print a person's associations
+void fPrintMarriages(char *, int);                                                        // print a person's marriages
+void fPrintDivorces(char *, int);                                                          // print a person's divorces
 
 // global declarations
 
@@ -127,7 +128,7 @@ int main(int argc, char **argv)
         else if(strchr("2eE", cMainChoice) != NULL)
         {
             printf("\n");
-            fListEvents(sPrgNme, &iDisplayPageLength, &cDisplayPageWidth, &cDisplayPageFormat, &cDisplayOrder);
+            fListMarriages(sPrgNme, &iDisplayPageLength, &cDisplayPageWidth, &cDisplayPageFormat, &cDisplayOrder);
             printf("\n");
             cMainChoice = '0';
             bExitMainMenu = false;
@@ -190,7 +191,7 @@ void fShowMainMenu(void)                                                        
     printf("\n");
     printf("4. Enter Pe(r)son");
     printf("\n");
-    printf("5. E(n)ter Event");
+    printf("5. E(n)ter Marriages");
     printf("\n");
     printf("6. Option(s)");
     printf("\n");
@@ -708,7 +709,7 @@ void fSetOptions(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     return;
 }
 
-void fListEvents(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWidth, char *pcDisplayPageFormat, char *pcDisplayOrder)
+void fListMarriages(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWidth, char *pcDisplayPageFormat, char *pcDisplayOrder)
 {
     int iColCount = 0;
     int *iLengths = NULL;
@@ -736,7 +737,7 @@ void fListEvents(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     {
         fRetitleConsole(sPrgNme);
         printf("\n");
-        printf("Main Menu > List Events ...");
+        printf("Main Menu > List Marriages ...");
         printf("\n\n");
         printf("(A)ll, (U)pcoming or E(x)it");
         printf("\n\n");
@@ -752,42 +753,42 @@ void fListEvents(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         }
         else if(cQueryFilterchoice == 'A')
         {
-            sprintf(caSQL, "SELECT AE.`Event ID` "
-                                ", AE.`Event Type` "
+            sprintf(caSQL, "SELECT AM.`Marriage ID` "
+                                ", AM.`Marriage Type` "
                                 ", CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`) AS `First Person` "
                                 ", CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`) AS `First Person` "
-                                ", AE.`Event Date` "
-                                ", AE.`Event Place` "
+                                ", AM.`Marriage Date` "
+                                ", AM.`Marriage Place` "
                                 ", AC.`Country Abbreviation` "
-                                "  FROM risingfast.`Ancestry Events` AE "
-                                "  LEFT JOIN risingfast.`Ancestry People` AP1 on AE.`Event First Person ID` = AP1.`Person ID` "
-                                "  LEFT JOIN risingfast.`Ancestry People` AP2 on AE.`Event Second Person ID` = AP2.`Person ID` "
-                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AE.`Event Country ID` = AC.`Country ID`")
+                                "  FROM risingfast.`Ancestry Marriages` AM "
+                                "  LEFT JOIN risingfast.`Ancestry People` AP1 on AM.`Husband ID` = AP1.`Person ID` "
+                                "  LEFT JOIN risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
+                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID`")
                                 ;
 
             cQueryFilterchoice = '0';
-            strcpy(caListHeading, "EventID/Event/FirstPerson/SecondPerson/Date/Place/Country");
+            strcpy(caListHeading, "MarriageID/Type/Husband/Wife/Date/Place/Country");
         }
         else if(cQueryFilterchoice == 'U')
         {
-            sprintf(caSQL, "SELECT AE.`Event ID` "
-                                ", AE.`Event Type` "
+            sprintf(caSQL, "SELECT AM.`Marriage ID` "
+                                ", AM.`Marriage Type` "
                                 ", CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`) AS `First Person` "
                                 ", CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`) AS `First Person` "
-                                ", AE.`Event Date` "
-                                ", AE.`Event Place` "
+                                ", AM.`Marriage Date` "
+                                ", AM.`Marriage Place` "
                                 ", AC.`Country Abbreviation` "
-                                ", IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) AS 'Mths Away' "
-                                "  FROM risingfast.`Ancestry Events` AE "
-                                "  LEFT JOIN risingfast.`Ancestry People` AP1 on AE.`Event First Person ID` = AP1.`Person ID` "
-                                "  LEFT JOIN risingfast.`Ancestry People` AP2 on AE.`Event Second Person ID` = AP2.`Person ID` "
-                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AE.`Event Country ID` = AC.`Country ID` "
-                                "  WHERE IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) < 12 "
-                                "  ORDER BY IF(MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AE.`Event Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AE.`Event Date`) - MONTH(CURRENT_DATE())) asc ")
+                                ", IF(MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AM.`Marriage Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE())) AS 'Mths Away' "
+                                "  FROM risingfast.`Ancestry Marriages` AM "
+                                "  LEFT JOIN risingfast.`Ancestry People` AP1 on AM.`Husband ID` = AP1.`Person ID` "
+                                "  LEFT JOIN risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
+                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID` "
+                                "  WHERE IF(MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AM.`Marriage Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE())) < 12 "
+                                "  ORDER BY IF(MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AM.`Marriage Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE())) asc ")
                                 ;
 
             cQueryFilterchoice = '0';
-            strcpy(caListHeading, "EventID/Event/FirstPerson/SecondPerson/Date/Place/Country/MthsAway");
+            strcpy(caListHeading, "MarriageID/Marriage/FirstPerson/SecondPerson/Date/Place/Country/MthsAway");
         }
     
     // execute the query and check for no result
@@ -971,7 +972,8 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
             fPrintPersonProfile(sPrgNme, iPersonID);
             fPrintParents(sPrgNme, iPersonID);
             fPrintSiblings(sPrgNme, iPersonID);
-            fPrintAssociations(sPrgNme, iPersonID);
+            fPrintMarriages(sPrgNme, iPersonID);
+            fPrintDivorces(sPrgNme, iPersonID);
             fPrintChildren(sPrgNme, iPersonID);
             fPressEnterToContinue();
             fRetitleConsole(sPrgNme);
@@ -1526,7 +1528,7 @@ bool fValidatePersonID(int iPersonID)
     return bRetVal;
 }
 
-void fPrintAssociations(char *sPrgNme, int iPersonID)
+void fPrintMarriages(char *sPrgNme, int iPersonID)
 {
     char caSQL[SQL_LEN] = {'\0'};
     int  iRowCount = 0;
@@ -1535,22 +1537,94 @@ void fPrintAssociations(char *sPrgNme, int iPersonID)
     MYSQL_RES *res;
     MYSQL_ROW row;
 
-    printf("Associations: ");
+    printf("Marriages: ");
     printf("\n\n");
 
-    sprintf(caSQL, "select LPAD(AE.`Event ID`, 4, ' ') "
-                        " , CONCAT(AE.`Event Type`, ':') AS 'Event Type' "
-                        " , CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`, ' and') AS `First Person` "
-                        " , CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`) AS `Second Person` "
-                        " , COALESCE(AE.`Event Date`, '') "
-                        " , AE.`Event Place` "
+    sprintf(caSQL, "select LPAD(AM.`Marriage ID`, 4, ' ') "
+                        " , CONCAT(AM.`Marriage Type`, ':') AS 'Marriage Type' "
+                        " , CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`, ' and') AS `Husband` "
+                        " , CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`, COALESCE(CONCAT(' (née ', AP2.`Birth Last Name`, ')'))) AS `Wife` "
+                        " , COALESCE(AM.`Marriage Date`, '') "
+                        " , AM.`Marriage Place` "
                         " , AC.`Country Abbreviation` "
-                    " FROM risingfast.`Ancestry Events` AE "
-                    " left join risingfast.`Ancestry People` AP1 on AE.`Event First Person ID` = AP1.`Person ID` "
-                    " left join risingfast.`Ancestry People` AP2 on AE.`Event Second Person ID` = AP2.`Person ID` "
-                    " LEFT JOIN risingfast.`Ancestry Countries` AC on AE.`Event Country ID` = AC.`Country ID` "
-                    " WHERE AE.`Event First Person ID` = %d OR AE.`Event Second Person ID` = %d "
-                    " AND AE.`Event Type` in ('Marriage', 'Divorce')", iPersonID, iPersonID);
+                    " FROM risingfast.`Ancestry Marriages` AM "
+                    " left join risingfast.`Ancestry People` AP1 on AM.`Husband ID` = AP1.`Person ID` "
+                    " left join risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
+                    " LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID` "
+                    " WHERE AM.`Husband ID` = %d OR AM.`Wife ID` = %d "
+                    " AND AM.`Marriage Type` in ('Marriage', 'Divorce')", iPersonID, iPersonID);
+
+// execute the query and check for no result
+
+    if(mysql_query(conn, caSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        fPressEnterToContinue();
+        return;
+    }
+
+// store the result of the query
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+        mysql_free_result(res);
+        return;
+    }
+
+// print each row of results
+
+    iRowCount = 0;
+    while(row = mysql_fetch_row(res))
+    {
+        if(row[0] != NULL)
+        {
+            printf("%s", row[0]);
+            printf(" %s", row[1]);
+            printf(" %s", row[2]);
+            printf(" %s", row[3]);
+            printf(" %s", row[4]);
+            printf(" %s", row[5]);
+            printf(" %s", row[6]);
+            iRowCount++;
+            printf("\n");
+        }
+    }
+    printf("\n");
+    mysql_free_result(res);
+    return;
+
+}
+
+void fPrintDivorces(char *sPrgNme, int iPersonID)
+{
+    char caSQL[SQL_LEN] = {'\0'};
+    int  iRowCount = 0;
+    int  iColCount = 0;
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    printf("Divorces: ");
+    printf("\n\n");
+
+    sprintf(caSQL, "select LPAD(AM.`Marriage ID`, 4, ' ') "
+                        " , 'Divorce' AS 'Marriage Type' "
+                        " , CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`, ' and') AS `Husband` "
+                        " , CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`, COALESCE(CONCAT(' (née ', AP2.`Birth Last Name`, ')'))) AS `Wife` "
+                        " , COALESCE(AM.`Divorce Date`, '') "
+                        " , AM.`Divorce Place` "
+                        " , AC.`Country Abbreviation` "
+                    " FROM risingfast.`Ancestry Marriages` AM "
+                    " left join risingfast.`Ancestry People` AP1 on AM.`Husband ID` = AP1.`Person ID` "
+                    " left join risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
+                    " LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Divorce Country ID` = AC.`Country ID` "
+                    " WHERE AM.`Husband ID` = %d OR AM.`Wife ID` = %d "
+                    " AND AM.`Divorce date` != NULL", iPersonID, iPersonID);
 
 // execute the query and check for no result
 
