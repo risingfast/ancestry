@@ -35,6 +35,7 @@
     22-Jul-2021 show divorces
     22-Jul-2021 show references on personal profiles
     22-Jul-2021 add known addresses
+    22-Jul-2021 add search on text with wildcards
 #### Enhancements: (0)
     add the children of Martha Whonsbon 94
     add query for half-siblings for Uncle Charlie and Maggie

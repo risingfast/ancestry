@@ -253,6 +253,7 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     bool bEndOfPrintBlock = false;
     bool bExitListMenu = false;
     char caListHeading[HDG_LEN] = {'\0'};
+    char *sSearchText = NULL;
 
     MYSQL_RES *res;
     MYSQL_ROW row;
@@ -260,11 +261,11 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
     if(*pcDisplayOrder == 'A')
     {
             strcpy(caOrder, "ASC");
-        }
-        else if(*pcDisplayOrder == 'D')
-        {
-            strcpy(caOrder, "DESC");
-        }
+    }
+    else if(*pcDisplayOrder == 'D')
+    {
+        strcpy(caOrder, "DESC");
+    }
     
     while(bExitListMenu == false)
     {
@@ -272,9 +273,9 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         printf("\n");
         printf("Main Menu > List People > People names ...");
         printf("\n\n");
-        printf("(A)ll, (M)ales, (F)emales, (L)iving, (D)eceased, (C)ohort, (B)irthdays or E(x)it");
+        printf("(A)ll, (M)ales, (F)emales, (L)iving, (D)eceased, (C)ohort, (B)irthdays, (S)earch or E(x)it");
         printf("\n\n");
-        while(strchr("aAmMfFlLdDcCbBxX", cQueryFilterchoice) == NULL)
+        while(strchr("aAmMfFlLdDcCbBsSxX", cQueryFilterchoice) == NULL)
         {
             printf("Choice: ");
             cQueryFilterchoice = toupper(GetChar());
@@ -402,8 +403,28 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
             cQueryFilterchoice = '0';
             strcpy(caListHeading, "ID/Person/Gender/Status/Age/Birthday/MonthsAway");
         }
-    
-    // execute the query and check for no result
+        else if(cQueryFilterchoice == 'S')
+        {
+            printf("\n");
+            printf("Search Text (First and Last Names '%%' is wild): ");
+            sSearchText = GetString();
+            sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') "
+                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", AP.`Gender` "
+                                ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
+                                ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
+                                "  ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)), '') as 'Age' "
+                                "  FROM risingfast.`Ancestry People` AP"
+                                "  WHERE AP.`Actual`= TRUE"
+                                "  AND CONCAT(AP.`First Name`, AP.`Last Name`) like '%%%s%%'"
+                                "  ORDER BY AP.`Person ID` %s", sSearchText, caOrder)
+                                ;
+            cQueryFilterchoice = '0';
+            strcpy(caListHeading, "ID/Person/Gender/Status/Age");
+        }
+        else if(cQueryFilterchoice == 'F');
+
+// execute the query and check for no result
     
         if(mysql_query(conn, caSQL) != 0)
         {
@@ -468,7 +489,6 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         {
             if(*pcDisplayPageFormat == 'T')
             {
-//                bEndOfPrintBlock = false;
                 for(int i = 0; i < iColCount; i++)
                 {
                     if(i == 0)
@@ -532,8 +552,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         {
             fPressEnterToContinue();
         }
+            
     }
-
     fRetitleConsole(sPrgNme);
     free(iLengths);
     mysql_free_result(res);
@@ -995,7 +1015,6 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
     return;
 }
 
-
 int fGetTableLength(char *sTblNme)
 {
     char caSQL[SQL_LEN] = {'\0'};
@@ -1176,6 +1195,7 @@ void fPrintPersonSearch(char *sPrgNme, int *piDisplayPageLength)
     char caSQL[SQL_LEN] = {'\0'};
     int  iRowCount = 0;
     int  iColCount = 0;
+    char *sSearchText = NULL;
 
     MYSQL_RES *res;
     MYSQL_ROW row;
@@ -1184,12 +1204,19 @@ void fPrintPersonSearch(char *sPrgNme, int *piDisplayPageLength)
     printf("\n");
     printf("Main Menu > Person Profile > Search ...");
     printf("\n\n");
-
-    sprintf(caSQL,"SELECT LPAD(AP.`Person ID`, 4, ' ') "
-                ", REPLACE(CONCAT(COALESCE(AP.`First Name`, ''), ' ', COALESCE(AP.`Middle Names`, ''), ' ',"
-                " COALESCE(AP.`Last Name`, '')), '  ', ' ')"
-                " FROM risingfast.`Ancestry People` AP "
-                " ORDER BY AP.`Person ID` ASC" );
+    printf("Search Text (First and Last Names '%%' is wild): ");
+    sSearchText = GetString();
+    printf("\n");
+    sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') "
+                        ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                        ", AP.`Gender` "
+                        ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
+                        ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
+                        "  ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)), '') as 'Age' "
+                        "  FROM risingfast.`Ancestry People` AP"
+                        "  WHERE AP.`Actual`= TRUE"
+                        "  AND CONCAT(AP.`First Name`, AP.`Last Name`) like '%%%s%%'"
+                        "  ORDER BY AP.`Person ID` ASC", sSearchText);
 
 // execute the query and check for no result
 
