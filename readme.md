@@ -34,8 +34,8 @@
     21-Jul-2021 add middle and maiden names to all people listings
     22-Jul-2021 show divorces
     22-Jul-2021 show references on personal profiles
+    22-Jul-2021 add known addresses
 #### Enhancements: (0)
-    add known addresses
     add the children of Martha Whonsbon 94
     add query for half-siblings for Uncle Charlie and Maggie
     fix the date ordering on the birthday listing to take day into account along with month

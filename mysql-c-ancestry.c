@@ -32,6 +32,7 @@ void fPrintSiblings(char *, int);                                               
 void fPrintChildren(char *, int);                                                          // print a person's children
 void fPrintMarriages(char *, int);                                                        // print a person's marriages
 void fPrintDivorces(char *, int);                                                          // print a person's divorces
+void fPrintAddresses(char *, int);                                                         // print a person's divorces
 void fPrintReferences(char *, int);                                                      // print a person's references
 
 // global declarations
@@ -976,6 +977,7 @@ void fShowPersonProfile(char *sPrgNme, int *piDisplayPageLength, char *pcDisplay
             fPrintMarriages(sPrgNme, iPersonID);
             fPrintDivorces(sPrgNme, iPersonID);
             fPrintChildren(sPrgNme, iPersonID);
+            fPrintAddresses(sPrgNme, iPersonID);
             fPrintReferences(sPrgNme, iPersonID);
             fPressEnterToContinue();
             fRetitleConsole(sPrgNme);
@@ -1731,4 +1733,70 @@ void fPrintReferences(char *sPrgNme, int iPersonID)
     mysql_free_result(res);
     return;
 
+}
+
+void fPrintAddresses(char *sPrgNme, int iPersonID)
+{
+    char caSQL[SQL_LEN] = {'\0'};
+    int  iRowCount = 0;
+    int  iColCount = 0;
+
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    printf("Addresses: ");
+    printf("\n\n");
+
+    sprintf(caSQL, " SELECT LPAD(AA.`Address ID`, 4, ' ') "
+                   ", CONCAT(AA.`Address Line 1`, COALESCE(CONCAT(' ', AA.`Address Line 2`), ' ') "
+                   ", COALESCE(CONCAT(' ', AA.`Address Line 3`), ' ')) AS Street "
+                   ", AA.`Address City` "
+                   ", AA.`Address State` "
+                   ", AC.`Country Abbreviation` "
+                   "  FROM risingfast.`Ancestry Addresses` AA "
+                   "  LEFT JOIN risingfast.`Ancestry Residents` AR on AR.`Address ID` = AA.`Address ID` "
+                   "  LEFT JOIN risingfast.`Ancestry Countries` AC on AA.`Address Country ID` = AC.`Country ID` "
+                   "  WHERE AR.`Person ID` = %d", iPersonID);
+
+// execute the query and check for no result
+
+    if(mysql_query(conn, caSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        fPressEnterToContinue();
+        return;
+    }
+
+// store the result of the query
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+        mysql_free_result(res);
+        return;
+    }
+
+// print each row of results
+
+    iRowCount = 0;
+    while(row = mysql_fetch_row(res))
+    {
+        if(row[0] != NULL)
+        {
+            printf("%s", row[0]);
+            printf(" %s", row[1]);
+            printf(" %s", row[2]);
+            printf(" %s", row[3]);
+            printf(" %s", row[4]);
+            iRowCount++;
+            printf("\n");
+        }
+    }
+    printf("\n");
+    mysql_free_result(res);
+    return;
 }
