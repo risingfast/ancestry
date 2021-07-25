@@ -1112,6 +1112,7 @@ void fPrintPersonProfile(char *sPrgNme, int iPersonID)
 
     sprintf(caSQL, "select AP.`Person ID` as 'ID' "
                         ", AP.`First Name` as 'First' "
+                        ", AP.`Nick Name` as 'Nick' "
                         ", AP.`Middle Names` as 'Middle' "
                         ", AP.`Last Name` as 'Last' "
                         ", AP.`Birth Last Name` as 'Née' "
@@ -1123,6 +1124,7 @@ void fPrintPersonProfile(char *sPrgNme, int iPersonID)
                         ", AP.`Cause of Death` AS 'Cause of Death' "
                         ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
                         "  ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)), '') AS 'Age' "
+                        ", AP.`Grave Site` "
                         ", AP.`Profile` "
                         ", AP.`Education` "
                         " FROM risingfast.`Ancestry People` AP "
@@ -1161,29 +1163,33 @@ void fPrintPersonProfile(char *sPrgNme, int iPersonID)
     printf("\n");
     printf("  First Name:     %s", (row[1] == NULL) ? sSingleSpace : row[1]);
     printf("\n");
-    printf("  Middle Name:    %s", (row[2] == NULL) ? sSingleSpace : row[2]);
+    printf("  Nick Name:      %s", (row[2] == NULL) ? sSingleSpace : row[2]);
     printf("\n");
-    printf("  Last Name:      %s", (row[3] == NULL) ? sSingleSpace : row[3]);
+    printf("  Middle Name:    %s", (row[3] == NULL) ? sSingleSpace : row[3]);
     printf("\n");
-    printf("  Née:            %s", (row[4] == NULL) ? sSingleSpace : row[4]);
+    printf("  Last Name:      %s", (row[4] == NULL) ? sSingleSpace : row[4]);
     printf("\n");
-    printf("  Born on:        %s", (row[5] == NULL) ? sSingleSpace : row[5]);
+    printf("  Née:            %s", (row[5] == NULL) ? sSingleSpace : row[5]);
     printf("\n");
-    printf("  Birth Place:    %s", (row[6] == NULL) ? sSingleSpace : row[6]);
+    printf("  Born On:        %s", (row[6] == NULL) ? sSingleSpace : row[6]);
     printf("\n");
-    printf("  Status:         %s", (row[7] == NULL) ? sSingleSpace : row[7]);
+    printf("  Birth Place:    %s", (row[7] == NULL) ? sSingleSpace : row[7]);
     printf("\n");
-    printf("  Deceased On:    %s", (row[8] == NULL) ? sSingleSpace : row[8]);
+    printf("  Status:         %s", (row[8] == NULL) ? sSingleSpace : row[8]);
     printf("\n");
-    printf("  Deceased At:    %s", (row[9] == NULL) ? sSingleSpace : row[9]);
+    printf("  Deceased On:    %s", (row[9] == NULL) ? sSingleSpace : row[9]);
     printf("\n");
-    printf("  Cause of Death: %s", (row[10] == NULL) ? sSingleSpace : row[10]);
+    printf("  Deceased At:    %s", (row[10] == NULL) ? sSingleSpace : row[10]);
     printf("\n");
-    printf("  Age:            %s", (row[11] == NULL) ? sSingleSpace : row[11]);
+    printf("  Cause of Death: %s", (row[11] == NULL) ? sSingleSpace : row[11]);
     printf("\n");
-    printf("  Profile:        %s", (row[12] == NULL) ? sSingleSpace : row[12]);
+    printf("  Age:            %s", (row[12] == NULL) ? sSingleSpace : row[12]);
     printf("\n");
-    printf("  Education:      %s", (row[13] == NULL) ? sSingleSpace : row[13]);
+    printf("  Gravesite:      %s", (row[13] == NULL) ? sSingleSpace : row[13]);
+    printf("\n");
+    printf("  Profile:        %s", (row[13] == NULL) ? sSingleSpace : row[14]);
+    printf("\n");
+    printf("  Education:      %s", (row[13] == NULL) ? sSingleSpace : row[15]);
     printf("\n\n");
     mysql_free_result(res);
     
@@ -1576,14 +1582,14 @@ void fPrintMarriages(char *sPrgNme, int iPersonID)
                         " , CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`, ' and') AS `Husband` "
                         " , CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`, COALESCE(CONCAT(' (née ', AP2.`Birth Last Name`, ')'))) AS `Wife` "
                         " , COALESCE(AM.`Marriage Date`, '') "
-                        " , AM.`Marriage Place` "
+                        " , COALESCE(AM.`Marriage Place`, '') "
                         " , AC.`Country Abbreviation` "
                     " FROM risingfast.`Ancestry Marriages` AM "
                     " left join risingfast.`Ancestry People` AP1 on AM.`Husband ID` = AP1.`Person ID` "
                     " left join risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
                     " LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID` "
-                    " WHERE AM.`Husband ID` = %d OR AM.`Wife ID` = %d "
-                    " AND AM.`Marriage Type` in ('Marriage', 'Divorce')", iPersonID, iPersonID);
+                    " WHERE (AM.`Husband ID` = %d OR AM.`Wife ID` = %d) "
+                    " AND AM.`Marriage Type` in ('Marriage', 'Cohabitation', 'Liason')", iPersonID, iPersonID);
 
 // execute the query and check for no result
 
@@ -1647,14 +1653,15 @@ void fPrintDivorces(char *sPrgNme, int iPersonID)
                         " , CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`, ' and') AS `Husband` "
                         " , CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`, COALESCE(CONCAT(' (née ', AP2.`Birth Last Name`, ')'))) AS `Wife` "
                         " , COALESCE(AM.`Divorce Date`, '') "
-                        " , AM.`Divorce Place` "
-                        " , AC.`Country Abbreviation` "
+                        " , COALESCE(AM.`Divorce Place`, '') "
+                        " , COALESCE(AC.`Country Abbreviation`, '') "
                     " FROM risingfast.`Ancestry Marriages` AM "
                     " left join risingfast.`Ancestry People` AP1 on AM.`Husband ID` = AP1.`Person ID` "
                     " left join risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
                     " LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Divorce Country ID` = AC.`Country ID` "
-                    " WHERE AM.`Husband ID` = %d OR AM.`Wife ID` = %d "
-                    " AND AM.`Divorce date` != NULL", iPersonID, iPersonID);
+                    " WHERE (AM.`Husband ID` = %d OR AM.`Wife ID` = %d) "
+                    " AND AM.`Divorced` = FALSE "
+                    " AND AM.`Divorce Date` != NULL", iPersonID, iPersonID);
 
 // execute the query and check for no result
 
