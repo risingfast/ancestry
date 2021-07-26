@@ -37,10 +37,11 @@
     22-Jul-2021 add known addresses
     22-Jul-2021 add search on text with wildcards
     23-Jul-2021 fix divorces showing up in error on personal profile
+    24-Jul-2021 add the children of Martha Whonsbon 94
+    26-Jul-2021 add nickname to all name listings and profiles
 #### Enhancements: (0)
-    add nickname to all name listings and profiles
-    fix nickname and Jr/Sr Suffix in table and queryies
-    add the children of Martha Whonsbon 94
+    add Jr/Sr Suffix in table and queryies
+    remove 'Divorce' section from profile and flag the marriage record instead
     add query for half-siblings for Uncle Charlie and Maggie
     fix the date ordering on the birthday listing to take day into account along with month
     send or show reminders of upcoming birthdays and events via email

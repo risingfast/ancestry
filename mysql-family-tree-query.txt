@@ -1,3 +1,94 @@
+-- export all people complete
+
+select AP.`Person ID`
+     , AP.`First Name`
+     , AP.`Nick Name`
+     , AP.`Middle Names`
+     , AP.`Last Name`
+	 , AP.`Gender`
+     , AP.`Birth Last Name` as 'Nee'
+     , AM.`Person ID` as 'Mother ID'
+     , concat(AM.`First Name`, ' ', AM.`Last Name`) as 'Mother'
+     , AF.`Person ID` as 'Father ID'
+     , concat(AF.`First Name`, ' ', AF.`Last Name`) as 'Father'
+     , AP.`Born On`
+     , AP.`Birth Place`
+     , AP.`Birth Country ID`
+     , ACB.`Country Abbreviation` as 'Birth Country'
+     , IF(AP.`Deceased` = 1, 'Yes', 'No') as Deceased
+     , AP.`Deceased On`
+     , AP.`Deceased Place`
+     , AP.`Cause of Death`
+     , AP.`Grave Site`
+     , ACD.`Country Abbreviation` as 'Deceased Country'     
+     , AP.`Comments`
+     , AP.`Education`
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry People` AF on AP.`Father ID` = AF.`Person ID`
+left join risingfast.`Ancestry People` AM on AP.`Mother ID` = AM.`Person ID`
+left join risingfast.`Ancestry Countries` ACB on AP.`Birth Country ID` = ACB.`Country ID`
+left join risingfast.`Ancestry Countries` ACD on AP.`Deceased Country ID` = ACD.`Country ID`
+;
+
+-- export all resident names and addresses
+select AR.`Resident ID`
+,      AR.`Address ID`
+,      AA.`Address Line 1`
+,      AA.`Address City`
+,      AA.`Address State`
+-- ,      AA.`Address Country ID`
+-- ,      AC.`Country Abbreviation`
+,      AR.`Person ID`
+,      AP.`First Name`
+,      AP.`Middle Names`
+,      AP.`Last Name`
+from risingfast.`Ancestry Residents` AR
+left outer join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID`
+left outer join risingfast.`Ancestry Addresses` AA on AR.`Address ID` = AA.`Address ID`
+-- left outer join risingfast.`Ancestry Countries` AC on AA.`Address Country ID ` = AC.`Country ID`
+order by AR.`Address ID` ASC
+;
+
+-- export all marriages
+
+select AM.`Marriage ID`
+,      AM.`Marriage Type`
+,      AM.`Marriage Date`
+,      AM.`Husband ID`
+,      AH.`First Name` as 'Husband First'
+,      AH.`Middle Names` as 'Husband Middle'
+,      AH.`Last Name` as 'Husband Last'
+,      AM.`Wife ID`
+,      AW.`First Name` as 'Wife First'
+,      AW.`Middle Names` as 'Wife Middle'
+,      AW.`Last Name` as 'Wife Last'
+,      AM.`Marriage Place`
+,      AM.`Marriage Country ID`
+,      AM.`Marriage Description`
+,      IF(AM.`Divorced` = 1, 'Yes', 'No') as Divorced
+,      AM.`Divorce Date`
+,      AM.`Divorce Place`
+,      AM.`Divorce Country ID`
+,      AC.`Country Abbreviation`
+from risingfast.`Ancestry Marriages` AM
+left outer join risingfast.`Ancestry People` AW on AM.`Wife ID` = AW.`Person ID`
+left outer join risingfast.`Ancestry People` AH on AM.`Husband ID` = AH.`Person ID`
+left outer join risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID`
+;
+
+-- Export all references
+
+select AR.`Person ID`
+,      AP.`First Name`
+,      AP.`Middle Names`
+,      AP.`Last Name`
+,      AR.`Reference Name`
+,      AR.`Reference Link`
+from risingfast.`Ancestry References` AR
+left outer join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID`
+;
+
+
 SELECT * FROM risingfast.`Ancestry People`;
 
 -- export all people and parents

@@ -111,7 +111,7 @@ int main(int argc, char **argv)
             fRetitleConsole(sPrgNme);
             fShowMainMenu();
             cMainChoice = GetChar();
-            if(strchr("1234567lLeEpPrRnNsSxX", cMainChoice) == NULL)
+            if(strchr("1234567lLmMpPrRnNsSxX", cMainChoice) == NULL)
             {
                 cMainChoice = '0';
                 fRetitleConsole(sPrgNme);
@@ -127,7 +127,7 @@ int main(int argc, char **argv)
             cMainChoice = '0';
             bExitMainMenu = false;
         }
-        else if(strchr("2eE", cMainChoice) != NULL)
+        else if(strchr("2mM", cMainChoice) != NULL)
         {
             printf("\n");
             fListMarriages(sPrgNme, &iDisplayPageLength, &cDisplayPageWidth, &cDisplayPageFormat, &cDisplayOrder);
@@ -187,7 +187,7 @@ void fShowMainMenu(void)                                                        
     printf("\n\n");
     printf("1. (L)ist People");
     printf("\n");
-    printf("2. List (E)vents");
+    printf("2. List (M)arriages");
     printf("\n");
     printf("3. (P)rofile Person");
     printf("\n");
@@ -288,7 +288,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         else if(cQueryFilterchoice == 'A')
         {
             sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') "
-                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                                "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                                 ", AP.`Gender` "
                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
                                 ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
@@ -303,7 +304,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         else if(cQueryFilterchoice == 'M')
         {
             sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') "
-                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                                "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                                 ", AP.`Gender` "
                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
                                 ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
@@ -319,7 +321,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         else if(cQueryFilterchoice == 'F')
         {
             sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') "
-                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                                "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                                 ", AP.`Gender` "
                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
                                 ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
@@ -335,7 +338,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         else if(cQueryFilterchoice == 'L')
         {
             sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') "
-                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                                "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                                 ", AP.`Gender` "
                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
                                 ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
@@ -351,7 +355,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         else if(cQueryFilterchoice == 'D')
         {
             sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') "
-                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                                "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                                 ", AP.`Gender` "
                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
                                 ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
@@ -367,7 +372,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         else if(cQueryFilterchoice == 'C')
         {
             sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') as 'ID' "
-                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                                "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                                 ", AP.`Gender` "
                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
                                 ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
@@ -384,7 +390,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
         else if(cQueryFilterchoice == 'B')
         {
             sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') as 'ID' "
-                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                                "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                                 ", AP.`Gender` "
                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
                                 ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 0), "
@@ -409,7 +416,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
             printf("Search Text (First and Last Names '%%' is wild): ");
             sSearchText = GetString();
             sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') "
-                                ", CONCAT(AP.`First Name`, ' ', AP.`Last Name`) AS `Person` "
+                                ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                                "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                                 ", AP.`Gender` "
                                 ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status'"
                                 ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
@@ -785,7 +793,8 @@ void fListMarriages(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPage
                                 "  FROM risingfast.`Ancestry Marriages` AM "
                                 "  LEFT JOIN risingfast.`Ancestry People` AP1 on AM.`Husband ID` = AP1.`Person ID` "
                                 "  LEFT JOIN risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
-                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID`")
+                                "  LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID`"
+                                "  WHERE AM.`Marriage Type` = 'Marriage' ")
                                 ;
 
             cQueryFilterchoice = '0';
@@ -806,6 +815,7 @@ void fListMarriages(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPage
                                 "  LEFT JOIN risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
                                 "  LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID` "
                                 "  WHERE IF(MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AM.`Marriage Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE())) < 12 "
+                                "  AND AM.`Marriage Type` = 'Marriage' "
                                 "  ORDER BY IF(MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE()) < 0, MONTH(AM.`Marriage Date`) + 12 - MONTH(CURRENT_DATE()) , MONTH(AM.`Marriage Date`) - MONTH(CURRENT_DATE())) asc ")
                                 ;
 
@@ -1125,7 +1135,7 @@ void fPrintPersonProfile(char *sPrgNme, int iPersonID)
                         ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1), "
                         "  ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)), '') AS 'Age' "
                         ", AP.`Grave Site` "
-                        ", AP.`Profile` "
+                        ", AP.`Comments` "
                         ", AP.`Education` "
                         " FROM risingfast.`Ancestry People` AP "
                         " WHERE AP.`Actual`= TRUE"
@@ -1187,9 +1197,9 @@ void fPrintPersonProfile(char *sPrgNme, int iPersonID)
     printf("\n");
     printf("  Gravesite:      %s", (row[13] == NULL) ? sSingleSpace : row[13]);
     printf("\n");
-    printf("  Profile:        %s", (row[13] == NULL) ? sSingleSpace : row[14]);
+    printf("  Comments:       %s", (row[14] == NULL) ? sSingleSpace : row[14]);
     printf("\n");
-    printf("  Education:      %s", (row[13] == NULL) ? sSingleSpace : row[15]);
+    printf("  Education:      %s", (row[15] == NULL) ? sSingleSpace : row[15]);
     printf("\n\n");
     mysql_free_result(res);
     
@@ -1280,9 +1290,8 @@ void fPrintParents(char *sPrgNme, int iPersonID)
 
     sprintf(caSQL, "SELECT LPAD(AM.`Person ID`, 4, ' ') AS 'Parent ID' "
                       " , 'Mother:' as 'Relation' "
-                      " , AM.`First Name` AS 'First' "
-                      " , COALESCE(AM.`Middle Names`, '') AS 'Middle' "
-                      " , CONCAT(AM.`Last Name`, ' (née ', AM.`Birth Last Name`, ')') AS 'Last' "
+                      ", REPLACE(REPLACE(CONCAT(AM.`First Name`, COALESCE(CONCAT(' ''', AM.`Nick Name`, ''' '), ' '), "
+                      "  COALESCE(AM.`Middle Names`, ''),' ', AM.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                       " , IF(AM.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
                       " , COALESCE(IF(AM.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AM.`Born On`)/365, 1), "
                       "   ROUND(DATEDIFF(AM.`Deceased On`, AM.`Born On`)/365, 1)), '') as 'Age' "
@@ -1293,9 +1302,8 @@ void fPrintParents(char *sPrgNme, int iPersonID)
                    "UNION DISTINCT "
                    "SELECT LPAD(AF.`Person ID`, 4, ' ') AS 'Parent ID' "
                       ", 'Father:' AS 'Relation' "
-                      ", AF.`First Name` AS 'First' "
-                      ", COALESCE(AF.`Middle Names`, '') AS 'Middle' "
-                      ", AF.`Last Name` AS 'Last' "
+                      ", REPLACE(REPLACE(CONCAT(AF.`First Name`, COALESCE(CONCAT(' ''', AF.`Nick Name`, ''' '), ' '), "
+                      "  COALESCE(AF.`Middle Names`, ''),' ', AF.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                       ", IF(AF.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
                       ", COALESCE(IF(AF.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AF.`Born On`)/365, 1), "
                       "  ROUND(DATEDIFF(AF.`Deceased On`, AF.`Born On`)/365, 1)), '') AS 'Age' "
@@ -1339,8 +1347,6 @@ void fPrintParents(char *sPrgNme, int iPersonID)
             printf(" %s", row[2]);
             printf(" %s", row[3]);
             printf(" %s", row[4]);
-            printf(" %s", row[5]);
-            printf(" %s", row[6]);
             iRowCount++;
             printf("\n");
         }
@@ -1363,10 +1369,9 @@ void fPrintSiblings(char *sPrgNme, int iPersonID )
     printf("\n\n");
 
     sprintf(caSQL, "SELECT LPAD(AC.`Person ID`, 4, ' ') AS 'Sibling ID' "
-                       ", 'Sibling:' AS 'Relation' "
-                       " , AC.`First Name` AS 'First' "
-                       " , AC.`Middle Names` AS 'Middle' "
-                       " , IF(AC.`Gender` = 'Female', (CONCAT(AC.`Last Name`, ' (née ', AC.`Birth Last Name`, ')')), AC.`Last Name`) AS 'Last' "
+                       ", IF(AC.`Gender` = 'Male', 'Brother:', 'Sister: ') "
+                       ", REPLACE(REPLACE(CONCAT(AC.`First Name`, COALESCE(CONCAT(' ''', AC.`Nick Name`, ''' '), ' '), "
+                       "  COALESCE(AC.`Middle Names`, ''),' ', AC.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                        " , IF(AC.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
                        " , COALESCE(IF(AC.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AC.`Born On`)/365, 1), "
                        "   ROUND(DATEDIFF(AC.`Deceased On`, AC.`Born On`)/365, 1)), '') as 'Age' "
@@ -1415,8 +1420,6 @@ void fPrintSiblings(char *sPrgNme, int iPersonID )
             printf(" %s", row[2]);
             printf(" %s", row[3]);
             printf(" %s", row[4]);
-            printf(" %s", row[5]);
-            printf(" %s", row[6]);
         }
         iRowCount++;
         printf("\n");
@@ -1439,10 +1442,9 @@ void fPrintChildren(char *sprgNme, int iPersonID)
     printf("\n\n");
 
     sprintf(caSQL, "SELECT LPAD(AC.`Person ID`, 4, ' ') AS AP"
-                      " , 'Child:' AS 'Relation' "
-                      " , AC.`First Name` AS 'First' "
-                      " , COALESCE(AC.`Middle Names`, '') AS 'Middle' "
-                      " , IF(AC.`Gender` = 'Female', (CONCAT(AC.`Last Name`, ' (née ', AC.`Birth Last Name`, ')')), AC.`Last Name`) AS 'Last' "
+                      ", IF(AC.`Gender` = 'Male', 'Son: ', 'Daug:') "
+                      ", REPLACE(REPLACE(CONCAT(AC.`First Name`, COALESCE(CONCAT(' ''', AC.`Nick Name`, ''' '), ' '), "
+                      "  COALESCE(AC.`Middle Names`, ''),' ', AC.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                       ",  IF(AC.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
                       ",  COALESCE(IF(AC.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AC.`Born On`)/365, 1), "
                       "   ROUND(DATEDIFF(AC.`Deceased On`, AC.`Born On`)/365, 1)), '') AS 'Age' "
@@ -1452,10 +1454,9 @@ void fPrintChildren(char *sprgNme, int iPersonID)
                    " AND AC.`Actual` = TRUE "
                    " UNION ALL "
                    "SELECT LPAD(AC.`Person ID`, 4, ' ') AS AP"
-                      " , 'Child:' AS 'Relation' "
-                      " , AC.`First Name` AS 'First' "
-                      " , COALESCE(AC.`Middle Names`, '') AS 'Middle' "
-                      " , IF(AC.`Gender` = 'Female', (CONCAT(AC.`Last Name`, ' (née ', AC.`Birth Last Name`, ')')), AC.`Last Name`) AS 'Last' "
+                      ", IF(AC.`Gender` = 'Male', 'Son: ', 'Daug:') "
+                      ", REPLACE(REPLACE(CONCAT(AC.`First Name`, COALESCE(CONCAT(' ''', AC.`Nick Name`, ''' '), ' '), "
+                      "  COALESCE(AC.`Middle Names`, ''),' ', AC.`Last Name`), '  ', ' '), '''''', '') AS `Person` "
                       ",  IF(AC.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
                       ",  COALESCE(IF(AC.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AC.`Born On`)/365, 1), "
                       "   ROUND(DATEDIFF(AC.`Deceased On`, AC.`Born On`)/365, 1)), '') AS 'Age' "
@@ -1498,8 +1499,8 @@ void fPrintChildren(char *sprgNme, int iPersonID)
             printf(" %s", row[2]);
             printf(" %s", row[3]);
             printf(" %s", row[4]);
-            printf(" %s", row[5]);
-            printf(" %s", row[6]);
+//            printf(" %s", row[5]);
+//            printf(" %s", row[6]);
             iRowCount++;
             printf("\n");
         }
@@ -1578,9 +1579,10 @@ void fPrintMarriages(char *sPrgNme, int iPersonID)
     printf("\n\n");
 
     sprintf(caSQL, "select LPAD(AM.`Marriage ID`, 4, ' ') "
-                        " , CONCAT(AM.`Marriage Type`, ':') AS 'Marriage Type' "
-                        " , CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`, ' and') AS `Husband` "
-                        " , CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`, COALESCE(CONCAT(' (née ', AP2.`Birth Last Name`, ')'))) AS `Wife` "
+                        ", REPLACE(REPLACE(CONCAT(AP1.`First Name`, COALESCE(CONCAT(' ''', AP1.`Nick Name`, ''' '), ' '), "
+                        "  COALESCE(AP1.`Middle Names`, ''),' ', AP1.`Last Name`), '  ', ' '), '''''', '') AS `Husband` "
+                        ", REPLACE(REPLACE(CONCAT(AP2.`First Name`, COALESCE(CONCAT(' ''', AP2.`Nick Name`, ''' '), ' '), "
+                        "  COALESCE(AP2.`Middle Names`, ''),' ', AP2.`Last Name`), '  ', ' '), '''''', '') AS `Wife` "
                         " , COALESCE(AM.`Marriage Date`, '') "
                         " , COALESCE(AM.`Marriage Place`, '') "
                         " , AC.`Country Abbreviation` "
@@ -1622,6 +1624,7 @@ void fPrintMarriages(char *sPrgNme, int iPersonID)
         {
             printf("%s", row[0]);
             printf(" %s", row[1]);
+            printf(" %s", "and");
             printf(" %s", row[2]);
             printf(" %s", row[3]);
             printf(" %s", row[4]);
