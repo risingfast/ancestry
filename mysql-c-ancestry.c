@@ -207,14 +207,12 @@ void fShowMainMenu(void)                                                        
 void fGetPwdFromConsole(void)
 {
     char *sEnteredPwd = NULL;;
-    char *sTempPwd = "Mpa4egu$";                                                         // Temporary disabled password
 
     printf("\n");
     do
     {
         printf("Password to connect to mysqlDB (or E(x)it): ");
-//        sEnteredPwd = GetString();                                                     // Temporary disabled password
-        sEnteredPwd = sTempPwd;                                                          // Temporary disabled password
+        sEnteredPwd = GetString(); 
         if((strlen(sEnteredPwd) == 1) && (strchr("xX", sEnteredPwd[0]) != NULL))
         {
             strcpy(sgPassword, "BadSoExit");
@@ -404,8 +402,8 @@ void fListPeople(char *sPrgNme, int *piDisplayPageLength, char *pcDisplayPageWid
                                 "  - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) < 12 "
                                 "  AND AP.`Deceased` = 0 "
                                 "  AND AP.`Actual`= TRUE"
-                                "  ORDER BY IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 "
-                                "  - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) asc ")
+                                "  order by IF(MONTH(`Born On`) - MONTH(CURRENT_DATE()) < 0, concat('01', lpad(MONTH(`Born On`), 2, '0'), "
+                                "  lpad(DAY(`Born On`), 2, '0')), concat('00',lpad(MONTH(`Born On`), 2, '0'), lpad(DAY(`Born On`), 2, '0'))) ASC")
                                 ;
             cQueryFilterchoice = '0';
             strcpy(caListHeading, "ID/Person/Gender/Status/Age/Birthday/MonthsAway");

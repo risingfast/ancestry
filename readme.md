@@ -42,8 +42,8 @@
     27-Jul-2021 add Jr/Sr Suffix in table and queryies
     28-Jul-2021 fix née on marriages in personal profile
     28-Jul-2021 fix the 'Divorce' section
+    28-Jul-2021 add query for half-siblings for Uncle Charlie and Maggie
+    28-Jul-2021 fix the date ordering on the birthday listing to take day into account along with month
+    28-Jul-2021 remove the temporarily disabled password
 #### Enhancements: (0)
-    add query for half-siblings for Uncle Charlie and Maggie
-    fix the date ordering on the birthday listing to take day into account along with month
     send or show reminders of upcoming birthdays and events via email
-    remove the temporarily disabled password
