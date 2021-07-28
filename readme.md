@@ -40,8 +40,9 @@
     24-Jul-2021 add the children of Martha Whonsbon 94
     26-Jul-2021 add nickname to all name listings and profiles
     27-Jul-2021 add Jr/Sr Suffix in table and queryies
+    28-Jul-2021 fix née on marriages in personal profile
+    28-Jul-2021 fix the 'Divorce' section
 #### Enhancements: (0)
-    remove 'Divorce' section from profile and flag the marriage record instead
     add query for half-siblings for Uncle Charlie and Maggie
     fix the date ordering on the birthday listing to take day into account along with month
     send or show reminders of upcoming birthdays and events via email

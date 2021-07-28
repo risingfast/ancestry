@@ -1582,10 +1582,13 @@ void fPrintMarriages(char *sPrgNme, int iPersonID)
     printf("\n\n");
 
     sprintf(caSQL, "select LPAD(AM.`Marriage ID`, 4, ' ') "
+                        " , AP1.`Person ID` "
                         ", REPLACE(REPLACE(CONCAT(AP1.`First Name`, COALESCE(CONCAT(' ''', AP1.`Nick Name`, ''' '), ' '), "
                         "  COALESCE(AP1.`Middle Names`, ''),' ', AP1.`Last Name`, ' ',COALESCE(AP1.`Suffix`, '')), '  ', ' '), '''''', '') AS `Husband` "
-                        ", REPLACE(REPLACE(CONCAT(AP2.`First Name`, COALESCE(CONCAT(' ''', AP2.`Nick Name`, ''' '), ' '), "
-                        "  COALESCE(AP2.`Middle Names`, ''),' ', AP2.`Last Name`, ' ',COALESCE(AP2.`Suffix`, '')), '  ', ' '), '''''', '') AS `Wife` "
+                        " , AP2.`Person ID` "
+                        " , REPLACE(REPLACE(CONCAT(AP2.`First Name`, COALESCE(CONCAT(' ''', AP2.`Nick Name`, ''' '), ' '),  "
+                        " COALESCE(AP2.`Middle Names`, ''),' ', AP2.`Last Name`, ' ',COALESCE(AP2.`Suffix`, ''), "
+                        " COALESCE(CONCAT('(née ', AP2.`Birth Last Name`, ')'), '')), '  ', ' '), '''''', '') AS `Wife` "
                         " , COALESCE(AM.`Marriage Date`, '') "
                         " , COALESCE(AM.`Marriage Place`, '') "
                         " , AC.`Country Abbreviation` "
@@ -1633,6 +1636,7 @@ void fPrintMarriages(char *sPrgNme, int iPersonID)
             printf(" %s", row[4]);
             printf(" %s", row[5]);
             printf(" %s", row[6]);
+            printf(" %s", row[7]);
             iRowCount++;
             printf("\n");
         }
@@ -1655,19 +1659,23 @@ void fPrintDivorces(char *sPrgNme, int iPersonID)
     printf("\n\n");
 
     sprintf(caSQL, "select LPAD(AM.`Marriage ID`, 4, ' ') "
-                        " , 'Divorce' AS 'Marriage Type' "
-                        " , CONCAT(AP1.`First Name`, ' ', AP1.`Last Name`, ' and') AS `Husband` "
-                        " , CONCAT(AP2.`First Name`, ' ', AP2.`Last Name`, COALESCE(CONCAT(' (née ', AP2.`Birth Last Name`, ')'))) AS `Wife` "
+                        " , AP1.`Person ID` "
+                        ", REPLACE(REPLACE(CONCAT(AP1.`First Name`, COALESCE(CONCAT(' ''', AP1.`Nick Name`, ''' '), ' '), "
+                        "  COALESCE(AP1.`Middle Names`, ''),' ', AP1.`Last Name`, ' ',COALESCE(AP1.`Suffix`, '')), '  ', ' '), '''''', '') AS `Husband` "
+                        " , AP2.`Person ID` "
+                        " , REPLACE(REPLACE(CONCAT(AP2.`First Name`, COALESCE(CONCAT(' ''', AP2.`Nick Name`, ''' '), ' '),  "
+                        " COALESCE(AP2.`Middle Names`, ''),' ', AP2.`Last Name`, ' ',COALESCE(AP2.`Suffix`, ''), "
+                        " COALESCE(CONCAT('(née ', AP2.`Birth Last Name`, ')'), '')), '  ', ' '), '''''', '') AS `Wife` "
                         " , COALESCE(AM.`Divorce Date`, '') "
                         " , COALESCE(AM.`Divorce Place`, '') "
-                        " , COALESCE(AC.`Country Abbreviation`, '') "
+                        " , AC.`Country Abbreviation` "
                     " FROM risingfast.`Ancestry Marriages` AM "
                     " left join risingfast.`Ancestry People` AP1 on AM.`Husband ID` = AP1.`Person ID` "
                     " left join risingfast.`Ancestry People` AP2 on AM.`Wife ID` = AP2.`Person ID` "
                     " LEFT JOIN risingfast.`Ancestry Countries` AC on AM.`Divorce Country ID` = AC.`Country ID` "
                     " WHERE (AM.`Husband ID` = %d OR AM.`Wife ID` = %d) "
-                    " AND AM.`Divorced` = FALSE "
-                    " AND AM.`Divorce Date` != NULL", iPersonID, iPersonID);
+                    " AND AM.`Marriage Type` in ('Marriage') "
+                    " AND AM.`Divorced` = TRUE ", iPersonID, iPersonID);
 
 // execute the query and check for no result
 
@@ -1705,6 +1713,8 @@ void fPrintDivorces(char *sPrgNme, int iPersonID)
             printf(" %s", row[4]);
             printf(" %s", row[5]);
             printf(" %s", row[6]);
+            printf(" %s", row[7]);
+            printf(" %s", row[8]);
             iRowCount++;
             printf("\n");
         }
