@@ -1291,8 +1291,9 @@ void fPrintParents(char *sPrgNme, int iPersonID)
 
     sprintf(caSQL, "SELECT LPAD(AM.`Person ID`, 4, ' ') AS 'Parent ID' "
                       " , 'Mother:' as 'Relation' "
-                      ", REPLACE(REPLACE(CONCAT(AM.`First Name`, COALESCE(CONCAT(' ''', AM.`Nick Name`, ''' '), ' '), "
-                      "  COALESCE(AM.`Middle Names`, ''),' ', AM.`Last Name`, ' ',COALESCE(AM.`Suffix`, '')), '  ', ' '), '''''', '') AS `Person` "
+
+                      " , REPLACE(REPLACE(CONCAT(AM.`First Name`, COALESCE(CONCAT(' ''', AM.`Nick Name`, ''' '), ' '), COALESCE(AM.`Middle Names`, ''),' ', "
+                      " AM.`Last Name`, ' ',COALESCE(AM.`Suffix`, ''), COALESCE(CONCAT('(née ', AM.`Birth Last Name`, ')'))), '  ', ' '), '''''', '') AS `Person` "
                       " , IF(AM.`Deceased` = 1, 'Deceased', 'Living') as 'Status' "
                       " , COALESCE(IF(AM.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AM.`Born On`)/365, 1), "
                       "   ROUND(DATEDIFF(AM.`Deceased On`, AM.`Born On`)/365, 1)), '') as 'Age' "
