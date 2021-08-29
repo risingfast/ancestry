@@ -4,11 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "cs50.h"
-#include "rf50.h"
+#include "../shared/cs50.h"
+#include "../shared/rf50.h"
 #include <ctype.h>
 #include <stdbool.h>
-#include <string.h>
 
 #define SQL_LEN 5000
 #define HDG_LEN 1000
@@ -1629,8 +1628,8 @@ void fPrintMarriages(char *sPrgNme, int iPersonID)
         {
             printf("%s", row[0]);
             printf(" %s", row[1]);
-            printf(" %s", "and");
             printf(" %s", row[2]);
+            printf(" %s", "and");
             printf(" %s", row[3]);
             printf(" %s", row[4]);
             printf(" %s", row[5]);

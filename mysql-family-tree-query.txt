@@ -30,25 +30,6 @@ left join risingfast.`Ancestry Countries` ACB on AP.`Birth Country ID` = ACB.`Co
 left join risingfast.`Ancestry Countries` ACD on AP.`Deceased Country ID` = ACD.`Country ID`
 ;
 
--- export all resident names and addresses
-select AR.`Resident ID`
-,      AR.`Address ID`
-,      AA.`Address Line 1`
-,      AA.`Address City`
-,      AA.`Address State`
--- ,      AA.`Address Country ID`
--- ,      AC.`Country Abbreviation`
-,      AR.`Person ID`
-,      AP.`First Name`
-,      AP.`Middle Names`
-,      AP.`Last Name`
-from risingfast.`Ancestry Residents` AR
-left outer join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID`
-left outer join risingfast.`Ancestry Addresses` AA on AR.`Address ID` = AA.`Address ID`
--- left outer join risingfast.`Ancestry Countries` AC on AA.`Address Country ID ` = AC.`Country ID`
-order by AR.`Address ID` ASC
-;
-
 -- export all marriages
 
 select AM.`Marriage ID`
@@ -76,9 +57,30 @@ left outer join risingfast.`Ancestry People` AH on AM.`Husband ID` = AH.`Person 
 left outer join risingfast.`Ancestry Countries` AC on AM.`Marriage Country ID` = AC.`Country ID`
 ;
 
+-- export all resident names and addresses
+
+select AR.`Resident ID`
+,      AR.`Address ID`
+,      AA.`Address Line 1`
+,      AA.`Address City`
+,      AA.`Address State`
+-- ,      AA.`Address Country ID`
+-- ,      AC.`Country Abbreviation`
+,      AR.`Person ID`
+,      AP.`First Name`
+,      AP.`Middle Names`
+,      AP.`Last Name`
+from risingfast.`Ancestry Residents` AR
+left outer join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID`
+left outer join risingfast.`Ancestry Addresses` AA on AR.`Address ID` = AA.`Address ID`
+-- left outer join risingfast.`Ancestry Countries` AC on AA.`Address Country ID ` = AC.`Country ID`
+order by AR.`Address ID` ASC
+;
+
 -- Export all references
 
-select AR.`Person ID`
+select AR.`Reference ID`
+,      AR.`Person ID`
 ,      AP.`First Name`
 ,      AP.`Middle Names`
 ,      AP.`Last Name`
@@ -87,6 +89,18 @@ select AR.`Person ID`
 from risingfast.`Ancestry References` AR
 left outer join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID`
 ;
+
+-- list everyone who does not have a picture in their references
+
+select  AP.`Person ID`
+	 , AP.`First Name`
+     , AP.`Middle Names`
+     , AP.`Last Name`
+     , AP.`Suffix`
+     , AP.`Born On`
+from `Ancestry People` AP
+where AP.`Person ID` not in (select AR.`Person ID` from `Ancestry References` AR where `Reference Type` = 'Picture')
+order by AP.`Born On` DESC;
 
 
 SELECT * FROM risingfast.`Ancestry People`;
