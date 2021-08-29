@@ -45,5 +45,6 @@
     28-Jul-2021 add query for half-siblings for Uncle Charlie and Maggie
     28-Jul-2021 fix the date ordering on the birthday listing to take day into account along with month
     28-Jul-2021 remove the temporarily disabled password
+    28-Aug-2021 create web application for ancestry at www.risingfast.com
 #### Enhancements: (0)
     send or show reminders of upcoming birthdays and events via email
