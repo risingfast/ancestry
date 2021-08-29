@@ -48,3 +48,4 @@
     28-Aug-2021 create web application for ancestry at www.risingfast.com
 #### Enhancements: (0)
     send or show reminders of upcoming birthdays and events via email
+    synchronize the tree with the parent links in the datbase
