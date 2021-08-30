@@ -47,6 +47,7 @@
     28-Jul-2021 remove the temporarily disabled password
     28-Aug-2021 create web application for ancestry at www.risingfast.com
     29-Aug-2021 make clean and rebuild
+    30-Aut-2021 test new projects home updating GitHub
 #### Enhancements: (0)
     send or show reminders of upcoming birthdays and events via email
     synchronize the tree with the parent links in the datbase
