@@ -14,7 +14,6 @@
 //    19-Aug-2021 add PersonID division to reset button action
 //    23-Aug-2021 clear references region when choosing a new action
 //    26-Aug-2021 minor changes and fixes to verbiage in messages
-//    09-Sep-2021 add function to support button to reveal background image
 // Enhancements:
 //
 
@@ -495,10 +494,10 @@ function showInternals() {
     } else {
          y.style.display = "none";
     }
-    document.getElementById("message").value="See internal information below the Internals button. Click Internals again to hide it";
+    document.getElementById("Message").value="See internal information below the Internals button. Click Internals again to hide it"
 }
 
-// function to show help information ----------------------------------------------------------------------------------
+// function to show help information --------i-------------------------------------------------------------------------
 
 function showHelp() {
     var x = document.getElementById("helpDiv");
@@ -507,33 +506,7 @@ function showHelp() {
     } else {
         x.style.display = "none";
     }
-    document.getElementById("message").value="See Help information below the Help button. Click Help again to hide it";
-}
-
-// function to show background image ----------------------------------------------------------------------------------
-
-function showBckgrnd() {
-    var r = document.getElementById("Div1");
-    var s = document.getElementById("filterpara");
-    var t = document.getElementById("results");
-    var u = document.getElementById("Div2");
-    var v = document.getElementById("Div3");
-    if (r.style.display === "none") {
-        r.style.display = "block";
-        s.style.display = "block";
-        t.rows="30";
-        t.style.width = "80%";
-        u.style.display = "block";
-        v.style.display = "block";
-    } else {
-        r.style.display = "none";
-        s.style.display = "none";
-        t.rows="41";
-        t.style.width = ".1%";
-        u.style.display = "none";
-        v.style.display = "none";
-    }
-    document.getElementById("message").value="Background image selected. Click Background again to hide it";
+    document.getElementById("Message").value="See Help information below the Help button. Click Help again to hide it"
 }
 
 // fetch the initial display attribute for the internals division -----------------------------------------------------

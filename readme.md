@@ -49,6 +49,7 @@
     29-Aug-2021 make clean and rebuild
     30-Aug-2021 test new projects home updating GitHub
     09-Sep-2021 add background picture
+    09-Sep-2021 add backgound button to reveal background images
 #### Enhancements: (0)
     send or show reminders of upcoming birthdays and events via email
     synchronize the tree with the parent links in the datbase

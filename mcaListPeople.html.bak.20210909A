@@ -10,7 +10,6 @@
 <!--     02-Sep-2021 move inline styles to stylesheet                                                               -->
 <!--     06-Sep-2021 add positioning                                                                                -->
 <!--     07-Sep-2021 alter vertical sizing to better fit 1280x720 HD                                                -->
-<!--     09-Sep-2021 add button to reveal background image                                                          -->
 <!-- Enhancements:                                                                                                  -->
 
 <!DOCTYPE html>
@@ -69,13 +68,13 @@
 <!-- main document content .................................................................... -->
 
     <MAIN>
-    <DIV STYLE="background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('multifacesC.png');position:relative;margin:auto;text-align:center;max-width:1440px;background-size:cover">
+    <DIV STYLE="background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('multifaces.png');position:relative;margin:auto;text-align:center;max-width:1440px;background-size:cover">
 
         <DIV STYLE="position:relative;margin:auto;text-align:center;padding:5px;max-width:1440px;background-color">
             <H3 STYLE="margin:30px 0px 30px 0px" >Ancestry</H3>
         </DIV>
 
-        <DIV ID="Div1" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:center;background-color">
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:center;background-color">
             <LABEL STYLE="width:80px;">Choose:</LABEL>
             <FIELDSET DATA-ROLE="controlgroup" DATA-TYPE="horizontal" STYLE="width:78%;background-color:#E5E4E2;border-color:#E5E4E2;border-width:thin">
                 <LEGEND>Action</LEGEND>
@@ -108,34 +107,31 @@
 
         <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
             <LABEL FOR="results" STYLE="width:80px">Results:</LABEL>
-            <TEXTAREA ID="results" NAME="results" ROWS="30" WRAP="off" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
+            <TEXTAREA ID="results" NAME="results" ROWS="30" COLUMNS="80" WRAP="off" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
         </DIV>
 
 <!-- reference links output area .................................................................................. -->
 
-        <DIV ID=Div2>
-            <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
-                References:
-            </DIV>
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
+            References:
+        </DIV>
         
-            <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
-                <P ID="profreflinks" STYLE="margin-left:80px;padding:0px">
-                </P>
-            </DIV>
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
+            <P ID="profreflinks" STYLE="margin-left:80px;padding:0px">
+            </P>
         </DIV>
 
 <!-- message box .................................................................................................. -->
 
-        <DIV ID="Div3" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
             <LABEL FOR="message" STYLE="width:80px">Message:</LABEL>
             <INPUT TYPE="text" ID="message" NAME="message" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"><BR>
         </DIV>
 
-<!-- buttons to show reset and background and help ................................................................ -->
+<!-- buttons to show reset and help ............................................................................... -->
 
          <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
-            <BUTTON onclick="reset()" ID="reset" STYLE="margin: 0px 10px 0px 80px">Reset</BUTTON>
-            <BUTTON onclick="showBckgrnd()" ID="showBkgrnd" STYLE="margin: 0px 20px 0px 10px">Background</BUTTON>
+            <BUTTON onclick="reset()" ID="reset" STYLE="margin: 0px 20px 0px 80px">Reset</BUTTON>
             <BUTTON onclick="showHelp()">Help</BUTTON>
         </DIV>
 
