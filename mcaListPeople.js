@@ -314,7 +314,7 @@ function getAction() {
         document.getElementById("filter").value = "";
         document.getElementById("personID").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterdiv").hidden = false;
+        document.getElementById("filterpara").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("profiles").checked === true) {
@@ -338,7 +338,7 @@ function getAction() {
         document.getElementById("filter").value = "";
         document.getElementById("personID").value = "";
         document.getElementById("personIDdiv").hidden = false; 
-        document.getElementById("filterdiv").hidden = true; 
+        document.getElementById("filterpara").hidden = true; 
         document.getElementById("profreflinks").innerHTML="";
     } 
     if (document.getElementById("marriages").checked === true) {
@@ -361,7 +361,7 @@ function getAction() {
         document.getElementById("filter").value = "";
         document.getElementById("personID").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterdiv").hidden = false;
+        document.getElementById("filterpara").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("residents").checked === true) {
@@ -384,7 +384,7 @@ function getAction() {
         document.getElementById("filter").value = "";
         document.getElementById("personID").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterdiv").hidden = false;
+        document.getElementById("filterpara").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("references").checked === true) {
@@ -407,7 +407,7 @@ function getAction() {
         document.getElementById("filter").value = "";
         document.getElementById("personID").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterdiv").hidden = false;
+        document.getElementById("filterpara").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("cohorts").checked === true) {
@@ -430,7 +430,7 @@ function getAction() {
         document.getElementById("filter").value = "";
         document.getElementById("personID").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterdiv").hidden = false;
+        document.getElementById("filterpara").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("birthdays").checked === true) {
@@ -453,7 +453,7 @@ function getAction() {
         document.getElementById("filter").value = "";
         document.getElementById("personID").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterdiv").hidden = false;
+        document.getElementById("filterpara").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
 }

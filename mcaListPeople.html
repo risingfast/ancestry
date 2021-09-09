@@ -7,6 +7,9 @@
 <!--     19-Aug-2021 add a separate region for reference links                                                      -->
 <!--     25-Aug-2021 add a dowload link for the family tree spreasheet                                              -->
 <!--     26-Aug-2021 change and clean up messages and internals                                                     -->
+<!--     02-Sep-2021 move inline styles to stylesheet                                                               -->
+<!--     06-Sep-2021 add positioning                                                                                -->
+<!--     07-Sep-2021 alter vertical sizing to better fit 1280x720 HD                                                -->
 <!-- Enhancements:                                                                                                  -->
 
 <!DOCTYPE html>
@@ -25,27 +28,39 @@
     <META name="generator" content="vim">
     <META name="author" content="risingfast">
     <META name="viewport" content= "width=device-width, initial-scale=1.0">
+    <STYLE>
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        a:active {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </STYLE>
+
 </HEAD>
 
 <!-- main page header ............................................................................................. -->
 
-<BODY>
+<BODY STYLE="font-family: helvetica; min-width: 600px">
 
 <!-- page heading and horizontal navigation links ................................................................. -->
 
     <HEADER>
         <DIV class="header">
-            <H3>www.risingfast.com</H3>
+            <H3 STYLE="font-size:150%" >www.risingfast.com</H3>
         </DIV>
     </HEADER>
     <NAV>
-        <DIV class="outerTopNav">
-            <DIV class="topnav">
-                <A class="active" HREF="http://www.risingfast.com">Home</A>
-                <A HREF="http://www.risingfast.com/d_ajaxFetch.html">Latest</A>
-                <A HREF="http://www.risingfast.com/d_template.html">Template</A>
-                <A HREF="http://www.risingfast.com/email.html">Email</A>
-                <A HREF="http://www.risingfast.com/about.html">About</A>
+        <DIV STYLE="width:100%;height:20px; background-color:palegreen">
+            <DIV STYLE="position:fixed; left:0px; top:47px;width:100%; height:20px; overflow:hidden; margin:auto; text-align:center; background-color:palegreen; padding: 10px 0px 10px 0px; text-decoration:none; font-size:15px">
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com">Home</A>
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com/d_ajaxFetch.html">Latest</A>
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com/d_template.html">Template</A>
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com/email.html">Email</A>
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com/about.html">About</A>
             </DIV>
         </DIV>
     </NAV>
@@ -53,16 +68,17 @@
 <!-- main document content .................................................................... -->
 
     <MAIN>
-        <SECTION>
-            <DIV style="width:80%; margin:auto; max-width:800px; text-align:center;">
-            <H3>Ancestry</H3>
-            </DIV>
-        </SECTION>
+    <DIV STYLE="background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('multifaces.png');position:relative;margin:auto;text-align:center;max-width:1440px;background-size:cover">
 
-        <DIV STYLE="width:80%; margin:auto; max-width:800px; text-align:center;">
-            <FIELDSET DATA-ROLE="controlgroup" DATA-TYPE="horizontal">
+        <DIV STYLE="position:relative;margin:auto;text-align:center;padding:5px;max-width:1440px;background-color">
+            <H3 STYLE="margin:30px 0px 30px 0px" >Ancestry</H3>
+        </DIV>
+
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:center;background-color">
+            <LABEL STYLE="width:80px;">Choose:</LABEL>
+            <FIELDSET DATA-ROLE="controlgroup" DATA-TYPE="horizontal" STYLE="width:78%;background-color:#E5E4E2;border-color:#E5E4E2;border-width:thin">
                 <LEGEND>Action</LEGEND>
-                    <INPUT CLASS="radio" TYPE="radio" ID="people" NAME="Mode" VALUE="people" STYLE="margin: 0px 5px 0px 0px" CHECKED="checked" onClick=getAction()>People
+                    <INPUT CLASS="radio" TYPE="radio" ID="people" NAME="Mode" VALUE="people" CHECKED="checked" STYLE="margin: 0px 5px 0px 0px" onClick=getAction()>People
                     <INPUT CLASS="radio" TYPE="radio" ID="profiles" NAME="Mode" VALUE="profiles" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Profile
                     <INPUT CLASS="radio" TYPE="radio" ID="marriages" NAME="Mode" VALUE="marriages" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Marriages
                     <INPUT CLASS="radio" TYPE="radio" ID="residents" NAME="Mode" VALUE="residents" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Residents
@@ -72,65 +88,57 @@
                 <BUTTON onclick="mcaListPeople()" ID="go" STYLE="margin: 0px 20px 0px 20px">Go</BUTTON>
                 </FIELDSET>
             </DIV>
-            <BR>
 
-<!-- filter input to filter results ............................................................................... -->
+<!-- filter input ............................................................................... -->
 
-            <DIV ID="filterdiv" STYLE="width:80%; margin:auto; max-width:800px; text-align:left;">
-                <LABEL FOR="filter" ID="filterlabel" STYLE="width: 60px">Filter: </LABEL>
-                <INPUT TYPE="text" ID="filter" NAME="Filter" SIZE="100">
-                <BR>
-                <BR>
-            </DIV>
+        <DIV  ID="filterpara" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+                <LABEL FOR="filter" ID="filterlabel" STYLE="width:80px;">Filter:</LABEL>
+                <INPUT TYPE="text" ID="filter" NAME="Filter" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin">
+        </DIV>
 
-<!-- Person ID input to select results ............................................................................ -->
+<!-- person ID input ............................................................................ -->
 
-            <DIV ID="personIDdiv" STYLE="width:80%; margin:auto; max-width:800px; text-align:left;">
-                <LABEL FOR="personID" ID="personIDlabel" STYLE="width: 80px">Person ID:</LABEL>
-                <INPUT TYPE="text" ID="personID" NAME="personID" SIZE="10">
-                <BR>
-                <BR>
-            </DIV>
+        <DIV ID="personIDdiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <LABEL FOR="personID" STYLE="width:80px">Person ID:</LABEL>
+            <INPUT TYPE="text" ID="personID" NAME="personID" SIZE="10" STYLE="width:100px;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin">
+        </DIV>
 
-<!-- main text output area ........................................................................................ -->
+<!-- results area ........................................................................................ -->
 
-    <DIV STYLE="width:80%; margin:auto; max-width:800px; text-align:center;">
-        <LABEL FOR="results" STYLE="width:40px">Results:</LABEL>
-        <TEXTAREA ID="results" NAME="results" ROWS="15" COLS="92" WRAP="off" PLACEHOLDER=""></TEXTAREA>
-        <BR>
-    </DIV>
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <LABEL FOR="results" STYLE="width:80px">Results:</LABEL>
+            <TEXTAREA ID="results" NAME="results" ROWS="30" COLUMNS="80" WRAP="off" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
+        </DIV>
 
 <!-- reference links output area .................................................................................. -->
-    <DIV STYLE="width:80%; margin:auto; max-width:800px; text-align:left;">
-        <BR>
-        References:
-    </DIV>
-    <DIV STYLE="width:80%; margin:auto; max-width:800px; text-align:left;">
-        <BR>
-        <P ID="profreflinks" STYLE="margin: 0px 0px 0px 30px">
-        </P>
-    </DIV>
 
-<!-- system message box ........................................................................................... -->
-
-        <DIV ID="Debug"V STYLE="width:80%; margin:auto; max-width:800px; text-align:center;">
-            <P>
-                <LABEL FOR="message" STYLE="width:50px">Message:</LABEL>
-                <INPUT TYPE="text" ID="message" NAME="message" PLACEHOLDER="" SIZE="97"><BR>
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
+            References:
+        </DIV>
+        
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
+            <P ID="profreflinks" STYLE="margin-left:80px;padding:0px">
             </P>
         </DIV>
 
-<!-- buttons to show help ......................................................................................... -->
+<!-- message box .................................................................................................. -->
 
-    <DIV STYLE="width:80%; margin:auto; max-width:800px;">
-        <BUTTON onclick="reset()" ID="reset" STYLE="margin: 0px 20px 0px 10px">Reset</BUTTON>
-        <BUTTON onclick="showHelp()">Help</BUTTON>
-    </DIV>
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <LABEL FOR="message" STYLE="width:80px">Message:</LABEL>
+            <INPUT TYPE="text" ID="message" NAME="message" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"><BR>
+        </DIV>
+
+<!-- buttons to show reset and help ............................................................................... -->
+
+         <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <BUTTON onclick="reset()" ID="reset" STYLE="margin: 0px 20px 0px 80px">Reset</BUTTON>
+            <BUTTON onclick="showHelp()">Help</BUTTON>
+        </DIV>
 
 <!-- help text controlled by button ............................................................................... -->
 
-        <DIV ID="helpDiv" CLASS="help"V STYLE="width:80%; margin:auto; max-width:800px;">
-            <P>
+        <DIV CLASS="help" ID="helpDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <P STYLE="margin-left:80px">
                 People: a filterable list of all people in the ancestry<BR>
                 Profile: a profile of an individual person including source references<BR>
                 Marriages: a filterable list of marriages (where the marriage date or marriage place are known)<BR>
@@ -143,20 +151,19 @@
 
 <!-- button to download the spreadsheet tree....................................................................... -->
 
-    <DIV STYLE="width:80%; margin:auto; max-width:800px;">
-        <BR>
-        <a href="Jarman Cook Family Tree Horizontal.xlsx">Download</a>
-    </DIV>
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <a href="Jarman Cook Family Tree Horizontal.xlsx">Download Tree</a> (Last Updated 06-Sep-2021)
+        </DIV>
 
 <!-- internals .................................................................................................... -->
 
-        <BR>
-        <DIV ID="internalsDiv" STYLE="width:80%; margin:auto; max-width:800px;">
+
+        <DIV ID="internalsDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
             <DETAILS>
-                <SUMMARY style="outline:none">
+                <SUMMARY STYLE="outline:none">
                     Internals
                 </SUMMARY> 
-                <P>
+                <P STYLE="margin-left:80px">
                     html file: /var/www.html/mcaListPeople.html<BR>
                     css file: /var/www/html/css/rfstyles.css<BR>
                     form handler: /usr/lib/cgi-bin/mcaListPeople.cgi<BR>
@@ -172,7 +179,7 @@
                 </P>
             </DETAILS>
         </DIV>
-
+    </DIV>
     </MAIN>
 
 <!-- footer ....................................................................................................... -->
