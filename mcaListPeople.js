@@ -15,6 +15,9 @@
 //    23-Aug-2021 clear references region when choosing a new action
 //    26-Aug-2021 minor changes and fixes to verbiage in messages
 //    09-Sep-2021 add function to support button to reveal background image
+//    14-Sep-2021 changes to troubleshoot grid layout on ancestry
+//    15-Sep-2021 fix the personIDdiv reference for the profile CGI call
+//    15-Sep-2021 fix focus unhiding elements
 // Enhancements:
 //
 
@@ -313,9 +316,9 @@ function getAction() {
         document.getElementById("message").value = "People action selected - click Go or set a filter then click Go to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
-        document.getElementById("personID").value = "";
+        document.getElementById("personIDdiv").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterpara").hidden = false;
+        document.getElementById("filterDiv").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("profiles").checked === true) {
@@ -337,9 +340,9 @@ function getAction() {
         document.getElementById("personID").style.backgroundColor = "lightyellow"
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
-        document.getElementById("personID").value = "";
+        document.getElementById("personIDdiv").value = "";
         document.getElementById("personIDdiv").hidden = false; 
-        document.getElementById("filterpara").hidden = true; 
+        document.getElementById("filterDiv").hidden = true; 
         document.getElementById("profreflinks").innerHTML="";
     } 
     if (document.getElementById("marriages").checked === true) {
@@ -360,9 +363,9 @@ function getAction() {
         document.getElementById("message").value = "Marriages action selected - click Go or set a filter then click Go to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
-        document.getElementById("personID").value = "";
+        document.getElementById("personIDdiv").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterpara").hidden = false;
+        document.getElementById("filterDiv").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("residents").checked === true) {
@@ -383,9 +386,9 @@ function getAction() {
         document.getElementById("message").value = "Residents action selected - click Go or set a filter then click Go to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
-        document.getElementById("personID").value = "";
+        document.getElementById("personIDdiv").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterpara").hidden = false;
+        document.getElementById("filterDiv").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("references").checked === true) {
@@ -406,9 +409,9 @@ function getAction() {
         document.getElementById("message").value = "References action selected - click Go or set a filter then click Go to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
-        document.getElementById("personID").value = "";
+        document.getElementById("personIDdiv").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterpara").hidden = false;
+        document.getElementById("filterDiv").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("cohorts").checked === true) {
@@ -429,9 +432,9 @@ function getAction() {
         document.getElementById("message").value = "Cohorts action selected - click Go or set a filter then click Go to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
-        document.getElementById("personID").value = "";
+        document.getElementById("personIDdiv").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterpara").hidden = false;
+        document.getElementById("filterDiv").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
     if (document.getElementById("birthdays").checked === true) {
@@ -452,9 +455,9 @@ function getAction() {
         document.getElementById("message").value = "Birthdays action selected - click Go or set a filter then click Go to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
-        document.getElementById("personID").value = "";
+        document.getElementById("personIDdiv").value = "";
         document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterpara").hidden = false;
+        document.getElementById("filterDiv").hidden = false;
         document.getElementById("profreflinks").innerHTML="";
     }
 }
@@ -482,8 +485,10 @@ function reset() {
     document.getElementById("results").value = "Results are reset";
     document.getElementById("filter").value = "";
     document.getElementById("personIDdiv").hidden = true; 
-    document.getElementById("filterdiv").hidden = false;
+    document.getElementById("filterDiv").hidden = false;
     document.getElementById("profreflinks").innerHTML="";
+    document.getElementById("results").rows="30";
+    document.getElementById("results").style.width = "80%";
 }
 
 // function to show internal information ------------------------------------------------------------------------------
@@ -498,52 +503,51 @@ function showInternals() {
     document.getElementById("message").value="See internal information below the Internals button. Click Internals again to hide it";
 }
 
-// function to show help information ----------------------------------------------------------------------------------
-
-function showHelp() {
-    var x = document.getElementById("helpDiv");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-    document.getElementById("message").value="See Help information below the Help button. Click Help again to hide it";
-}
-
 // function to show background image ----------------------------------------------------------------------------------
 
 function showBckgrnd() {
+    var n = document.getElementById("people");
+    var p = document.getElementById("downloadDiv");
+    var q = document.getElementById("personIDdiv");
     var r = document.getElementById("Div1");
-    var s = document.getElementById("filterpara");
+    var s = document.getElementById("filterDiv");
     var t = document.getElementById("results");
     var u = document.getElementById("Div2");
     var v = document.getElementById("Div3");
-    if (r.style.display === "none") {
-        r.style.display = "block";
-        s.style.display = "block";
+    var w = document.getElementById("reset");
+    var x = document.getElementById("showHelp");
+    var y = document.getElementById("pageHeading");
+    var z = document.getElementById("resultsLbl");
+    if (r.hidden === true) {
+        p.hidden = true;
+        q.hidden = true;
+        r.hidden = false;
+        s.hidden = false;
         t.rows="30";
         t.style.width = "80%";
-        u.style.display = "block";
-        v.style.display = "block";
+        u.hidden = false;
+        v.hidden = false;
+        w.hidden = false;
+        x.hidden = false;
+        y.hidden = false;
+        z.hidden = false;
+        n.checked = "checked";
     } else {
-        r.style.display = "none";
-        s.style.display = "none";
-        t.rows="41";
+        p.hidden= true;
+        q.hidden= true;
+        r.hidden = true;
+        s.hidden = true;
+        t.rows="47";
         t.style.width = ".1%";
-        u.style.display = "none";
-        v.style.display = "none";
+        u.hidden = true;
+        v.hidden = true;
+        w.hidden = true;
+        x.hidden = true;
+        y.hidden = true;
+        z.hidden = true;
     }
     document.getElementById("message").value="Background image selected. Click Background again to hide it";
 }
-
-// fetch the initial display attribute for the internals division -----------------------------------------------------
-
-var x = document.getElementById("helpDiv");
-const stx = getComputedStyle(x);
-x.style.display = stx.display;
-var y = document.getElementById("internalsDiv");
-const sty = getComputedStyle(y);
-y.style.display = sty.display;
 
 getAction();
 

@@ -1,0 +1,201 @@
+<!-- mcaListPeople.html to show the ancestry of a person                                                            -->
+<!-- Started: 04-Aug-2021                                                                                           -->
+<!-- Author: Geoffrey Jarman                                                                                        -->
+<!-- Log:                                                                                                           -->
+<!--     04-Aug-2021 started                                                                                        -->
+<!--     11-Aug-2021 revert main menu and compress choices for people to accomodate filters                         -->
+<!--     19-Aug-2021 add a separate region for reference links                                                      -->
+<!--     25-Aug-2021 add a dowload link for the family tree spreasheet                                              -->
+<!--     26-Aug-2021 change and clean up messages and internals                                                     -->
+<!--     02-Sep-2021 move inline styles to stylesheet                                                               -->
+<!--     06-Sep-2021 add positioning                                                                                -->
+<!--     07-Sep-2021 alter vertical sizing to better fit 1280x720 HD                                                -->
+<!--     09-Sep-2021 add button to reveal background image                                                          -->
+<!-- Enhancements:                                                                                                  -->
+
+<!DOCTYPE html>
+
+<HTML lang="en">
+
+<!-- html document head ........................................................................................... -->
+
+<HEAD>
+    <TITLE>mcaListPeople.html</TITLE>
+    <META charset="UTF-8">
+    <LINK rel="stylesheet" type="text/css" href="rfstyles.css">
+    <LINK rel="shortcut icon" href="letterRF.png" type="image/png">
+    <META name="description" content= "show ancestry of a person with c cgi and javaScript">
+    <META name="keywords" content="html, css, cgi">
+    <META name="generator" content="vim">
+    <META name="author" content="risingfast">
+    <META name="viewport" content= "width=device-width, initial-scale=1.0">
+    <STYLE>
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        a:active {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </STYLE>
+
+</HEAD>
+
+<!-- main page header ............................................................................................. -->
+
+<BODY STYLE="font-family: helvetica; min-width: 600px">
+
+<!-- page heading and horizontal navigation links ................................................................. -->
+
+    <HEADER>
+        <DIV class="header">
+            <H3 STYLE="font-size:150%" >www.risingfast.com</H3>
+        </DIV>
+    </HEADER>
+    <NAV>
+        <DIV STYLE="width:100%;height:20px; background-color:palegreen">
+            <DIV STYLE="position:fixed; left:0px; top:47px;width:100%; height:20px; overflow:hidden; margin:auto; text-align:center; background-color:palegreen; padding: 10px 0px 10px 0px; text-decoration:none; font-size:15px">
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com">Home</A>
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com/d_ajaxFetch.html">Latest</A>
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com/d_template.html">Template</A>
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com/email.html">Email</A>
+                <A STYLE="text-decoration:none; color:olive; font-size:120%; margin:10px" HREF="http://www.risingfast.com/about.html">About</A>
+            </DIV>
+        </DIV>
+    </NAV>
+
+<!-- main document content .................................................................... -->
+
+    <MAIN>
+    <DIV STYLE="background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('multifacesC.png');position:relative;margin:auto;text-align:center;max-width:1440px;background-size:cover">
+
+        <DIV STYLE="position:relative;margin:auto;text-align:center;padding:5px;max-width:1440px;background-color">
+            <H3 STYLE="margin:30px 0px 30px 0px" >Ancestry</H3>
+        </DIV>
+
+        <DIV ID="Div1" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:center;background-color">
+            <LABEL STYLE="width:80px;">Choose:</LABEL>
+            <FIELDSET DATA-ROLE="controlgroup" DATA-TYPE="horizontal" STYLE="width:78%;background-color:#E5E4E2;border-color:#E5E4E2;border-width:thin">
+                <LEGEND>Action</LEGEND>
+                    <INPUT CLASS="radio" TYPE="radio" ID="people" NAME="Mode" VALUE="people" CHECKED="checked" STYLE="margin: 0px 5px 0px 0px" onClick=getAction()>People
+                    <INPUT CLASS="radio" TYPE="radio" ID="profiles" NAME="Mode" VALUE="profiles" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Profile
+                    <INPUT CLASS="radio" TYPE="radio" ID="marriages" NAME="Mode" VALUE="marriages" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Marriages
+                    <INPUT CLASS="radio" TYPE="radio" ID="residents" NAME="Mode" VALUE="residents" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Residents
+                    <INPUT CLASS="radio" TYPE="radio" ID="references" NAME="Mode" VALUE="references" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>References
+                    <INPUT CLASS="radio" TYPE="radio" ID="cohorts" NAME="Mode" VALUE="cohorts" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Cohorts
+                    <INPUT CLASS="radio" TYPE="radio" ID="birthdays" NAME="Mode" VALUE="birthdays" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Birthdays
+                <BUTTON onclick="mcaListPeople()" ID="go" STYLE="margin: 0px 20px 0px 20px">Go</BUTTON>
+                </FIELDSET>
+            </DIV>
+
+<!-- filter input ............................................................................... -->
+
+        <DIV  ID="filterpara" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+                <LABEL FOR="filter" ID="filterlabel" STYLE="width:80px;">Filter:</LABEL>
+                <INPUT TYPE="text" ID="filter" NAME="Filter" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin">
+        </DIV>
+
+<!-- person ID input ............................................................................ -->
+
+        <DIV ID="personIDdiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <LABEL FOR="personID" STYLE="width:80px">Person ID:</LABEL>
+            <INPUT TYPE="text" ID="personID" NAME="personID" SIZE="10" STYLE="width:100px;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin">
+        </DIV>
+
+<!-- results area ........................................................................................ -->
+
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <LABEL FOR="results" STYLE="width:80px">Results:</LABEL>
+            <TEXTAREA ID="results" NAME="results" ROWS="30" WRAP="off" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
+        </DIV>
+
+<!-- reference links output area .................................................................................. -->
+
+        <DIV ID=Div2>
+            <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
+                References:
+            </DIV>
+        
+            <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
+                <P ID="profreflinks" STYLE="margin-left:80px;padding:0px">
+                </P>
+            </DIV>
+        </DIV>
+
+<!-- message box .................................................................................................. -->
+
+        <DIV ID="Div3" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <LABEL FOR="message" STYLE="width:80px">Message:</LABEL>
+            <INPUT TYPE="text" ID="message" NAME="message" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"><BR>
+        </DIV>
+
+<!-- buttons to show reset and background and help ................................................................ -->
+
+         <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <BUTTON onclick="reset()" ID="reset" STYLE="margin: 0px 10px 0px 80px">Reset</BUTTON>
+            <BUTTON onclick="showBckgrnd()" ID="showBkgrnd" STYLE="margin: 0px 20px 0px 10px">Background</BUTTON>
+            <BUTTON onclick="showHelp()">Help</BUTTON>
+        </DIV>
+
+<!-- help text controlled by button ............................................................................... -->
+
+        <DIV CLASS="help" ID="helpDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <P STYLE="margin-left:80px">
+                People: a filterable list of all people in the ancestry<BR>
+                Profile: a profile of an individual person including source references<BR>
+                Marriages: a filterable list of marriages (where the marriage date or marriage place are known)<BR>
+                Residents: a list of people and places where they lived, for primary addresses over extended periods<BR>
+                References: a list of references for people in the ancestry, tied to each person's ID<BR>
+                Cohorts: a list of people with known birth dates and their assocaiated cohort (e.g. baby boomer)<BR>
+                Birthdays: a list of upcoming birthdays showing the number of months away from each birthday
+            </P>
+        </DIV>
+
+<!-- button to download the spreadsheet tree....................................................................... -->
+
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <a href="Jarman Cook Family Tree Horizontal.xlsx">Download Tree</a> (Last Updated 06-Sep-2021)
+        </DIV>
+
+<!-- internals .................................................................................................... -->
+
+
+        <DIV ID="internalsDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+            <DETAILS>
+                <SUMMARY STYLE="outline:none">
+                    Internals
+                </SUMMARY> 
+                <P STYLE="margin-left:80px">
+                    html file: /var/www.html/mcaListPeople.html<BR>
+                    css file: /var/www/html/css/rfstyles.css<BR>
+                    form handler: /usr/lib/cgi-bin/mcaListPeople.cgi<BR>
+                    form handler: /usr/lib/cgi-bin/mcaListProfile.cgi<BR>
+                    form handler: /usr/lib/cgi-bin/mcaListProfRefLinks.cgi<BR>
+                    form handler: /usr/lib/cgi-bin/mcaListMarriages.cgi<BR>
+                    form handler: /usr/lib/cgi-bin/mcaListResidents.cgi<BR>
+                    form handler: /usr/lib/cgi-bin/mcaListReferences.cgi<BR>
+                    form handler: /usr/lib/cgi-bin/mcaListCohorts.cgi<BR>
+                    form handler: /usr/lib/cgi-bin/mcaListBirthdays.cgi<BR>
+                    form method: post<BR>
+                    source code: html, javascript, c<BR>
+                </P>
+            </DETAILS>
+        </DIV>
+    </DIV>
+    </MAIN>
+
+<!-- footer ....................................................................................................... -->
+
+    <FOOTER>
+        <DIV class="footer">
+            <P>&copy; 2020 www.risingfast.com ... /var/www/html/mcaListPeople.html</P>
+        </DIV>
+    </FOOTER>
+
+    <SCRIPT src="mcaListPeople.js"></SCRIPT>
+
+</BODY>
+
+</HTML>

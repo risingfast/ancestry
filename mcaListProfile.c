@@ -18,6 +18,7 @@
 //      26-Aug-2021 add a recursive function to print ancestors
 //      26-Aug-2021 add location to ancestor tree list
 //      27-Aug-2021 expand indentations on the tree listing
+//      15-Sep-2021 fix bug selecting father's birthplace in parent query
 //  Enhancements:
 
 #include <mysql.h>
@@ -620,7 +621,7 @@ int fPrintParents(long lPersonID, int iLvl)
                       " , REPLACE(REPLACE(CONCAT(AF.`First Name`, COALESCE(CONCAT(' ''', AF.`Nick Name`, ''' '), ' '), "
                       "  COALESCE(AF.`Middle Names`, ''),' ', AF.`Last Name`, ' ',COALESCE(AF.`Suffix`, '')), '  ', ' '), '''''', '') AS `Person` "
                       " , COALESCE(CONCAT('b. ', AF.`Born On`), '') as 'Born On' "
-                      " , COALESCE(AP.`Birth Place`, '') as 'Birth Place' "
+                      " , COALESCE(AF.`Birth Place`, '') as 'Birth Place' "
                       " , IF(AF.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
                       " , IF(AF.`Born On` IS NOT NULL, IF(AF.`Deceased On` IS NOT NULL, FLOOR(DATEDIFF(AF.`Deceased On`, AF.`Born On`)/365), IF(AF.`Deceased` = 0, FLOOR(DATEDIFF(CURRENT_DATE(), AF.`Born On`)/365), 'DoD Unknown')), 'DoB Unknown') AS 'Age' "
                    "FROM risingfast.`Ancestry People` AP "
