@@ -18,6 +18,8 @@
 //    14-Sep-2021 changes to troubleshoot grid layout on ancestry
 //    15-Sep-2021 fix the personIDdiv reference for the profile CGI call
 //    15-Sep-2021 fix focus unhiding elements
+//    16-Sep-2021 changes to messages with technical references removed
+//    16-Sep-2021 change error message to red
 // Enhancements:
 //
 
@@ -69,7 +71,8 @@ async function mcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="mcaListPeople.cgi fired - showing all (or a filtered list of) people in the ancestry, ascending by Person ID";
+            document.getElementById("message").value="People listing shown - all (or a filtered list of) people in the ancestry, ascending by Person ID";
+            document.getElementById("message").style.color= "black";
             document.getElementById("results").value=text2;
         }
     }
@@ -82,6 +85,7 @@ async function mcaListPeople() {
         if (PersonIDValue.length === 0)
         {
             document.getElementById("message").value= "A Person ID is required if the Profile option is selected";
+            document.getElementById("message").style.color= "red";
         }
         else
         {
@@ -92,7 +96,8 @@ async function mcaListPeople() {
                 text2 = text1.replace(/\|/g, ", ");
                 text1 = text2;
                 text2 = text1.replace(/, , , /g, ", ");
-                document.getElementById("message").value="mcaListProfile.cgi fired - showing a person's profile in the ancestry";
+                document.getElementById("message").value="A Person Profile shown - a single person's profile in the ancestry";
+                document.getElementById("message").style.color="black";
                 document.getElementById("results").value=text2;
             }
         }
@@ -110,7 +115,8 @@ async function mcaListPeople() {
             let response = await fetch(uri);
             if (response.ok) {
                 text3 = await response.text();
-                document.getElementById("message").value="mcaListProfile.cgi and mcaListProfRefLinks fired - showing a person's profile reference links in the ancestry";
+                document.getElementById("message").value="A Person's Profile and Reference Links shown - a person's profile and reference links in the ancestry";
+                document.getElementById("message").style.color="black";
                 document.getElementById("profreflinks").innerHTML=text3;
             }
         }
@@ -145,7 +151,8 @@ async function mcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="mcaListMarriages.cgi fired - showing all (or a filtered list of) marriages in the ancestry";
+            document.getElementById("message").value="Marriages and Unions shown - all (or a filtered list of) marriages and unions in the ancestry";
+            document.getElementById("message").style.color="black";
             document.getElementById("results").value=text2;
         }
     }
@@ -179,7 +186,8 @@ async function mcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="mcaListResidents.cgi fired - showing all (or a filtered list of) residents in the ancestry";
+            document.getElementById("message").value="Residents shown - all (or a filtered list of) residents and their addresses in the ancestry";
+            document.getElementById("message").style.color="black";
             document.getElementById("results").value=text2;
         }
     }
@@ -213,7 +221,8 @@ async function mcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="mcaListReferences.cgi fired - showing all (or a filtered list of) references (source documents) in the ancestry";
+            document.getElementById("message").value="References shown - all (or a filtered list of) references (source documents) in the ancestry";
+            document.getElementById("message").style.color="black";
             document.getElementById("results").value=text2;
         }
     }
@@ -247,7 +256,8 @@ async function mcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="mcaListCohorts.cgi fired - showing the cohort of each  person  with a known birthdate, ascending by Person ID";
+            document.getElementById("message").value="Cohorts shown - the cohort of each  person  with a known birthdate, ascending by Person ID";
+            document.getElementById("message").style.color="black";
             document.getElementById("results").value=text2;
         }
     }
@@ -281,7 +291,8 @@ async function mcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="mcaListBirthdays.cgi fired - showing upcoming birthdays, birth dates and months to next birthday";
+            document.getElementById("message").value="Birthdays shown - an ordered list of upcoming birthdays, birth dates and count of months to next birthday";
+            document.getElementById("message").style.color="black";
             document.getElementById("results").value=text2;
         }
     }
@@ -313,7 +324,7 @@ function getAction() {
         document.getElementById("birthdays").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "People action selected - click Go or set a filter then click Go to proceed";
+        document.getElementById("message").value = "People action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
         document.getElementById("personIDdiv").value = "";
@@ -336,7 +347,7 @@ function getAction() {
         document.getElementById("birthdays").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Profiles action selected - enter a person ID then click Go to proceed (use the People option to find a Person ID)";
+        document.getElementById("message").value = "Profiles action selected - enter a Person ID then click 'Go' to proceed (use the People option to find a Person ID)";
         document.getElementById("personID").style.backgroundColor = "lightyellow"
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
@@ -360,7 +371,7 @@ function getAction() {
         document.getElementById("birthdays").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Marriages action selected - click Go or set a filter then click Go to proceed";
+        document.getElementById("message").value = "Unions action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
         document.getElementById("personIDdiv").value = "";
@@ -383,7 +394,7 @@ function getAction() {
         document.getElementById("birthdays").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Residents action selected - click Go or set a filter then click Go to proceed";
+        document.getElementById("message").value = "Residents action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
         document.getElementById("personIDdiv").value = "";
@@ -406,7 +417,7 @@ function getAction() {
         document.getElementById("birthdays").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "References action selected - click Go or set a filter then click Go to proceed";
+        document.getElementById("message").value = "References action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
         document.getElementById("personIDdiv").value = "";
@@ -429,7 +440,7 @@ function getAction() {
         document.getElementById("birthdays").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Cohorts action selected - click Go or set a filter then click Go to proceed";
+        document.getElementById("message").value = "Cohorts action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
         document.getElementById("personIDdiv").value = "";
@@ -452,7 +463,7 @@ function getAction() {
         document.getElementById("cohorts").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Birthdays action selected - click Go or set a filter then click Go to proceed";
+        document.getElementById("message").value = "Birthdays action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results").value = "";
         document.getElementById("filter").value = "";
         document.getElementById("personIDdiv").value = "";
@@ -489,6 +500,7 @@ function reset() {
     document.getElementById("profreflinks").innerHTML="";
     document.getElementById("results").rows="30";
     document.getElementById("results").style.width = "80%";
+    document.getElementById("message").style.color="black";
 }
 
 // function to show internal information ------------------------------------------------------------------------------
@@ -519,7 +531,7 @@ function showBckgrnd() {
     var y = document.getElementById("pageHeading");
     var z = document.getElementById("resultsLbl");
     if (r.hidden === true) {
-        p.hidden = true;
+        p.hidden = false;
         q.hidden = true;
         r.hidden = false;
         s.hidden = false;
@@ -537,7 +549,7 @@ function showBckgrnd() {
         q.hidden= true;
         r.hidden = true;
         s.hidden = true;
-        t.rows="47";
+        t.rows="41";
         t.style.width = ".1%";
         u.hidden = true;
         v.hidden = true;

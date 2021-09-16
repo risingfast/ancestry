@@ -52,6 +52,7 @@
     09-Sep-2021 add backgound button to reveal background images
     15-Sep-2021 add vertical scrollbar and fix bug in profile query
     15-Sep-2021 fix bug in profile listing for parents birthplace
+    16-Sep-2021 misc maintenance fixes
 #### Enhancements: (0)
     send or show reminders of upcoming birthdays and events via email
     synchronize the tree with the parent links in the database

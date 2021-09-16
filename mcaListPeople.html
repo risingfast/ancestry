@@ -1,17 +1,8 @@
-<!-- mcaListPeople.html -  show ancestry of a person                                                                -->
-<!-- References:                                                                                                    -->
-<!-- Templates:                                                                                                     -->
-<!-- Log:                                                                                                           -->
-<!--    13-Sep-2021 - start                                                                                         -->
-<!--    14-Sep-2021 - grid layout                                                                                   -->
-<!--    15-Sep-2021 - change font-weights for better visibility with multiface background                           -->
-<!--    15-Sep-2021 - vertical scroll main area                                                                     -->
-
 <!DOCTYPE html>
 
-<HTML lang="en">
-
 <!-- html document head ........................................................................................... -->
+
+<HTML lang="en">
 
 <HEAD>
     <META charset="UTF-8">
@@ -21,13 +12,23 @@
     <META name="keywords" content="html, css, cgi">
     <META name="generator" content="vim">
     <META name="author" content="risingfast">
-    <TITLE>Index</TITLE>
+    <TITLE>Cook-Jarman Ancestry</TITLE>
     <LINK rel="stylesheet" type="text/css" href="index.css">
     <LINK rel="shortcut icon" href="letterRF.png" type="image/png">
-
-
-
 </HEAD>
+
+<!-- comments block   ............................................................................................. -->
+
+<!-- mcaListPeople.html -  show ancestry of a person                                                                -->
+<!-- References:                                                                                                    -->
+<!-- Templates:                                                                                                     -->
+<!-- Log:                                                                                                           -->
+<!--    13-Sep-2021 - start                                                                                         -->
+<!--    14-Sep-2021 - grid layout                                                                                   -->
+<!--    15-Sep-2021 - change font-weights for better visibility with multiface background                           -->
+<!--    15-Sep-2021 - vertical scroll main area                                                                     -->
+<!--    16-Sep-2021 - remove help button and pad Go button                                                          -->
+<!--    16-Sep-2021 - change comments block and clean up format exceptions to pass valiation                        -->
 
 <!-- main page header ............................................................................................. -->
 
@@ -48,7 +49,7 @@
                     <LI class="NAV1LI"><A HREF="http://www.risingfast.com/d_template.html">Template</A></LI>
                     <LI class="NAV1LI"><A HREF="http://www.risingfast.com/email.html">Email</A></LI>
                     <LI class="NAV1LI"><A HREF="http://www.risingfast.com/about.html">About</A></LI>
-                </OL>
+                </UL>
             </NAV>
 
 <!-- main document content ........................................................................................ -->
@@ -56,54 +57,54 @@
             <MAIN ID="MAIN1" STYLE="background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('multifacesE.png'); background-size: cover">
 
 
-        <DIV STYLE="position:relative;margin:auto;text-align:center;padding:5px;max-width:1440px;background-color">
-            <H3 ID="pageHeading" STYLE="margin:30px 0px 30px 0px" >Cook-Jarman Ancestry</H3>
-        </DIV>
+            <DIV STYLE="position:relative; margin:auto; text-align:center; padding:5px; max-width:1440px">
+                <H3 ID="pageHeading" STYLE="margin:30px 0px 30px 0px" >Cook-Jarman Ancestry</H3>
+            </DIV>
 
-        <DIV ID="Div1" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
-            <LABEL STYLE="width:80px;padding-left:30px;font-weight:600">Choose:</LABEL>
-            <FIELDSET DATA-ROLE="controlgroup" DATA-TYPE="horizontal" STYLE="display:inline;padding:0px;margin:auto;width:80%;background-color:#E5E4E2;border-color:#E5E4E2;border-width:thin">
-                <LEGEND STYLE="margin:auto;text-align:center">Action</LEGEND>
-                    <INPUT CLASS="radio" TYPE="radio" ID="people" NAME="Mode" VALUE="people" CHECKED="checked" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>People
-                    <INPUT CLASS="radio" TYPE="radio" ID="profiles" NAME="Mode" VALUE="profiles" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Profile
-                    <INPUT CLASS="radio" TYPE="radio" ID="marriages" NAME="Mode" VALUE="marriages" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Unions
-                    <INPUT CLASS="radio" TYPE="radio" ID="residents" NAME="Mode" VALUE="residents" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Residents
-                    <INPUT CLASS="radio" TYPE="radio" ID="references" NAME="Mode" VALUE="references" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>References
-                    <INPUT CLASS="radio" TYPE="radio" ID="cohorts" NAME="Mode" VALUE="cohorts" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Cohorts
-                    <INPUT CLASS="radio" TYPE="radio" ID="birthdays" NAME="Mode" VALUE="birthdays" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>B'days
-                <BUTTON onclick="mcaListPeople()" ID="go" STYLE="margin:0px 0px 0px 5px">Go</BUTTON>
+            <DIV ID="Div1" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
+                <LABEL STYLE="width:80px;padding-left:30px;font-weight:600;padding: 0px 0px 0px 30px">Choose:</LABEL>
+                <FIELDSET DATA-ROLE="controlgroup" DATA-TYPE="horizontal" STYLE="display:inline;padding:0px;margin:auto;width:80%;background-color:#E5E4E2;border-color:#E5E4E2;border-width:thin">
+                    <LEGEND STYLE="margin:auto;text-align:center">Action</LEGEND>
+                        <INPUT CLASS="radio" TYPE="radio" ID="people" NAME="Mode" VALUE="people" CHECKED="checked" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>People
+                        <INPUT CLASS="radio" TYPE="radio" ID="profiles" NAME="Mode" VALUE="profiles" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Profile
+                        <INPUT CLASS="radio" TYPE="radio" ID="marriages" NAME="Mode" VALUE="marriages" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Unions
+                        <INPUT CLASS="radio" TYPE="radio" ID="residents" NAME="Mode" VALUE="residents" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Residents
+                        <INPUT CLASS="radio" TYPE="radio" ID="references" NAME="Mode" VALUE="references" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>References
+                        <INPUT CLASS="radio" TYPE="radio" ID="cohorts" NAME="Mode" VALUE="cohorts" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Cohorts
+                        <INPUT CLASS="radio" TYPE="radio" ID="birthdays" NAME="Mode" VALUE="birthdays" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>B'days
+                    <BUTTON onclick="mcaListPeople()" ID="go" STYLE="margin:0px 0px 10px 10px">Go</BUTTON>
                 </FIELDSET>
             </DIV>
 
-<!-- filter input ............................................................................... -->
+<!-- filter input ................................................................................................. -->
 
-        <DIV  ID="filterDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+        <DIV  ID="filterDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
                 <LABEL FOR="filter" ID="filterlabel" STYLE="width:80px;padding-left:49px;font-weight:600">Filter:</LABEL>
                 <INPUT TYPE="text" ID="filter" NAME="Filter" STYLE="margin:auto;width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin">
         </DIV>
 
-<!-- person ID input ............................................................................ -->
+<!-- person ID input .............................................................................................. -->
 
-        <DIV ID="personIDdiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+        <DIV ID="personIDdiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
             <LABEL FOR="personID" STYLE="padding-left:15px;width:80px;font-weight:600">Person ID:</LABEL>
             <INPUT TYPE="text" ID="personID" NAME="personID" SIZE="10" STYLE="width:100px;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin">
         </DIV>
 
-<!-- results area ........................................................................................ -->
+<!-- results area ................................................................................................. -->
 
-        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+        <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
             <LABEL ID="resultsLbl" FOR="results" STYLE="width:80px;padding-left:35px;font-weight:600">Results:</LABEL>
-            <TEXTAREA ID="results" NAME="results" ROWS="30" WRAP="off" STYLE="width:80%;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
+            <TEXTAREA ID="results" NAME="results" WRAP="off" ROWS="30" STYLE="width:80%;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
         </DIV>
 
 <!-- reference links output area .................................................................................. -->
 
         <DIV ID=Div2>
-            <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
+            <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left">
                 <LABEL STYLE="padding-left:15px;font-weight:600">References:</LABEL>
             </DIV>
         
-            <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left;background-color">
+            <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left">
                 <P ID="profreflinks" STYLE="margin-left:80px;padding:0px;font-weight:600">
                 </P>
             </DIV>
@@ -111,23 +112,22 @@
 
 <!-- message box .................................................................................................. -->
 
-        <DIV ID="Div3" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
+        <DIV ID="Div3" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
             <LABEL FOR="message" STYLE="width:80px;padding-left:22px;font-weight:600">Message:</LABEL>
             <INPUT TYPE="text" ID="message" NAME="message" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"><BR>
         </DIV>
 
-<!-- buttons to show reset and background and help ................................................................ -->
+<!-- buttons to show reset and background.......................................................................... -->
 
-         <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left;background-color">
-            <BUTTON onclick="reset()" ID="reset" STYLE="margin: 0px 10px 0px 80px">Reset</BUTTON>
+         <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
+            <BUTTON onclick="reset()" ID="reset" STYLE="margin: 0px 10px 0px 93px">Reset</BUTTON>
             <BUTTON onclick="showBckgrnd()" ID="showBkgrnd" STYLE="margin: 0px 20px 0px 10px">Background</BUTTON>
-            <BUTTON onclick="showHelp()" ID="showHelp">Help</BUTTON>
         </DIV>
 
 <!-- button to download the spreadsheet tree....................................................................... -->
 
-        <DIV ID="downloadDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;font-weight:600;text-align:left;background-color">
-            <a href="Jarman Cook Family Tree Horizontal.xlsx">Download Tree</a> (Last Updated 15-Sep-2021)
+        <DIV ID="downloadDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;font-weight:600;text-align:left">
+            <A href="Jarman%20Cook%20Family%20Tree%20Horizontal.xlsx">Download Tree</A>(Last Updated 16-Sep-2021)
         </DIV>
 
             </MAIN>
@@ -135,15 +135,17 @@
             <ASIDE ID="ASIDE1">
                     <H3 ID=ASIDE1H3>Changes 2021</H3>
                 <UL ID="ASIDE1UL">
-                    <LI ASIDE1LI>15-Sep: add vertical scroll</LI>
-                    <LI ASIDE1LI>15-Sep: profile query fix</LI>
-                    <LI ASIDE1LI>14-Sep: background image fix</LI>
-                    <LI ASIDE1LI>14-Sep: grid layout</LI>
+                    <LI ID="ASIDE1LI1">16-Sep: simplify system messages</LI>
+                    <LI ID="ASIDE1LI2">16-Sep: update background</LI>
+                    <LI ID="ASIDE1LI3">15-Sep: add vertical scroll bar</LI>
+                    <LI ID="ASIDE1LI4">15-Sep: fix profile query bug</LI>
+                    <LI ID="ASIDE1LI5">14-Sep: fix background image</LI>
+                    <LI ID="ASIDE1LI6">14-Sep: implement grid layout</LI>
                 </UL>
             </ASIDE>
             <ASIDE ID="ASIDE2">
                 <DIV ID="ASIDE2DIV">
-                     <IMG src="cornerImage.png" STYLE="width:250px; height:250px">
+                     <IMG SRC="cornerImage.png" ALT="No cornerImage.png available to load" STYLE="width:250px; height:250px">
                 </DIV>
             </ASIDE>
             <FOOTER ID="FOOTER1">
