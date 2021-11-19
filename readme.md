@@ -53,6 +53,7 @@
     15-Sep-2021 add vertical scrollbar and fix bug in profile query
     15-Sep-2021 fix bug in profile listing for parents birthplace
     16-Sep-2021 misc maintenance fixes
+    19-Nov-2021 update GIT with changes
 #### Enhancements: (0)
     send or show reminders of upcoming birthdays and events via email
     synchronize the tree with the parent links in the database

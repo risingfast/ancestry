@@ -16,7 +16,7 @@ CFLAGS=-g -o
 SQL1FLAGS=-I/usr/include/mysql
 SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -lrt -lssl -lcrypto -ldl -lresolv
 
-all: mysql-c-ancestry mcaListPeople mcaListProfile mcaListCohorts mcaListBirthdays mcaListMarriages mcaListReferences mcaListResidents mcaListProfRefLinks mcaShowTree
+all: mysql-c-ancestry mcaListPeople mcaListProfile mcaListCohorts mcaListBirthdays mcaListMarriages mcaListReferences mcaListResidents mcaListProfRefLinks mcaShowTree bookShow
 
 mysql-c-ancestry: mysql-c-ancestry.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
@@ -48,5 +48,8 @@ mcaListProfRefLinks: mcaListProfRefLinks.c ../shared/rf50.c ../shared/cs50.c
 mcaShowTree: mcaShowTree.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
 
+bookShow: bookShow.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
+
 clean:
-	rm -f *.o *.s *.i mysql-c-ancestry mcaListPeople mcaListProfile mcaListCohorts mcaListBirthdays mcaListProfRefLinks mcaShowTree
+	rm -f *.o *.s *.i mysql-c-ancestry mcaListPeople mcaListProfile mcaListCohorts mcaListBirthdays mcaListProfRefLinks mcaShowTree bookShow

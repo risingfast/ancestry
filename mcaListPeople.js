@@ -561,5 +561,21 @@ function showBckgrnd() {
     document.getElementById("message").value="Background image selected. Click Background again to hide it";
 }
 
+// functions for action buttons to display and hide help ..........................................
+  
+function showHelp() {
+    var x = document.getElementById("helpDiv");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
+function resetShows() {
+    var x = document.getElementById("helpDiv");
+    x.style.display = "none";
+}
+
 getAction();
 
