@@ -32,13 +32,10 @@
 <!--    18-Sep-2021 - change image size on mediaquery                                                                -->
 <!--    19-Sep-2021 - add Internals                                                                                  -->
 <!--    19-Sep-2021 - add Help button                                                                                -->
-<!--    30-Sep-2021 - update the footer text to match the file name                                                  -->
-<!--    03-Oct-2021 - rename functions with f-prefix                                                                 -->
-<!--    25-Apr-2022 - change last update date for xlsx download                                                      -->
 <!--                                                                                                                 -->
 <!-- main page header .............................................................................................. -->
 
-<BODY onload="fGetAction()">
+<BODY>
     <DIV ID="WRAPPER1">
         <DIV ID="WRAPPER2">
             <HEADER ID="HEADER1">
@@ -68,17 +65,17 @@
                 </DIV>
     
                 <DIV ID="Div1" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
-                    <LABEL STYLE="width:80px;padding-left:30px;font-weight:600;padding: 0px 7px 0px 30px">Choose:</LABEL>
+                    <LABEL STYLE="width:80px;padding-left:30px;font-weight:600;padding: 0px 0px 0px 30px">Choose:</LABEL>
                     <FIELDSET DATA-ROLE="controlgroup" DATA-TYPE="horizontal" STYLE="display:inline;padding:0px;margin:auto;width:80%;background-color:#E5E4E2;border-color:#E5E4E2;border-width:thin">
                         <LEGEND STYLE="margin:auto;text-align:center">Action</LEGEND>
-                            <INPUT CLASS="radio" TYPE="radio" ID="people" NAME="Mode" VALUE="people" CHECKED="checked" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>People
-                            <INPUT CLASS="radio" TYPE="radio" ID="profiles" NAME="Mode" VALUE="profiles" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>Profile
-                            <INPUT CLASS="radio" TYPE="radio" ID="marriages" NAME="Mode" VALUE="marriages" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>Unions
-                            <INPUT CLASS="radio" TYPE="radio" ID="residents" NAME="Mode" VALUE="residents" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>Residents
-                            <INPUT CLASS="radio" TYPE="radio" ID="references" NAME="Mode" VALUE="references" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>References
-                            <INPUT CLASS="radio" TYPE="radio" ID="cohorts" NAME="Mode" VALUE="cohorts" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>Cohorts
-                            <INPUT CLASS="radio" TYPE="radio" ID="birthdays" NAME="Mode" VALUE="birthdays" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>B'days
-                        <BUTTON onclick="fMcaListPeople()" ID="go" STYLE="margin:0px 0px 10px 10px">Go</BUTTON>
+                            <INPUT CLASS="radio" TYPE="radio" ID="people" NAME="Mode" VALUE="people" CHECKED="checked" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>People
+                            <INPUT CLASS="radio" TYPE="radio" ID="profiles" NAME="Mode" VALUE="profiles" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Profile
+                            <INPUT CLASS="radio" TYPE="radio" ID="marriages" NAME="Mode" VALUE="marriages" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Unions
+                            <INPUT CLASS="radio" TYPE="radio" ID="residents" NAME="Mode" VALUE="residents" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Residents
+                            <INPUT CLASS="radio" TYPE="radio" ID="references" NAME="Mode" VALUE="references" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>References
+                            <INPUT CLASS="radio" TYPE="radio" ID="cohorts" NAME="Mode" VALUE="cohorts" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>Cohorts
+                            <INPUT CLASS="radio" TYPE="radio" ID="birthdays" NAME="Mode" VALUE="birthdays" STYLE="margin: 0px 5px 0px 20px" onClick=getAction()>B'days
+                        <BUTTON onclick="mcaListPeople()" ID="go" STYLE="margin:0px 0px 10px 10px">Go</BUTTON>
                     </FIELDSET>
                 </DIV>
     
@@ -100,7 +97,7 @@
     
                 <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
                     <LABEL ID="resultsLbl" FOR="results" STYLE="width:80px;padding-left:35px;font-weight:600">Results:</LABEL>
-                    <TEXTAREA ID="results" NAME="results" WRAP="off" ROWS="30" readonly STYLE="width:80%;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
+                    <TEXTAREA ID="results" NAME="results" WRAP="off" ROWS="30" STYLE="width:80%;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
                 </DIV>
     
 <!-- reference links output area ................................................................................... -->
@@ -126,9 +123,9 @@
 <!-- buttons to show reset and background and help ................................................................. -->
     
                  <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
-                    <BUTTON onclick="fReset()" ID="reset" STYLE="margin: 0px 10px 0px 93px">Clear</BUTTON>
-                    <BUTTON onclick="fShowBckgrnd()" ID="showBkgrnd" STYLE="margin: 0px 20px 0px 10px">Background</BUTTON>
-                    <BUTTON onclick="fShowHelp()">Help</BUTTON>
+                    <BUTTON onclick="reset()" ID="reset" STYLE="margin: 0px 10px 0px 93px">Reset</BUTTON>
+                    <BUTTON onclick="showBckgrnd()" ID="showBkgrnd" STYLE="margin: 0px 20px 0px 10px">Background</BUTTON>
+                    <BUTTON onclick="showHelp()">Help</BUTTON>
                 </DIV>
 
 <!-- help text controlled by the help button ....................................................................... -->
@@ -148,23 +145,22 @@
 <!-- button to download the spreadsheet tree........................................................................ -->
     
                 <DIV ID="downloadDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;font-weight:600;text-align:left">
-                    <A href="Jarman%20Cook%20Family%20Tree%20Horizontal.xlsx">Download Tree</A>(Last Updated 25-Apr-2022)
+                    <A href="Jarman%20Cook%20Family%20Tree%20Horizontal.xlsx">Download Tree</A>(Last Updated 22-Sep-2021)
                 </DIV>
 
                 <SECTION>
                    <DIV style="width:80%; margin: auto; max-width:800px;">
-                        <DETAILS style="font-weight:600">
+                        <DETAILS>
                             <SUMMARY style="outline:none">
                                 Internals
                             </SUMMARY>
                             <P STYLE="PADDING-LEFT:17px">
                                 html file: /var/www.html/mcaListPeople.html<BR>
-                                js file: /var/www/html/mcaListPeople.js<BR>
                                 css file: /var/www/html/css/index.css<BR>
-                                cgi file: /usr/lib/cgi-bin/mcaListPeople.cgi<BR>
+                                cgi directory: /usr/lib/cgi-bin/<BR>
                                 corner image: /var/www/html/cornerImage.png<BR>
                                 background image: /var/www/html/multifacesE.jpg<BR>
-                                CGI source code: C<BR>
+                                CGI source code: c<BR>
                             </P>
                         </DETAILS>
                     </DIV>
@@ -175,9 +171,6 @@
             <ASIDE ID="ASIDE1">
                     <H3 ID=ASIDE1H3>Changes 2021</H3>
                 <UL ID="ASIDE1UL">
-                    <LI CLASS="ASIDE1LI">03-Oct: set internals font-weight</LI>
-                    <LI CLASS="ASIDE1LI">03-Oct: set results read-only</LI>
-                    <LI CLASS="ASIDE1LI">03-Oct: rename functions</LI>
                     <LI CLASS="ASIDE1LI">19-Sep: add a Help button</LI>
                     <LI CLASS="ASIDE1LI">16-Sep: add Internals section</LI>
                     <LI CLASS="ASIDE1LI">16-Sep: simplify system messages</LI>
@@ -195,7 +188,7 @@
             </ASIDE>
             <FOOTER ID="FOOTER1">
                 <DIV ID="FOOTER1DIV">
-                    <P>&copy; 2020 www.risingfast.com ... /var/www/html/fMcaListPeople.html</P>
+                    <P>&copy; 2020 www.risingfast.com ... /var/www/html/index.html</P>
                 </DIV>
             </FOOTER>
         </DIV>

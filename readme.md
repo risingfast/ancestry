@@ -16,6 +16,9 @@
 #### Compliation:
     make, or
     gcc -g -o mysql-c-ancestry $(mysql_config --cflags) mysql-c-ancestry.c $(mysql_config --libs) cs50.c rf50.c
+#### Enhancements: (0)
+    send or show reminders of upcoming birthdays and events via email
+    synchronize the tree with the parent links in the database
 #### Log:
     14-Jul-2021 started
     15-Jul-2021 fix the age formula to account for months and days
@@ -55,6 +58,4 @@
     16-Sep-2021 misc maintenance fixes
     19-Nov-2021 update GIT with changes
     31-Dec-2021 backup current version
-#### Enhancements: (0)
-    send or show reminders of upcoming birthdays and events via email
-    synchronize the tree with the parent links in the database
+    03-May-2021 backup current version
