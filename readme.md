@@ -19,6 +19,8 @@
 #### Enhancements: (0)
     send or show reminders of upcoming birthdays and events via email
     synchronize the tree with the parent links in the database
+    add an option to suppress the background image on the main page
+    add an option to suppress the background image on the ancestry page
 #### Log:
     14-Jul-2021 started
     15-Jul-2021 fix the age formula to account for months and days
@@ -59,3 +61,4 @@
     19-Nov-2021 update GIT with changes
     31-Dec-2021 backup current version
     03-May-2021 backup current version
+    14-May-2021 backup current version

@@ -20,6 +20,7 @@
 //    15-Sep-2021 fix focus unhiding elements
 //    16-Sep-2021 changes to messages with technical references removed
 //    16-Sep-2021 change error message to red
+//    12-May-2022 change "none" to "" for x.style.display in fShowHelp()
 // Enhancements:
 //
 
@@ -29,7 +30,7 @@ const uri = "http://www.risingfast.com/cgi-bin/mcaListPeople.cgi";
 
 // function to ajax fetch all people from the server ------------------------------------------------------------------
 
-async function mcaListPeople() {
+async function fMcaListPeople() {
 
     var arrBuffer = new Array(2);
     var strTemp = "";
@@ -307,7 +308,7 @@ async function mcaListPeople() {
 
 // function to set form status based on action chosen -----------------------------------------------------------------
 
-function getAction() {
+function fGetAction() {
 
     if (document.getElementById("people").checked === true) {
         document.getElementById("profiles").disabled = false;
@@ -475,7 +476,7 @@ function getAction() {
 
 // function to reset fields -------------------------------------------------------------------------------------------
 
-function reset() {
+function fReset() {
     document.getElementById("people").checked = true;
     document.getElementById("people").disabled = false;
     document.getElementById("profiles").checked = false;
@@ -505,7 +506,7 @@ function reset() {
 
 // function to show internal information ------------------------------------------------------------------------------
 
-function showInternals() {
+function fShowInternals() {
     var y = document.getElementById("internalsDiv");
     if (y.style.display === "none") {
         y.style.display = "block";
@@ -517,7 +518,7 @@ function showInternals() {
 
 // function to show background image ----------------------------------------------------------------------------------
 
-function showBckgrnd() {
+function fShowBckgrnd() {
     var n = document.getElementById("people");
     var p = document.getElementById("downloadDiv");
     var q = document.getElementById("personIDdiv");
@@ -563,19 +564,17 @@ function showBckgrnd() {
 
 // functions for action buttons to display and hide help ..........................................
   
-function showHelp() {
-    var x = document.getElementById("helpDiv");
-    if (x.style.display === "none") {
+function fShowHelp() {
+    var x = document.getElementById("HELPDIV");
+    if (x.style.display === "") {
         x.style.display = "block";
     } else {
-        x.style.display = "none";
+        x.style.display = "";
     }
 }
 
-function resetShows() {
+function fResetShows() {
     var x = document.getElementById("helpDiv");
     x.style.display = "none";
 }
-
-getAction();
 

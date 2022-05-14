@@ -17,7 +17,7 @@
     <LINK rel="shortcut icon" href="letterRF.png" type="image/png">
 </HEAD>
 
-<!-- Comments block   .............................................................................................. -->
+<!-- comments block   .............................................................................................. -->
 <!--                                                                                                                 -->
 <!-- mcaListPeople.html -  show ancestry of a person                                                                 -->
 <!-- References:                                                                                                     -->
@@ -35,8 +35,6 @@
 <!--    30-Sep-2021 - update the footer text to match the file name                                                  -->
 <!--    03-Oct-2021 - rename functions with f-prefix                                                                 -->
 <!--    25-Apr-2022 - change last update date for xlsx download                                                      -->
-<!--    10-May-2022 - migrate styles to index.css                                                                    -->
-<!--    10-May-2022 - add <ASIDE3> tag region for corner image footer                                                -->
 <!--                                                                                                                 -->
 <!-- main page header .............................................................................................. -->
 
@@ -135,8 +133,8 @@
 
 <!-- help text controlled by the help button ....................................................................... -->
 
-                <DIV id="HELPTXT">
-                    <DIV id="HELPDIV" class="help">
+                <DIV style="width:80%; margin: auto; max-width:800px; text-align:left;">
+                    <DIV id="helpDiv" class="help" STYLE="DISPLAY:none;font-weight:600">
                         <P>
                             To find a person's profile, find their Person ID then click 'Profile', enter the Person ID and click 'Go'.<BR>
                             To find a Person ID, click 'People' then 'Go' and scan the list. Filter the list by entering text in the 'Filter'.<BR>
@@ -153,15 +151,13 @@
                     <A href="Jarman%20Cook%20Family%20Tree%20Horizontal.xlsx">Download Tree</A>(Last Updated 25-Apr-2022)
                 </DIV>
 
-<!-- Internals ..................................................................................................... -->
-
                 <SECTION>
-                   <DIV id="INTERNALS">
-                        <DETAILS>
+                   <DIV style="width:80%; margin: auto; max-width:800px;">
+                        <DETAILS style="font-weight:600">
                             <SUMMARY style="outline:none">
                                 Internals
                             </SUMMARY>
-                            <P>
+                            <P STYLE="PADDING-LEFT:17px">
                                 html file: /var/www.html/mcaListPeople.html<BR>
                                 js file: /var/www/html/mcaListPeople.js<BR>
                                 css file: /var/www/html/css/index.css<BR>
@@ -175,8 +171,6 @@
                 </SECTION>
 
             </MAIN>
-
-<!-- <ASIDE1> region for change log ................................................................................ -->
 
             <ASIDE ID="ASIDE1">
                     <H3 ID=ASIDE1H3>Changes 2021</H3>
@@ -194,28 +188,11 @@
                     <LI CLASS="ASIDE1LI">14-Sep: implement grid layout</LI>
                 </UL>
             </ASIDE>
-
-<!-- <ASIDE2> region for corner image .............................................................................. -->
-
             <ASIDE ID="ASIDE2">
                 <DIV ID="ASIDE2DIV">
                      <IMG ID="ASIDE2IMG" SRC="cornerImage.png" ALT="No cornerImage.png available to load">
                 </DIV>
             </ASIDE>
-
-<!-- <ASIDE3> region for corner image caption ...................................................................... -->
-
-            <ASIDE id="ASIDE3">
-                <DIV id="ASIDE3DIV">
-                    <P>
-                     Matilda Cook in Magpies uniform before her next netball game 2022
-                    </P>
-                </DIV>
-            </ASIDE>
-
-<!-- <FOOTER> region for page footer ............................................................................... -->
-
-
             <FOOTER ID="FOOTER1">
                 <DIV ID="FOOTER1DIV">
                     <P>&copy; 2020 www.risingfast.com ... /var/www/html/fMcaListPeople.html</P>
