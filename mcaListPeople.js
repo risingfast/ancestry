@@ -21,6 +21,7 @@
 //    16-Sep-2021 changes to messages with technical references removed
 //    16-Sep-2021 change error message to red
 //    12-May-2022 change "none" to "" for x.style.display in fShowHelp()
+//    15-May-2022 remove fShowHelp() moved to common.js
 // Enhancements:
 //
 
@@ -508,10 +509,10 @@ function fReset() {
 
 function fShowInternals() {
     var y = document.getElementById("internalsDiv");
-    if (y.style.display === "none") {
+    if (y.style.display === "") {
         y.style.display = "block";
     } else {
-         y.style.display = "none";
+         y.style.display = "";
     }
     document.getElementById("message").value="See internal information below the Internals button. Click Internals again to hide it";
 }
@@ -562,19 +563,8 @@ function fShowBckgrnd() {
     document.getElementById("message").value="Background image selected. Click Background again to hide it";
 }
 
-// functions for action buttons to display and hide help ..........................................
-  
-function fShowHelp() {
-    var x = document.getElementById("HELPDIV");
-    if (x.style.display === "") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "";
-    }
-}
-
 function fResetShows() {
     var x = document.getElementById("helpDiv");
-    x.style.display = "none";
+    x.style.display = "";
 }
 
