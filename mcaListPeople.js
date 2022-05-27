@@ -46,7 +46,7 @@ async function fMcaListPeople() {
 
 // list people if the all people option is chosen ---------------------------------------------------------------------
 
-    if (document.getElementById("people").checked === true) 
+    if (document.getElementById("people-input").checked === true) 
     {
         const uri = "http://www.risingfast.com/cgi-bin/mcaListPeople.cgi";
         let response = await fetch(uri);
@@ -58,7 +58,7 @@ async function fMcaListPeople() {
             text1 = text2;
             const array1 = text2.split("\n");
             text2 = "";
-            filter1 = (document.getElementById("filter").value).toUpperCase();
+            filter1 = (document.getElementById("filter-input").value).toUpperCase();
             if(filter1.length != 0)
             {
                  for(i = 0; i < array1.length; i++)
@@ -73,21 +73,21 @@ async function fMcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="People listing shown - all (or a filtered list of) people in the ancestry, ascending by Person ID";
-            document.getElementById("message").style.color= "black";
-            document.getElementById("results").value=text2;
+            document.getElementById("message-input").value="People listing shown - all (or a filtered list of) people in the ancestry, ascending by Person ID";
+            document.getElementById("message-input").style.color= "black";
+            document.getElementById("results-textarea").value=text2;
         }
     }
 
 // show a person's profile if the profile option is chosen ------------------------------------------------------------
 
-    else if (document.getElementById("profiles").checked === true) 
+    else if (document.getElementById("profiles-input").checked === true) 
     {
-        PersonIDValue = document.getElementById("personID").value;
+        PersonIDValue = document.getElementById("personid-input").value;
         if (PersonIDValue.length === 0)
         {
-            document.getElementById("message").value= "A Person ID is required if the Profile option is selected";
-            document.getElementById("message").style.color= "red";
+            document.getElementById("message-input").value= "A Person ID is required if the Profile option is selected";
+            document.getElementById("message-input").style.color= "red";
         }
         else
         {
@@ -98,18 +98,18 @@ async function fMcaListPeople() {
                 text2 = text1.replace(/\|/g, ", ");
                 text1 = text2;
                 text2 = text1.replace(/, , , /g, ", ");
-                document.getElementById("message").value="A Person Profile shown - a single person's profile in the ancestry";
-                document.getElementById("message").style.color="black";
-                document.getElementById("results").value=text2;
+                document.getElementById("message-input").value="A Person Profile shown - a single person's profile in the ancestry";
+                document.getElementById("message-input").style.color="black";
+                document.getElementById("results-textarea").value=text2;
             }
         }
 
 // show a person's reference links if the profile option is chosen ------------------------------------------------------------
 
-        PersonIDValue = document.getElementById("personID").value;
+        PersonIDValue = document.getElementById("personid-input").value;
         if (PersonIDValue.length === 0)
         {
-            document.getElementById("message").value= "A Person ID is required if the Profile option is selected";
+            document.getElementById("message-input").value= "A Person ID is required if the Profile option is selected";
         }
         else
         {
@@ -117,16 +117,16 @@ async function fMcaListPeople() {
             let response = await fetch(uri);
             if (response.ok) {
                 text3 = await response.text();
-                document.getElementById("message").value="A Person's Profile and Reference Links shown - a person's profile and reference links in the ancestry";
-                document.getElementById("message").style.color="black";
-                document.getElementById("profreflinks").innerHTML=text3;
+                document.getElementById("message-input").value="A Person's Profile and Reference Links shown - a person's profile and reference links in the ancestry";
+                document.getElementById("message-input").style.color="black";
+                document.getElementById("references-links").innerHTML=text3;
             }
         }
     }
 
 // list marriages if the marriages option is chosen -------------------------------------------------------------------
 
-    else if (document.getElementById("marriages").checked === true) 
+    else if (document.getElementById("marriages-input").checked === true) 
     {
         const uri = "http://www.risingfast.com/cgi-bin/mcaListMarriages.cgi";
         let response = await fetch(uri);
@@ -138,7 +138,7 @@ async function fMcaListPeople() {
             text1 = text2;
             const array1 = text2.split("\n");
             text2 = "";
-            filter1 = (document.getElementById("filter").value).toUpperCase();
+            filter1 = (document.getElementById("filter-input").value).toUpperCase();
             if(filter1.length != 0)
             {
                  for(i = 0; i < array1.length; i++)
@@ -153,15 +153,15 @@ async function fMcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="Marriages and Unions shown - all (or a filtered list of) marriages and unions in the ancestry";
-            document.getElementById("message").style.color="black";
-            document.getElementById("results").value=text2;
+            document.getElementById("message-input").value="Marriages and Unions shown - all (or a filtered list of) marriages and unions in the ancestry";
+            document.getElementById("message-input").style.color="black";
+            document.getElementById("results-textarea").value=text2;
         }
     }
 
 // list residents if the residents option is chosen -------------------------------------------------------------------
 
-    else if (document.getElementById("residents").checked === true) 
+    else if (document.getElementById("residents-input").checked === true) 
     {
         const uri = "http://www.risingfast.com/cgi-bin/mcaListResidents.cgi";
         let response = await fetch(uri);
@@ -173,7 +173,7 @@ async function fMcaListPeople() {
             text1 = text2;
             const array1 = text2.split("\n");
             text2 = "";
-            filter1 = (document.getElementById("filter").value).toUpperCase();
+            filter1 = (document.getElementById("filter-input").value).toUpperCase();
             if(filter1.length != 0)
             {
                  for(i = 0; i < array1.length; i++)
@@ -188,15 +188,15 @@ async function fMcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="Residents shown - all (or a filtered list of) residents and their addresses in the ancestry";
-            document.getElementById("message").style.color="black";
-            document.getElementById("results").value=text2;
+            document.getElementById("message-input").value="Residents shown - all (or a filtered list of) residents and their addresses in the ancestry";
+            document.getElementById("message-input").style.color="black";
+            document.getElementById("results-textarea").value=text2;
         }
     }
 
 // list references if the references option is chosen -----------------------------------------------------------------
 
-    else if (document.getElementById("references").checked === true) 
+    else if (document.getElementById("references-input").checked === true) 
     {
         const uri = "http://www.risingfast.com/cgi-bin/mcaListReferences.cgi";
         let response = await fetch(uri);
@@ -208,7 +208,7 @@ async function fMcaListPeople() {
             text1 = text2;
             const array1 = text2.split("\n");
             text2 = "";
-            filter1 = (document.getElementById("filter").value).toUpperCase();
+            filter1 = (document.getElementById("filter-input").value).toUpperCase();
             if(filter1.length != 0)
             {
                  for(i = 0; i < array1.length; i++)
@@ -223,15 +223,15 @@ async function fMcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="References shown - all (or a filtered list of) references (source documents) in the ancestry";
-            document.getElementById("message").style.color="black";
-            document.getElementById("results").value=text2;
+            document.getElementById("message-input").value="References shown - all (or a filtered list of) references (source documents) in the ancestry";
+            document.getElementById("message-input").style.color="black";
+            document.getElementById("results-textarea").value=text2;
         }
     }
 
 // list cohorts if the cohorts option is chosen -----------------------------------------------------------------------
 
-    else if (document.getElementById("cohorts").checked === true) 
+    else if (document.getElementById("cohorts-input").checked === true) 
     {
         const uri = "http://www.risingfast.com/cgi-bin/mcaListCohorts.cgi";
         let response = await fetch(uri);
@@ -243,7 +243,7 @@ async function fMcaListPeople() {
             text1 = text2;
             const array1 = text2.split("\n");
             text2 = "";
-            filter1 = (document.getElementById("filter").value).toUpperCase();
+            filter1 = (document.getElementById("filter-input").value).toUpperCase();
             if(filter1.length != 0)
             {
                  for(i = 0; i < array1.length; i++)
@@ -258,15 +258,15 @@ async function fMcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="Cohorts shown - the cohort of each  person  with a known birthdate, ascending by Person ID";
-            document.getElementById("message").style.color="black";
-            document.getElementById("results").value=text2;
+            document.getElementById("message-input").value="Cohorts shown - the cohort of each  person  with a known birthdate, ascending by Person ID";
+            document.getElementById("message-input").style.color="black";
+            document.getElementById("results-textarea").value=text2;
         }
     }
 
 // list birthdays if the birthdays option is chosen -------------------------------------------------------------------
 
-    else if (document.getElementById("birthdays").checked === true) 
+    else if (document.getElementById("birthdays-input").checked === true) 
     {
         const uri = "http://www.risingfast.com/cgi-bin/mcaListBirthdays.cgi";
         let response = await fetch(uri);
@@ -278,7 +278,7 @@ async function fMcaListPeople() {
             text1 = text2;
             const array1 = text2.split("\n");
             text2 = "";
-            filter1 = (document.getElementById("filter").value).toUpperCase();
+            filter1 = (document.getElementById("filter-input").value).toUpperCase();
             if(filter1.length != 0)
             {
                  for(i = 0; i < array1.length; i++)
@@ -293,9 +293,9 @@ async function fMcaListPeople() {
             {
                 text2 = text1;
             }
-            document.getElementById("message").value="Birthdays shown - an ordered list of upcoming birthdays, birth dates and count of months to next birthday";
-            document.getElementById("message").style.color="black";
-            document.getElementById("results").value=text2;
+            document.getElementById("message-input").value="Birthdays shown - an ordered list of upcoming birthdays, birth dates and count of months to next birthday";
+            document.getElementById("message-input").style.color="black";
+            document.getElementById("results-textarea").value=text2;
         }
     }
 
@@ -303,7 +303,7 @@ async function fMcaListPeople() {
 
     else 
     {
-        document.getElementById("results").value = "This wasn't supposed to happen!";
+        document.getElementById("results-textarea").value = "This wasn't supposed to happen!";
     }
 }
 
@@ -311,198 +311,198 @@ async function fMcaListPeople() {
 
 function fGetAction() {
 
-    if (document.getElementById("people").checked === true) {
-        document.getElementById("profiles").disabled = false;
-        document.getElementById("profiles").required = false;
-        document.getElementById("marriages").disabled = false;
-        document.getElementById("marriages").required = false;
-        document.getElementById("residents").disabled = false;
-        document.getElementById("residents").required = false;
-        document.getElementById("references").disabled = false;
-        document.getElementById("references").required = false;
-        document.getElementById("cohorts").disabled = false;
-        document.getElementById("cohorts").required = false;
-        document.getElementById("birthdays").disabled = false;
-        document.getElementById("birthdays").required = false;
+    if (document.getElementById("people-input").checked === true) {
+        document.getElementById("profiles-input").disabled = false;
+        document.getElementById("profiles-input").required = false;
+        document.getElementById("marriages-input").disabled = false;
+        document.getElementById("marriages-input").required = false;
+        document.getElementById("residents-input").disabled = false;
+        document.getElementById("residents-input").required = false;
+        document.getElementById("references-input").disabled = false;
+        document.getElementById("references-input").required = false;
+        document.getElementById("cohorts-input").disabled = false;
+        document.getElementById("cohorts-input").required = false;
+        document.getElementById("birthdays-input").disabled = false;
+        document.getElementById("birthdays-input").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "People action selected - click 'Go' or set a filter then click 'Go' to proceed";
-        document.getElementById("results").value = "";
-        document.getElementById("filter").value = "";
-        document.getElementById("personIDdiv").value = "";
-        document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterDiv").hidden = false;
-        document.getElementById("profreflinks").innerHTML="";
+        document.getElementById("message-input").value = "People action selected - click 'Go' or set a filter then click 'Go' to proceed";
+        document.getElementById("results-textarea").value = "";
+        document.getElementById("filter-input").value = "";
+        document.getElementById("personid-div").value = "";
+        document.getElementById("personid-div").hidden = true; 
+        document.getElementById("filter-div").hidden = false;
+        document.getElementById("references-links").innerHTML="";
     }
-    if (document.getElementById("profiles").checked === true) {
-        document.getElementById("people").disabled = false;
-        document.getElementById("people").required = false;
-        document.getElementById("marriages").disabled = false;
-        document.getElementById("marriages").required = false;
-        document.getElementById("residents").disabled = false;
-        document.getElementById("residents").required = false;
-        document.getElementById("references").disabled = false;
-        document.getElementById("references").required = false;
-        document.getElementById("cohorts").disabled = false;
-        document.getElementById("cohorts").required = false;
-        document.getElementById("birthdays").disabled = false;
-        document.getElementById("birthdays").required = false;
+    if (document.getElementById("profiles-input").checked === true) {
+        document.getElementById("people-input").disabled = false;
+        document.getElementById("people-input").required = false;
+        document.getElementById("marriages-input").disabled = false;
+        document.getElementById("marriages-input").required = false;
+        document.getElementById("residents-input").disabled = false;
+        document.getElementById("residents-input").required = false;
+        document.getElementById("references-input").disabled = false;
+        document.getElementById("references-input").required = false;
+        document.getElementById("cohorts-input").disabled = false;
+        document.getElementById("cohorts-input").required = false;
+        document.getElementById("birthdays-input").disabled = false;
+        document.getElementById("birthdays-input").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Profiles action selected - enter a Person ID then click 'Go' to proceed (use the People option to find a Person ID)";
-        document.getElementById("personID").style.backgroundColor = "lightyellow"
-        document.getElementById("results").value = "";
-        document.getElementById("filter").value = "";
-        document.getElementById("personIDdiv").value = "";
-        document.getElementById("personIDdiv").hidden = false; 
-        document.getElementById("filterDiv").hidden = true; 
-        document.getElementById("profreflinks").innerHTML="";
+        document.getElementById("message-input").value = "Profiles action selected - enter a Person ID then click 'Go' to proceed (use the People option to find a Person ID)";
+        document.getElementById("personid-input").style.backgroundColor = "lightyellow"
+        document.getElementById("results-textarea").value = "";
+        document.getElementById("filter-input").value = "";
+        document.getElementById("personid-div").value = "";
+        document.getElementById("personid-div").hidden = false; 
+        document.getElementById("filter-div").hidden = true; 
+        document.getElementById("references-links").innerHTML="";
     } 
-    if (document.getElementById("marriages").checked === true) {
-        document.getElementById("people").disabled = false;
-        document.getElementById("people").required = false;
-        document.getElementById("profiles").disabled = false;
-        document.getElementById("profiles").required = false;
-        document.getElementById("residents").disabled = false;
-        document.getElementById("residents").required = false;
-        document.getElementById("references").disabled = false;
-        document.getElementById("references").required = false;
-        document.getElementById("cohorts").disabled = false;
-        document.getElementById("cohorts").required = false;
-        document.getElementById("birthdays").disabled = false;
-        document.getElementById("birthdays").required = false;
+    if (document.getElementById("marriages-input").checked === true) {
+        document.getElementById("people-input").disabled = false;
+        document.getElementById("people-input").required = false;
+        document.getElementById("profiles-input").disabled = false;
+        document.getElementById("profiles-input").required = false;
+        document.getElementById("residents-input").disabled = false;
+        document.getElementById("residents-input").required = false;
+        document.getElementById("references-input").disabled = false;
+        document.getElementById("references-input").required = false;
+        document.getElementById("cohorts-input").disabled = false;
+        document.getElementById("cohorts-input").required = false;
+        document.getElementById("birthdays-input").disabled = false;
+        document.getElementById("birthdays-input").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Unions action selected - click 'Go' or set a filter then click 'Go' to proceed";
-        document.getElementById("results").value = "";
-        document.getElementById("filter").value = "";
-        document.getElementById("personIDdiv").value = "";
-        document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterDiv").hidden = false;
-        document.getElementById("profreflinks").innerHTML="";
+        document.getElementById("message-input").value = "Unions action selected - click 'Go' or set a filter then click 'Go' to proceed";
+        document.getElementById("results-textarea").value = "";
+        document.getElementById("filter-input").value = "";
+        document.getElementById("personid-div").value = "";
+        document.getElementById("personid-div").hidden = true; 
+        document.getElementById("filter-div").hidden = false;
+        document.getElementById("references-links").innerHTML="";
     }
-    if (document.getElementById("residents").checked === true) {
-        document.getElementById("people").disabled = false;
-        document.getElementById("people").required = false;
-        document.getElementById("profiles").disabled = false;
-        document.getElementById("profiles").required = false;
-        document.getElementById("marriages").disabled = false;
-        document.getElementById("marriages").required = false;
-        document.getElementById("references").disabled = false;
-        document.getElementById("references").required = false;
-        document.getElementById("cohorts").disabled = false;
-        document.getElementById("cohorts").required = false;
-        document.getElementById("birthdays").disabled = false;
-        document.getElementById("birthdays").required = false;
+    if (document.getElementById("residents-input").checked === true) {
+        document.getElementById("people-input").disabled = false;
+        document.getElementById("people-input").required = false;
+        document.getElementById("profiles-input").disabled = false;
+        document.getElementById("profiles-input").required = false;
+        document.getElementById("marriages-input").disabled = false;
+        document.getElementById("marriages-input").required = false;
+        document.getElementById("references-input").disabled = false;
+        document.getElementById("references-input").required = false;
+        document.getElementById("cohorts-input").disabled = false;
+        document.getElementById("cohorts-input").required = false;
+        document.getElementById("birthdays-input").disabled = false;
+        document.getElementById("birthdays-input").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Residents action selected - click 'Go' or set a filter then click 'Go' to proceed";
-        document.getElementById("results").value = "";
-        document.getElementById("filter").value = "";
-        document.getElementById("personIDdiv").value = "";
-        document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterDiv").hidden = false;
-        document.getElementById("profreflinks").innerHTML="";
+        document.getElementById("message-input").value = "Residents action selected - click 'Go' or set a filter then click 'Go' to proceed";
+        document.getElementById("results-textarea").value = "";
+        document.getElementById("filter-input").value = "";
+        document.getElementById("personid-div").value = "";
+        document.getElementById("personid-div").hidden = true; 
+        document.getElementById("filter-div").hidden = false;
+        document.getElementById("references-links").innerHTML="";
     }
-    if (document.getElementById("references").checked === true) {
-        document.getElementById("people").disabled = false;
-        document.getElementById("people").required = false;
-        document.getElementById("profiles").disabled = false;
-        document.getElementById("profiles").required = false;
-        document.getElementById("marriages").disabled = false;
-        document.getElementById("marriages").required = false;
-        document.getElementById("residents").disabled = false;
-        document.getElementById("residents").required = false;
-        document.getElementById("cohorts").disabled = false;
-        document.getElementById("cohorts").required = false;
-        document.getElementById("birthdays").disabled = false;
-        document.getElementById("birthdays").required = false;
+    if (document.getElementById("references-input").checked === true) {
+        document.getElementById("people-input").disabled = false;
+        document.getElementById("people-input").required = false;
+        document.getElementById("profiles-input").disabled = false;
+        document.getElementById("profiles-input").required = false;
+        document.getElementById("marriages-input").disabled = false;
+        document.getElementById("marriages-input").required = false;
+        document.getElementById("residents-input").disabled = false;
+        document.getElementById("residents-input").required = false;
+        document.getElementById("cohorts-input").disabled = false;
+        document.getElementById("cohorts-input").required = false;
+        document.getElementById("birthdays-input").disabled = false;
+        document.getElementById("birthdays-input").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "References action selected - click 'Go' or set a filter then click 'Go' to proceed";
-        document.getElementById("results").value = "";
-        document.getElementById("filter").value = "";
-        document.getElementById("personIDdiv").value = "";
-        document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterDiv").hidden = false;
-        document.getElementById("profreflinks").innerHTML="";
+        document.getElementById("message-input").value = "References action selected - click 'Go' or set a filter then click 'Go' to proceed";
+        document.getElementById("results-textarea").value = "";
+        document.getElementById("filter-input").value = "";
+        document.getElementById("personid-div").value = "";
+        document.getElementById("personid-div").hidden = true; 
+        document.getElementById("filter-div").hidden = false;
+        document.getElementById("refrences-links").innerHTML="";
     }
-    if (document.getElementById("cohorts").checked === true) {
-        document.getElementById("people").disabled = false;
-        document.getElementById("people").required = false;
-        document.getElementById("profiles").disabled = false;
-        document.getElementById("profiles").required = false;
-        document.getElementById("marriages").disabled = false;
-        document.getElementById("marriages").required = false;
-        document.getElementById("residents").disabled = false;
-        document.getElementById("residents").required = false;
-        document.getElementById("references").disabled = false;
-        document.getElementById("references").required = false;
-        document.getElementById("birthdays").disabled = false;
-        document.getElementById("birthdays").required = false;
+    if (document.getElementById("cohorts-input").checked === true) {
+        document.getElementById("people-input").disabled = false;
+        document.getElementById("people-input").required = false;
+        document.getElementById("profiles-input").disabled = false;
+        document.getElementById("profiles-input").required = false;
+        document.getElementById("marriages-input").disabled = false;
+        document.getElementById("marriages-input").required = false;
+        document.getElementById("residents-input").disabled = false;
+        document.getElementById("residents-input").required = false;
+        document.getElementById("references-input").disabled = false;
+        document.getElementById("references-input").required = false;
+        document.getElementById("birthdays-input").disabled = false;
+        document.getElementById("birthdays-input").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Cohorts action selected - click 'Go' or set a filter then click 'Go' to proceed";
-        document.getElementById("results").value = "";
-        document.getElementById("filter").value = "";
-        document.getElementById("personIDdiv").value = "";
-        document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterDiv").hidden = false;
-        document.getElementById("profreflinks").innerHTML="";
+        document.getElementById("message-input").value = "Cohorts action selected - click 'Go' or set a filter then click 'Go' to proceed";
+        document.getElementById("results-textarea").value = "";
+        document.getElementById("filter-input").value = "";
+        document.getElementById("personid-div").value = "";
+        document.getElementById("personid-div").hidden = true; 
+        document.getElementById("filter-div").hidden = false;
+        document.getElementById("references-links").innerHTML="";
     }
-    if (document.getElementById("birthdays").checked === true) {
-        document.getElementById("people").disabled = false;
-        document.getElementById("people").required = false;
-        document.getElementById("profiles").disabled = false;
-        document.getElementById("profiles").required = false;
-        document.getElementById("marriages").disabled = false;
-        document.getElementById("marriages").required = false;
-        document.getElementById("residents").disabled = false;
-        document.getElementById("residents").required = false;
-        document.getElementById("references").disabled = false;
-        document.getElementById("references").required = false;
-        document.getElementById("cohorts").disabled = false;
-        document.getElementById("cohorts").required = false;
+    if (document.getElementById("birthdays-input").checked === true) {
+        document.getElementById("people-input").disabled = false;
+        document.getElementById("people-input").required = false;
+        document.getElementById("profiles-input").disabled = false;
+        document.getElementById("profiles-input").required = false;
+        document.getElementById("marriages-input").disabled = false;
+        document.getElementById("marriages-input").required = false;
+        document.getElementById("residents-input").disabled = false;
+        document.getElementById("residents-input").required = false;
+        document.getElementById("references-input").disabled = false;
+        document.getElementById("references-input").required = false;
+        document.getElementById("cohorts-input").disabled = false;
+        document.getElementById("cohorts-input").required = false;
         document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message").value = "Birthdays action selected - click 'Go' or set a filter then click 'Go' to proceed";
-        document.getElementById("results").value = "";
-        document.getElementById("filter").value = "";
-        document.getElementById("personIDdiv").value = "";
-        document.getElementById("personIDdiv").hidden = true; 
-        document.getElementById("filterDiv").hidden = false;
-        document.getElementById("profreflinks").innerHTML="";
+        document.getElementById("message-input").value = "Birthdays action selected - click 'Go' or set a filter then click 'Go' to proceed";
+        document.getElementById("results-textarea").value = "";
+        document.getElementById("filter-input").value = "";
+        document.getElementById("personid-div").value = "";
+        document.getElementById("personid-div").hidden = true; 
+        document.getElementById("filter-div").hidden = false;
+        document.getElementById("references-links").innerHTML="";
     }
 }
 
 // function to reset fields -------------------------------------------------------------------------------------------
 
 function fReset() {
-    document.getElementById("people").checked = true;
-    document.getElementById("people").disabled = false;
-    document.getElementById("profiles").checked = false;
-    document.getElementById("profiles").disabled = false;
-    document.getElementById("marriages").checked = false;
-    document.getElementById("marriages").disabled = false;
-    document.getElementById("residents").checked = false;
-    document.getElementById("residents").disabled = false;
-    document.getElementById("references").checked = false;
-    document.getElementById("references").disabled = false;
-    document.getElementById("cohorts").checked = false;
-    document.getElementById("cohorts").disabled = false;
-    document.getElementById("birthdays").checked = false;
-    document.getElementById("birthdays").disabled = false;
+    document.getElementById("people-input").checked = true;
+    document.getElementById("people-input").disabled = false;
+    document.getElementById("profiles-input").checked = false;
+    document.getElementById("profiles-input").disabled = false;
+    document.getElementById("marriages-input").checked = false;
+    document.getElementById("marriages-input").disabled = false;
+    document.getElementById("residents-input").checked = false;
+    document.getElementById("residents-input").disabled = false;
+    document.getElementById("references-input").checked = false;
+    document.getElementById("references-input").disabled = false;
+    document.getElementById("cohorts-input").checked = false;
+    document.getElementById("cohorts-input").disabled = false;
+    document.getElementById("birthdays-input").checked = false;
+    document.getElementById("birthdays-input").disabled = false;
     document.getElementById("go").disabled = false;
     document.getElementById("reset").disabled = false;
-    document.getElementById("message").value = "Reset action selected - all fields are reset";
-    document.getElementById("results").value = "Results are reset";
-    document.getElementById("filter").value = "";
-    document.getElementById("personIDdiv").hidden = true; 
-    document.getElementById("filterDiv").hidden = false;
-    document.getElementById("profreflinks").innerHTML="";
-    document.getElementById("results").rows="30";
-    document.getElementById("results").style.width = "80%";
-    document.getElementById("message").style.color="black";
+    document.getElementById("message-input").value = "Reset action selected - all fields are reset";
+    document.getElementById("results-textarea").value = "Results are reset";
+    document.getElementById("filter-input").value = "";
+    document.getElementById("personid-div").hidden = true; 
+    document.getElementById("filter-div").hidden = false;
+    document.getElementById("references-links").innerHTML="";
+    document.getElementById("results-textarea").rows="30";
+    document.getElementById("results-textarea").style.width = "80%";
+    document.getElementById("message-input").style.color="black";
 }
 
 // function to show internal information ------------------------------------------------------------------------------
@@ -514,53 +514,7 @@ function fShowInternals() {
     } else {
          y.style.display = "";
     }
-    document.getElementById("message").value="See internal information below the Internals button. Click Internals again to hide it";
-}
-
-// function to show background image ----------------------------------------------------------------------------------
-
-function fShowBckgrnd() {
-    var n = document.getElementById("people");
-    var p = document.getElementById("downloadDiv");
-    var q = document.getElementById("personIDdiv");
-    var r = document.getElementById("Div1");
-    var s = document.getElementById("filterDiv");
-    var t = document.getElementById("results");
-    var u = document.getElementById("Div2");
-    var v = document.getElementById("Div3");
-    var w = document.getElementById("reset");
-    var x = document.getElementById("showHelp");
-    var y = document.getElementById("pageHeading");
-    var z = document.getElementById("resultsLbl");
-    if (r.hidden === true) {
-        p.hidden = false;
-        q.hidden = true;
-        r.hidden = false;
-        s.hidden = false;
-        t.rows="30";
-        t.style.width = "80%";
-        u.hidden = false;
-        v.hidden = false;
-        w.hidden = false;
-        x.hidden = false;
-        y.hidden = false;
-        z.hidden = false;
-        n.checked = "checked";
-    } else {
-        p.hidden= true;
-        q.hidden= true;
-        r.hidden = true;
-        s.hidden = true;
-        t.rows="41";
-        t.style.width = ".1%";
-        u.hidden = true;
-        v.hidden = true;
-        w.hidden = true;
-        x.hidden = true;
-        y.hidden = true;
-        z.hidden = true;
-    }
-    document.getElementById("message").value="Background image selected. Click Background again to hide it";
+    document.getElementById("message-input").value="See internal information below the Internals button. Click Internals again to hide it";
 }
 
 function fResetShows() {
@@ -568,3 +522,11 @@ function fResetShows() {
     x.style.display = "";
 }
 
+function fShowAncestryHelp() {
+    var x = document.getElementById("help-div");
+    if (x.style.display === "") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "";
+    }
+}

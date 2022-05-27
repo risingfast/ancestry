@@ -2,20 +2,21 @@
 
 <!-- html document head ............................................................................................ -->
 
-<HTML lang="en">
+<html lang="en">
 
-<HEAD>
-    <META charset="UTF-8">
-    <META name="viewport" content="width=device-width, initial-scale=1.0">
-    <META http-equiv="X-UA-Compatible" content="ie=edge">
-    <META name="description" content="Main index to risingfast website">
-    <META name="keywords" content="html, css, cgi">
-    <META name="generator" content="vim">
-    <META name="author" content="risingfast">
-    <TITLE>Cook-Jarman Ancestry</TITLE>
-    <LINK rel="stylesheet" type="text/css" href="index.css">
-    <LINK rel="shortcut icon" href="letterRF.png" type="image/png">
-</HEAD>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Main index to risingfast website">
+    <meta name="keywords" content="html, css, cgi">
+    <meta name="generator" content="vim">
+    <meta name="author" content="risingfast">
+    <title>Cook-Jarman Ancestry</title>
+    <link rel="stylesheet" type="text/css" href="mcaListPeople.css">
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="shortcut icon" href="letterRF.png" type="image/png">
+</head>
 
 <!-- Comments block   .............................................................................................. -->
 <!--                                                                                                                 -->
@@ -38,196 +39,199 @@
 <!--    10-May-2022 - migrate styles to index.css                                                                    -->
 <!--    10-May-2022 - add <ASIDE3> tag region for corner image footer                                                -->
 <!--    15-May-2022 - add common.js script reference                                                                 -->
+<!--    15-May-2022 - move page-specific styling to mcaListPeople.css                                                -->
 <!--                                                                                                                 -->
 <!-- main page header .............................................................................................. -->
 
-<BODY onload="fGetAction()">
-    <DIV ID="WRAPPER1">
-        <DIV ID="WRAPPER2">
-            <HEADER ID="HEADER1">
-                <BR>
-                <DIV ID="HEADER1DIV">
-                     <H2>www.Risingfast.com</H2>
-                </DIV>
-            </HEADER>
-            <NAV ID="NAV1">
-                    <H3 ID="NAV1H3">Links</H3>
-                <UL ID="NAV1UL">
-                    <LI class="NAV1LI"><A class="active" HREF="http://www.risingfast.com">Home</A></LI>
-                    <LI class="NAV1LI"><A HREF="http://www.risingfast.com/d_ajaxFetch.html">Latest</A></LI>
-                    <LI class="NAV1LI"><A HREF="http://www.risingfast.com/d_template.html">Template</A></LI>
-                    <LI class="NAV1LI"><A HREF="http://www.risingfast.com/email.html">Email</A></LI>
-                    <LI class="NAV1LI"><A HREF="http://www.risingfast.com/about.html">About</A></LI>
-                </UL>
-            </NAV>
+<body onload="fGetAction()">
+    <div ID="WRAPPER1">
+        <div ID="WRAPPER2">
+            <header ID="HEADER1">
+                <br>
+                <div ID="HEADER1DIV">
+                     <h2>www.Risingfast.com</h2>
+                </div>
+            </header>
+            <nav ID="NAV1">
+                    <h3 ID="NAV1H3">Links</h3>
+                <ul ID="NAV1UL">
+                    <li class="NAV1LI"><a class="active" HREF="http://www.risingfast.com">Home</a></li>
+                    <li class="NAV1LI"><a HREF="http://www.risingfast.com/d_ajaxFetch.html">Latest</a></li>
+                    <li class="NAV1LI"><a HREF="http://www.risingfast.com/d_template.html">Template</a></li>
+                    <li class="NAV1LI"><a HREF="http://www.risingfast.com/email.html">Email</a></li>
+                    <li class="NAV1LI"><a HREF="http://www.risingfast.com/about.html">About</a></li>
+                </ul>
+            </nav>
 
 <!-- main document content ......................................................................................... -->
 
+            <main ID="MAIN1" STYLE="background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('background.jpg'); background-size: cover">
+<!--
             <MAIN ID="MAIN1" STYLE="background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('multifacesE.png'); background-size: cover">
+-->
 
+                <div id="heading-div">
+                    <H3 ID="heading-h3">Cook-Jarman Ancestry</H3>
+                </div>
 
-                <DIV STYLE="position:relative; margin:auto; text-align:center; padding:5px; max-width:1440px">
-                    <H3 ID="pageHeading" STYLE="margin:30px 0px 30px 0px" >Cook-Jarman Ancestry</H3>
-                </DIV>
-    
-                <DIV ID="Div1" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
-                    <LABEL STYLE="width:80px;padding-left:30px;font-weight:600;padding: 0px 7px 0px 30px">Choose:</LABEL>
-                    <FIELDSET DATA-ROLE="controlgroup" DATA-TYPE="horizontal" STYLE="display:inline;padding:0px;margin:auto;width:80%;background-color:#E5E4E2;border-color:#E5E4E2;border-width:thin">
-                        <LEGEND STYLE="margin:auto;text-align:center">Action</LEGEND>
-                            <INPUT CLASS="radio" TYPE="radio" ID="people" NAME="Mode" VALUE="people" CHECKED="checked" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>People
-                            <INPUT CLASS="radio" TYPE="radio" ID="profiles" NAME="Mode" VALUE="profiles" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>Profile
-                            <INPUT CLASS="radio" TYPE="radio" ID="marriages" NAME="Mode" VALUE="marriages" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>Unions
-                            <INPUT CLASS="radio" TYPE="radio" ID="residents" NAME="Mode" VALUE="residents" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>Residents
-                            <INPUT CLASS="radio" TYPE="radio" ID="references" NAME="Mode" VALUE="references" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>References
-                            <INPUT CLASS="radio" TYPE="radio" ID="cohorts" NAME="Mode" VALUE="cohorts" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>Cohorts
-                            <INPUT CLASS="radio" TYPE="radio" ID="birthdays" NAME="Mode" VALUE="birthdays" STYLE="margin: 0px 5px 0px 20px" onClick=fGetAction()>B'days
-                        <BUTTON onclick="fMcaListPeople()" ID="go" STYLE="margin:0px 0px 10px 10px">Go</BUTTON>
-                    </FIELDSET>
-                </DIV>
+<!-- main options .................................................................................................. -->
+
+                <div id="options-div">
+                    <label id="options-label">Choose:</label>
+                    <fieldset id="options-fieldset" DATA-ROLE="controlgroup" DATA-TYPE="horizontal">
+                        <legend STYLE="margin:auto;text-align:center"></legend>
+                            <input class="radio" TYPE="radio" ID="people-input" NAME="Mode" VALUE="people" CHECKED="checked" onClick=fGetAction()>People
+                            <input class="radio" TYPE="radio" ID="profiles-input" NAME="Mode" VALUE="profiles" onClick=fGetAction()>Profile
+                            <input class="radio" TYPE="radio" ID="marriages-input" NAME="Mode" VALUE="marriages" onClick=fGetAction()>Unions
+                            <input class="radio" TYPE="radio" ID="residents-input" NAME="Mode" VALUE="residents" onClick=fGetAction()>Residents
+                            <input class="radio" TYPE="radio" ID="references-input" NAME="Mode" VALUE="references" onClick=fGetAction()>References
+                            <input class="radio" TYPE="radio" ID="cohorts-input" NAME="Mode" VALUE="cohorts" onClick=fGetAction()>Cohorts
+                            <input class="radio" TYPE="radio" ID="birthdays-input" NAME="Mode" VALUE="birthdays" onClick=fGetAction()>B'days
+                        <button onclick="fMcaListPeople()" id="go" style="margin:10px 0px 10px 10px">Submit</button>
+                    </fieldset>
+                </div>
     
 <!-- filter input .................................................................................................. -->
     
-                <DIV  ID="filterDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
-                        <LABEL FOR="filter" ID="filterlabel" STYLE="width:80px;padding-left:49px;font-weight:600">Filter:</LABEL>
-                        <INPUT TYPE="text" ID="filter" NAME="Filter" STYLE="margin:auto;width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin">
-                </DIV>
+                <div  ID="filter-div">
+                        <label FOR="filter" id="filter-label">Filter:</label>
+                        <input type="text" id="filter-input" name="filter-input">
+                </div>
     
 <!-- person ID input ............................................................................................... -->
     
-                <DIV ID="personIDdiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
-                    <LABEL FOR="personID" STYLE="padding-left:15px;width:80px;font-weight:600">Person ID:</LABEL>
-                    <INPUT TYPE="text" ID="personID" NAME="personID" SIZE="10" STYLE="width:100px;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin">
-                </DIV>
+                <div ID="personid-div">
+                    <label id="personid-label" for="personid-input">Person ID:</label>
+                    <input id="personid-input" type="text" name="personid-input" size="4">
+                </div>
     
 <!-- results area .................................................................................................. -->
     
-                <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
-                    <LABEL ID="resultsLbl" FOR="results" STYLE="width:80px;padding-left:35px;font-weight:600">Results:</LABEL>
-                    <TEXTAREA ID="results" NAME="results" WRAP="off" ROWS="30" readonly STYLE="width:80%;background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"></TEXTAREA>
-                </DIV>
-    
-<!-- reference links output area ................................................................................... -->
-    
-                <DIV ID=Div2>
-                    <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left">
-                        <LABEL STYLE="padding-left:15px;font-weight:600">References:</LABEL>
-                    </DIV>
-    
-                    <DIV STYLE="position:relative;max-width:1440px;margin:auto;text-align:left">
-                        <P ID="profreflinks" STYLE="margin-left:80px;padding:0px;font-weight:600">
-                        </P>
-                    </DIV>
-                </DIV>
+                <div id="results-div">
+                    <label id="results-label" ID="resultsLbl" FOR="results">Results:</label>
+                    <textarea id="results-textarea" ID="results" NAME="results" WRAP="off" ROWS="30" readonly></textarea>
+                </div>
     
 <!-- message box ................................................................................................... -->
     
-                <DIV ID="Div3" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
-                    <LABEL FOR="message" STYLE="width:80px;padding-left:22px;font-weight:600">Message:</LABEL>
-                    <INPUT TYPE="text" ID="message" NAME="message" STYLE="width:80%; background-color:#E5E4E2; border-color:#E5E4E2; border-width:thin"><BR>
-                </DIV>
+                <div id="message-div">
+                    <label id="message-label" FOR="message-input">Message:</label>
+                    <input id="message-input" TYPE="text" NAME="message"><BR>
+                </div>
     
 <!-- buttons to show reset and background and help ................................................................. -->
     
-                 <DIV STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;text-align:left">
-                    <BUTTON onclick="fReset()" ID="reset" STYLE="margin: 0px 10px 0px 93px">Clear</BUTTON>
-                    <BUTTON onclick="fShowBckgrnd()" ID="showBkgrnd" STYLE="margin: 0px 20px 0px 10px">Background</BUTTON>
-                    <BUTTON onclick="fShowHelp()">Help</BUTTON>
-                </DIV>
+                 <div id="buttons-div">
+                    <label id="buttons-label"></label>
+                    <button id="help-button" onclick="fShowAncestryHelp()">Help</button>
+                    <button onclick="fReset()" ID="reset">Clear</button>
+                </div>
 
 <!-- help text controlled by the help button ....................................................................... -->
 
-                <DIV id="HELPTXT">
-                    <DIV id="HELPDIV" class="help">
-                        <P>
-                            To find a person's profile, find their Person ID then click 'Profile', enter the Person ID and click 'Go'.<BR>
-                            To find a Person ID, click 'People' then 'Go' and scan the list. Filter the list by entering text in the 'Filter'.<BR>
-                            Every person's profile has their ancestry in a tree layout at the bottom of the person's profile results.<BR>
-                            The 'Results' box can be expanded by dragging the bottom right corner with a mouse.<BR>
-                            A spreadsheet version of the Cook ancestry (direct ancestors only) is downloaded by the link below<BR>
-                        </P>
-                    </DIV>
-                </DIV>
+                <div id="help-div">
+                    <label id="help-label"></label>
+                    <p id="help-para">
+                        To find a person's profile, find their Person ID then click 'Profile', enter the Person ID and click 'Go'.<br>
+                        To find a Person ID, click 'People' then 'Go' and scan the list. Filter the list by entering text in the 'Filter'.<br>
+                        Every person's profile has their ancestry in a tree layout at the bottom of the person's profile results.<br>
+                        The 'Results' box can be expanded by dragging the bottom right corner with a mouse.<br>
+                        A spreadsheet version of the Cook ancestry (direct ancestors only) is downloaded by the link below<br>
+                    </p>
+                </div>
 
 <!-- button to download the spreadsheet tree........................................................................ -->
     
-                <DIV ID="downloadDiv" STYLE="position:relative;max-width:1440px;margin:auto;padding:5px;font-weight:600;text-align:left">
-                    <A href="Jarman%20Cook%20Family%20Tree%20Horizontal.xlsx">Download Tree</A>(Last Updated 25-Apr-2022)
-                </DIV>
+                <div id="download-div">
+                    <label id="download-label"></label>
+                    <a id="download-anchor" href="Jarman%20Cook%20Family%20Tree%20Horizontal.xlsx">Download Tree (Last Updated 25-Apr-2022)</a>
+                </div>
 
+<!-- reference links output area ................................................................................... -->
+    
+                <div id="references-div">
+                    <label id="references-label">References:</label>
+                        <P ID="references-links">
+                        </P>
+                </div>
+    
 <!-- Internals ..................................................................................................... -->
 
-                <SECTION>
-                   <DIV id="INTERNALS">
-                        <DETAILS>
-                            <SUMMARY style="outline:none">
-                                Internals
-                            </SUMMARY>
-                            <P>
-                                html file: /var/www.html/mcaListPeople.html<BR>
-                                js file: /var/www/html/mcaListPeople.js<BR>
-                                css file: /var/www/html/css/index.css<BR>
-                                cgi file: /usr/lib/cgi-bin/mcaListPeople.cgi<BR>
-                                corner image: /var/www/html/cornerImage.png<BR>
-                                background image: /var/www/html/multifacesE.jpg<BR>
-                                CGI source code: C<BR>
-                            </P>
-                        </DETAILS>
-                    </DIV>
-                </SECTION>
+               <div id="internals-div">
+                <label id="internals-label"></label>
+                    <details id="internals-details">
+                        <summary style="outline:none">
+                            Internals
+                        </summary>
+                        <p>
+                            html file: /var/www.html/mcaListPeople.html<BR>
+                            js file1: /var/www/html/common.js<BR>
+                            js file2: /var/www/html/mcaListPeople.js<BR>
+                            css file1: /var/www/html/common.css<BR>
+                            cgi file2: /usr/lib/cgi-bin/mcaListPeople.cgi<BR>
+                            corner image: /var/www/html/cornerImage.png<BR>
+                            background image: /var/www/html/background.jpg<BR>
+                            CGI source code: C<BR>
+                        </p>
+                    </details>
+                </div>
 
-            </MAIN>
+            </main>
 
 <!-- <ASIDE1> region for change log ................................................................................ -->
 
-            <ASIDE ID="ASIDE1">
-                    <H3 ID=ASIDE1H3>Changes 2021</H3>
-                <UL ID="ASIDE1UL">
-                    <LI CLASS="ASIDE1LI">03-Oct: set internals font-weight</LI>
-                    <LI CLASS="ASIDE1LI">03-Oct: set results read-only</LI>
-                    <LI CLASS="ASIDE1LI">03-Oct: rename functions</LI>
-                    <LI CLASS="ASIDE1LI">19-Sep: add a Help button</LI>
-                    <LI CLASS="ASIDE1LI">16-Sep: add Internals section</LI>
-                    <LI CLASS="ASIDE1LI">16-Sep: simplify system messages</LI>
-                    <LI CLASS="ASIDE1LI">16-Sep: update background</LI>
-                    <LI CLASS="ASIDE1LI">15-Sep: add vertical scroll bar</LI>
-                    <LI CLASS="ASIDE1LI">15-Sep: fix profile query bug</LI>
-                    <LI CLASS="ASIDE1LI">14-Sep: fix background image</LI>
-                    <LI CLASS="ASIDE1LI">14-Sep: implement grid layout</LI>
-                </UL>
-            </ASIDE>
+            <aside ID="ASIDE1">
+                    <h3 ID=ASIDE1H3>Changes 2021</h3>
+                <ul ID="ASIDE1UL">
+                    <li class="ASIDE1LI">22-May: lowercase html tags</li>
+                    <li class="ASIDE1LI">22-May: cleanup layout</li>
+                    <li class="ASIDE1LI">21-May: implement mcaListPeople.css</li>
+                    <li class="ASIDE1LI">03-Oct: set internals font-weight</li>
+                    <li class="ASIDE1LI">03-Oct: set results read-only</li>
+                    <li class="ASIDE1LI">03-Oct: rename functions</li>
+                    <li class="ASIDE1LI">19-Sep: add a Help button</li>
+                    <li class="ASIDE1LI">16-Sep: add Internals section</li>
+                    <li class="ASIDE1LI">16-Sep: simplify system messages</li>
+                    <li class="ASIDE1LI">16-Sep: update background</li>
+                    <li class="ASIDE1LI">15-Sep: add vertical scroll bar</li>
+                    <li class="ASIDE1LI">15-Sep: fix profile query bug</li>
+                    <li class="ASIDE1LI">14-Sep: fix background image</li>
+                    <li class="ASIDE1LI">14-Sep: implement grid layout</li>
+                </ul>
+            </aside>
 
 <!-- <ASIDE2> region for corner image .............................................................................. -->
 
-            <ASIDE ID="ASIDE2">
-                <DIV ID="ASIDE2DIV">
-                     <IMG ID="ASIDE2IMG" SRC="cornerImage.png" ALT="No cornerImage.png available to load">
-                </DIV>
-            </ASIDE>
+            <aside ID="ASIDE2">
+                <div ID="ASIDE2DIV">
+                     <img ID="ASIDE2IMG" SRC="cornerImage.png" ALT="No cornerImage.png available to load">
+                </div>
+            </aside>
 
 <!-- <ASIDE3> region for corner image caption ...................................................................... -->
 
-            <ASIDE id="ASIDE3">
-                <DIV id="ASIDE3DIV">
+            <aside id="ASIDE3">
+                <div id="ASIDE3DIV">
                     <P>
                      Matilda Cook in Magpies uniform before her next netball game 2022
                     </P>
-                </DIV>
-            </ASIDE>
+                </div>
+            </aside>
 
 <!-- <FOOTER> region for page footer ............................................................................... -->
 
 
-            <FOOTER ID="FOOTER1">
-                <DIV ID="FOOTER1DIV">
+            <footer id="FOOTER1">
+                <div ID="FOOTER1DIV">
                     <P>&copy; 2020 www.risingfast.com ... /var/www/html/fMcaListPeople.html</P>
-                </DIV>
-            </FOOTER>
-        </DIV>
-    </DIV>
+                </div>
+            </footer>
+        </div>
+    </div>
 
-    <SCRIPT src="mcaListPeople.js"></SCRIPT>
-    <SCRIPT src="common.js"></SCRIPT>
+    <script src="mcaListPeople.js"></script>
+    <script src="common.js"></script>
 
-</BODY>
+</body>
 
-</HTML>
+</html>
