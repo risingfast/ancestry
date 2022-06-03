@@ -25,8 +25,7 @@
     position: relative;
     max-width: 1440px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
     text-align: left;
 }
 
@@ -39,57 +38,47 @@
 
 #options-fieldset {
     display: inline;
+    padding: 5px;
     margin: auto;
     width: 80%;
     background-color: #E5E4E2;
     border-color: #E5E4E2;
-    border-width: 0px;
-    padding: 0px;
-}
-
-#options-legend {
-    margin: auto;
-    text-align: center;
-}
-
-#options-button {
-    margin:10px 0px 10px 10px;
+    border-width: thin;
 }
 
 #people-input {
-    margin: 0px 5px 0px 10px;
+    margin: 0px 5px 0px 20px;
 }
 
 #profiles-input {
-    margin: 0px 5px 0px 10px;
+    margin: 0px 5px 0px 20px;
 }
 
 #marriages-input {
-    margin: 0px 5px 0px 10px;
+    margin: 0px 5px 0px 20px;
 }
 
 #residents-input {
-    margin: 0px 5px 0px 10px;
+    margin: 0px 5px 0px 20px;
 }
 
 #references-input {
-    margin: 0px 5px 0px 10px;
+    margin: 0px 5px 0px 20px;
 }
 
 #cohorts-input {
-    margin: 0px 5px 0px 10px;
+    margin: 0px 5px 0px 20px;
 }
 
 #birthdays-input {
-    margin: 0px 5px 0px 10px;
+    margin: 0px 5px 0px 20px;
 }
 
 #filter-div {
     position :relative;
     max-width: 1440px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding:5px;
     text-align:left;
 }
 
@@ -103,19 +92,17 @@
 #filter-input {
     margin: auto;
     width:80%;
+    padding: 5px;
     background-color: #E5E4E2;
     border-color: #E5E4E2;
-    border-width: 0px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    border-width: thin;
 }
 
 #personid-div {
     position: relative;
     max-width: 1440px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
     text-align: left;
 }
 
@@ -130,17 +117,17 @@
     width: 100px;
     background-color: #E5E4E2;
     border-color: #E5E4E2;
-    border-width: 0px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    border-width: thin;
+    padding: 5px;
 }
 
 #results-div {
     position: relative;
     max-width: 1440px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding-left:5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
     text-align: left;
 }
 
@@ -155,15 +142,14 @@
     width: 80%;
     background-color: #E5E4E2;
     border-color: #E5E4E2;
-    order-width: 0px;
+    border-width: thin;
 }
 
 #message-div {
     position: relative;
     max-width: 1440px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
     text-align: left;
 }
 
@@ -177,17 +163,17 @@
 #message-input {
     margin: auto;
     width:80%;
+    padding: 5px;
     background-color: #E5E4E2;
     border-color: #E5E4E2;
-    border-width: 0px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    border-width: thin;
 }
 
 #buttons-div {
     position: relative;
     max-width: 1440px;
     margin: auto;
+    padding: 5px;
     text-align: left;
 }
 
@@ -205,8 +191,7 @@
     position: relative;
     max-width: 1440px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
     text-align: left;
     display: none;
 }
@@ -225,8 +210,7 @@
     position: relative;
     max-width: 1440px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
     text-align: left;
 }
 
@@ -244,8 +228,7 @@
     position: relative;
     max-width: 1440px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
     text-align: left;
 }
 

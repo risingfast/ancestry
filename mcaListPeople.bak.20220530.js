@@ -22,15 +22,12 @@
 //    16-Sep-2021 change error message to red
 //    12-May-2022 change "none" to "" for x.style.display in fShowHelp()
 //    15-May-2022 remove fShowHelp() moved to common.js
-//    31-May-2021 add math.random() to fSetCornerImage()
-
 // Enhancements:
 //
 
 'use strict';
 
 const uri = "http://www.risingfast.com/cgi-bin/mcaListPeople.cgi";
-const uri2 = "http://www.risingfast.com/cgi-bin/setCornerImage.cgi";
 
 // function to ajax fetch all people from the server ------------------------------------------------------------------
 
@@ -327,9 +324,9 @@ function fGetAction() {
         document.getElementById("cohorts-input").required = false;
         document.getElementById("birthdays-input").disabled = false;
         document.getElementById("birthdays-input").required = false;
-        document.getElementById("options-button").disabled = false;
+        document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "People action selected - click 'Submit' or set a filter then click 'Submit' to proceed";
+        document.getElementById("message-input").value = "People action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results-textarea").value = "";
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
@@ -350,9 +347,9 @@ function fGetAction() {
         document.getElementById("cohorts-input").required = false;
         document.getElementById("birthdays-input").disabled = false;
         document.getElementById("birthdays-input").required = false;
-        document.getElementById("options-button").disabled = false;
+        document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "Profiles action selected - enter a Person ID then click 'Submit' to proceed (use the People option to find a Person ID)";
+        document.getElementById("message-input").value = "Profiles action selected - enter a Person ID then click 'Go' to proceed (use the People option to find a Person ID)";
         document.getElementById("personid-input").style.backgroundColor = "lightyellow"
         document.getElementById("results-textarea").value = "";
         document.getElementById("filter-input").value = "";
@@ -374,9 +371,9 @@ function fGetAction() {
         document.getElementById("cohorts-input").required = false;
         document.getElementById("birthdays-input").disabled = false;
         document.getElementById("birthdays-input").required = false;
-        document.getElementById("options-button").disabled = false;
+        document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "Unions action selected - click 'Submit' or set a filter then click 'Submit' to proceed";
+        document.getElementById("message-input").value = "Unions action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results-textarea").value = "";
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
@@ -397,9 +394,9 @@ function fGetAction() {
         document.getElementById("cohorts-input").required = false;
         document.getElementById("birthdays-input").disabled = false;
         document.getElementById("birthdays-input").required = false;
-        document.getElementById("options-button").disabled = false;
+        document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "Residents action selected - click 'Submit' or set a filter then click 'Submit' to proceed";
+        document.getElementById("message-input").value = "Residents action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results-textarea").value = "";
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
@@ -420,15 +417,15 @@ function fGetAction() {
         document.getElementById("cohorts-input").required = false;
         document.getElementById("birthdays-input").disabled = false;
         document.getElementById("birthdays-input").required = false;
-        document.getElementById("options-button").disabled = false;
+        document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "References action selected - click 'Submit' or set a filter then click 'Submit' to proceed";
+        document.getElementById("message-input").value = "References action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results-textarea").value = "";
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
-        document.getElementById("references-links").innerHTML="";
+        document.getElementById("refrences-links").innerHTML="";
     }
     if (document.getElementById("cohorts-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -443,9 +440,9 @@ function fGetAction() {
         document.getElementById("references-input").required = false;
         document.getElementById("birthdays-input").disabled = false;
         document.getElementById("birthdays-input").required = false;
-        document.getElementById("options-button").disabled = false;
+        document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "Cohorts action selected - click 'Submit' or set a filter then click 'Submit' to proceed";
+        document.getElementById("message-input").value = "Cohorts action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results-textarea").value = "";
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
@@ -466,9 +463,9 @@ function fGetAction() {
         document.getElementById("references-input").required = false;
         document.getElementById("cohorts-input").disabled = false;
         document.getElementById("cohorts-input").required = false;
-        document.getElementById("options-button").disabled = false;
+        document.getElementById("go").disabled = false;
         document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "Birthdays action selected - click 'Submit' or set a filter then click 'Submit' to proceed";
+        document.getElementById("message-input").value = "Birthdays action selected - click 'Go' or set a filter then click 'Go' to proceed";
         document.getElementById("results-textarea").value = "";
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
@@ -495,7 +492,7 @@ function fReset() {
     document.getElementById("cohorts-input").disabled = false;
     document.getElementById("birthdays-input").checked = false;
     document.getElementById("birthdays-input").disabled = false;
-    document.getElementById("options-button").disabled = false;
+    document.getElementById("go").disabled = false;
     document.getElementById("reset").disabled = false;
     document.getElementById("message-input").value = "Reset action selected - all fields are reset";
     document.getElementById("results-textarea").value = "Results are reset";
@@ -533,22 +530,3 @@ function fShowAncestryHelp() {
         x.style.display = "";
     }
 }
-
-
-// function to ajax fetch the current corner image and captiona
-
-async function fSetCornerImage() {
-    let response = await fetch(uri2);
-    if (response.ok) {
-        let text = await response.text();
-        let array = text.split("\n");
-        array.pop();                      // remove the last element (empty element) created by the split("\n")
-        let intRecords = array.length/3;
-        let intRecordSelected = Math.trunc(Math.random() * intRecords);
-        document.getElementById("ASIDE2IMG").src=array[intRecordSelected * 3]
-        document.getElementById("ASIDE3-PARA").innerHTML=array[(intRecordSelected * 3) + 1];
-    } else {
-        alert("HttpError: " + response.status);
-    }
-}
-

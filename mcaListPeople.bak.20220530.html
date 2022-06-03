@@ -40,11 +40,10 @@
 <!--    10-May-2022 - add <ASIDE3> tag region for corner image footer                                                -->
 <!--    15-May-2022 - add common.js script reference                                                                 -->
 <!--    15-May-2022 - move page-specific styling to mcaListPeople.css                                                -->
-<!--    31-May-2022 - set cornerimage rotation                                                                       -->
 <!--                                                                                                                 -->
 <!-- main page header .............................................................................................. -->
 
-<body onload="fGetAction(); fSetCornerImage()">
+<body onload="fGetAction()">
     <div ID="WRAPPER1">
         <div ID="WRAPPER2">
             <header ID="HEADER1">
@@ -66,7 +65,10 @@
 
 <!-- main document content ......................................................................................... -->
 
-            <main ID="MAIN1">
+            <main ID="MAIN1" STYLE="background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('background.jpg'); background-size: cover">
+<!--
+            <MAIN ID="MAIN1" STYLE="background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('multifacesE.png'); background-size: cover">
+-->
 
                 <div id="heading-div">
                     <H3 ID="heading-h3">Cook-Jarman Ancestry</H3>
@@ -77,7 +79,7 @@
                 <div id="options-div">
                     <label id="options-label">Choose:</label>
                     <fieldset id="options-fieldset" DATA-ROLE="controlgroup" DATA-TYPE="horizontal">
-                        <legend id="options-legend"></legend>
+                        <legend STYLE="margin:auto;text-align:center"></legend>
                             <input class="radio" TYPE="radio" ID="people-input" NAME="Mode" VALUE="people" CHECKED="checked" onClick=fGetAction()>People
                             <input class="radio" TYPE="radio" ID="profiles-input" NAME="Mode" VALUE="profiles" onClick=fGetAction()>Profile
                             <input class="radio" TYPE="radio" ID="marriages-input" NAME="Mode" VALUE="marriages" onClick=fGetAction()>Unions
@@ -85,8 +87,7 @@
                             <input class="radio" TYPE="radio" ID="references-input" NAME="Mode" VALUE="references" onClick=fGetAction()>References
                             <input class="radio" TYPE="radio" ID="cohorts-input" NAME="Mode" VALUE="cohorts" onClick=fGetAction()>Cohorts
                             <input class="radio" TYPE="radio" ID="birthdays-input" NAME="Mode" VALUE="birthdays" onClick=fGetAction()>B'days
-                            <input class="radio" TYPE="radio" ID="options-input" NAME="Mode" VALUE="options" onClick=fSetOptions()>Options
-                        <button onclick="fMcaListPeople()" id="options-button">Submit</button>
+                        <button onclick="fMcaListPeople()" id="go" style="margin:10px 0px 10px 10px">Submit</button>
                     </fieldset>
                 </div>
     
@@ -131,8 +132,8 @@
                 <div id="help-div">
                     <label id="help-label"></label>
                     <p id="help-para">
-                        To find a person's profile, find their Person ID then click 'Profile', enter the Person ID and click 'Submit'.<br>
-                        To find a Person ID, click 'People' then 'Submit' and scan the list. Filter the list by entering text in the 'Filter'.<br>
+                        To find a person's profile, find their Person ID then click 'Profile', enter the Person ID and click 'Go'.<br>
+                        To find a Person ID, click 'People' then 'Go' and scan the list. Filter the list by entering text in the 'Filter'.<br>
                         Every person's profile has their ancestry in a tree layout at the bottom of the person's profile results.<br>
                         The 'Results' box can be expanded by dragging the bottom right corner with a mouse.<br>
                         A spreadsheet version of the Cook ancestry (direct ancestors only) is downloaded by the link below<br>
@@ -156,9 +157,10 @@
     
 <!-- Internals ..................................................................................................... -->
 
-               <div id="INTERNALS">
+               <div id="internals-div">
+                <label id="internals-label"></label>
                     <details id="internals-details">
-                        <summary>
+                        <summary style="outline:none">
                             Internals
                         </summary>
                         <p>
@@ -182,8 +184,6 @@
             <aside ID="ASIDE1">
                     <h3 ID=ASIDE1H3>Changes 2021</h3>
                 <ul ID="ASIDE1UL">
-                    <li class="ASIDE1LI">31-May: set cornerimage rotation</li>
-                    <li class="ASIDE1LI">30-May: cleanup margin layout</li>
                     <li class="ASIDE1LI">22-May: lowercase html tags</li>
                     <li class="ASIDE1LI">22-May: cleanup layout</li>
                     <li class="ASIDE1LI">21-May: implement mcaListPeople.css</li>
@@ -213,7 +213,7 @@
 
             <aside id="ASIDE3">
                 <div id="ASIDE3DIV">
-                    <P id="ASIDE3-PARA">
+                    <P>
                      Matilda Cook in Magpies uniform before her next netball game 2022
                     </P>
                 </div>
