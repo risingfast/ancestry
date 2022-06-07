@@ -22,8 +22,7 @@
 //    16-Sep-2021 change error message to red
 //    12-May-2022 change "none" to "" for x.style.display in fShowHelp()
 //    15-May-2022 remove fShowHelp() moved to common.js
-//    31-May-2022 add math.random() to fSetCornerImage()
-//    05-Jun-2022 add fSetFocusOnSubmit();
+//    31-May-2021 add math.random() to fSetCornerImage()
 
 // Enhancements:
 //
@@ -336,8 +335,6 @@ function fGetAction() {
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
-        document.getElementById("jump-div").hidden = false; 
-        document.getElementById("jump-input").value = ""; 
         document.getElementById("references-links").innerHTML="";
     }
     if (document.getElementById("profiles-input").checked === true) {
@@ -362,7 +359,6 @@ function fGetAction() {
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = false; 
         document.getElementById("filter-div").hidden = true; 
-        document.getElementById("jump-div").hidden = true; 
         document.getElementById("references-links").innerHTML="";
     } 
     if (document.getElementById("marriages-input").checked === true) {
@@ -385,7 +381,6 @@ function fGetAction() {
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
-        document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
     }
@@ -409,7 +404,6 @@ function fGetAction() {
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
-        document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
     }
@@ -433,7 +427,6 @@ function fGetAction() {
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
-        document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
     }
@@ -457,7 +450,6 @@ function fGetAction() {
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
-        document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
     }
@@ -481,7 +473,6 @@ function fGetAction() {
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
-        document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
     }
@@ -561,24 +552,3 @@ async function fSetCornerImage() {
     }
 }
 
-// function to focus the options button when a filter is entered
-
-function fSetFocusOnSubmit() {
-  document.getElementById("options-button").focus();
-}
-
-// function to focus the jumpt button when a person id is entered
-
-function fSetFocusOnJump() {
-  document.getElementById("jump-button").focus();
-}
-
-// function jump to a person's profile from the peopel list jump field
-
-function fonclick_jump_submit() {
-    document.getElementById("profiles-input").checked = true;
-    document.getElementById("personid-input").value = document.getElementById("jump-input").value;
-    fMcaListPeople();
-    fGetAction();
-
-}

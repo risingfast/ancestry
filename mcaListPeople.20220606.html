@@ -42,7 +42,6 @@
 <!--    15-May-2022 - move page-specific styling to mcaListPeople.css                                                -->
 <!--    31-May-2022 - set cornerimage rotation                                                                       -->
 <!--    05-Jun-2022 - set submit focus on filter input                                                               -->
-<!--    06-Jun-2022 - add profile jump from list                                                                     -->
 <!--                                                                                                                 -->
 <!-- main page header .............................................................................................. -->
 
@@ -103,27 +102,17 @@
     
                 <div ID="personid-div">
                     <label id="personid-label" for="personid-input">Person ID:</label>
-                    <input id="personid-input" type="text" name="personid-input" size="4" onchange="fSetFocusOnSubmit()">
+                    <input id="personid-input" type="text" name="personid-input" size="4">
                 </div>
     
-<!-- results div ................................................................................................... -->
+<!-- results area .................................................................................................. -->
     
                 <div id="results-div">
                     <label id="results-label" ID="resultsLbl" FOR="results">Results:</label>
                     <textarea id="results-textarea" ID="results" NAME="results" WRAP="off" ROWS="30" readonly></textarea>
                 </div>
     
-
-<!-- jump div ...................................................................................................... -->
-
-                <div ID="jump-div">
-                    <label id="jump-label" for="jump-input">Person ID:</label>
-                    <input id="jump-input" type="text" name="jump-input" size="4" onchange="fSetFocusOnJump()">
-                    <button id="jump-button"  onclick="fonclick_jump_submit()">Jump</button>
-                </div>
-
-
-<!-- message box div ............................................................................................... -->
+<!-- message box ................................................................................................... -->
     
                 <div id="message-div">
                     <label id="message-label" FOR="message-input">Message:</label>
@@ -155,7 +144,7 @@
     
                 <div id="download-div">
                     <label id="download-label"></label>
-                    <a id="download-anchor" href="Jarman%20Cook%20Family%20Tree%20Horizontal.xlsx">Download Tree (Last Updated 07-Jun-2022)</a>
+                    <a id="download-anchor" href="Jarman%20Cook%20Family%20Tree%20Horizontal.xlsx">Download Tree (Last Updated 25-Apr-2022)</a>
                 </div>
 
 <!-- reference links output area ................................................................................... -->
@@ -194,7 +183,6 @@
             <aside ID="ASIDE1">
                     <h3 ID=ASIDE1H3>Changes 2021</h3>
                 <ul ID="ASIDE1UL">
-                    <li class="ASIDE1LI">06-Jun: add profile jump to list</li>
                     <li class="ASIDE1LI">05-Jun: focus submit on filter input</li>
                     <li class="ASIDE1LI">31-May: set cornerimage rotation</li>
                     <li class="ASIDE1LI">30-May: cleanup margin layout</li>

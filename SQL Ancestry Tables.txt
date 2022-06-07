@@ -1,0 +1,101 @@
+-- Description: dump the People table and join foreign keys
+-- Created:     07-Jun-2022
+-- Log:
+--    07-Jun-2022 format date columns
+--    07-Jun-2022 comment out minor ID columns
+
+select AP.`Person ID`
+--     , AP.`Actual` as `Actual Person Flag`
+     , AP.`First Name`
+     , AP.`Nick Name`
+     , AP.`Middle Names`
+     , AP.`Last Name`
+     , AP.`Suffix`
+     , AP.`Gender`
+     , AP.`Birth Last Name`
+     , AP.`Mother ID`
+     , concat(ACM.`First Name`, ' ', ACM.`Last Name`) as `Mother's Name`
+     , AP.`Father ID`
+     , concat(ACF.`First Name`, ' ', ACF.`Last Name`) as `Father's Name` 
+     , date_format(AP.`Born On`, "%D-%M-%Y") as `Born On`
+     , AP.`Birth Place`
+--     , AP.`Birth Country ID`
+     , ACB.`Country Name` as `Birth Country`
+--     , AP.`Deceased` as `Deceased Flag`
+     , if (AP.`Deceased` = 1,'Deceased','Living') as `Deceased Status`
+     , date_format(AP.`Deceased On`, "%D-%M-%Y") as `Deceased On`
+     , AP.`Deceased Place`
+     , AP.`Cause of Death`
+     , AP.`Grave Site`
+--     , AP.`Deceased Country ID`
+     , ACD.`Country Name` as `Deceased Country`
+     , ACD.`Country Name`
+     , AP.`Comments`
+     , AP.`Education`
+from risingfast.`Ancestry People` AP
+left join risingfast.`Ancestry Countries` ACB on AP.`Birth Country ID` = ACB.`Country ID`
+left join risingfast.`Ancestry People` ACM on AP.`Mother ID` = ACM.`Person ID`
+left join risingfast.`Ancestry People` ACF on AP.`Father ID` = ACF.`Person ID`
+left join risingfast.`Ancestry Countries` ACD on AP.`Deceased Country ID` = ACD.`Country ID`
+where AP.`Actual` = 1
+order by `Person ID` asc
+;
+
+-- Description: dump of Marriages tabl and join foreign keys
+-- Created:     07-Jun-2022
+-- Log:
+--     format dates
+select AM.`Marriage ID`
+     , AM.`Marriage Description`
+     , AM.`Marriage Place`
+     , date_format(AM.`Marriage Date`, "%D-%M-%Y") as `Marriage Date`
+	 , AM.`Husband ID`
+     , concat(ACH.`First Name`, ' ', ACH.`Last Name`) as `Groom's Name`
+     , AM.`Wife ID`
+     , concat(ACW.`First Name`, ' ', ACW.`Last Name`) as `Bride's Name` 
+     , date_format(AM.`Marriage Date`, "%D-%M-%Y") as `Married On`
+     , ACM.`Country Name` as `Marriage Country`
+--     , AP.`Deceased` as `Deceased Flag`
+     , if (AM.`Divorced` = 1,'Divorced','Together') as `Marriage Status`
+     , date_format(AM.`Divorce Date`, "%D-%M-%Y") `Divorced On`
+     , AM.`Divorce Place`
+     , ACD.`Country Name` as `Divorce Country`
+from risingfast.`Ancestry Marriages` AM
+left join risingfast.`Ancestry Countries` ACM on AM.`Marriage Country ID` = ACM.`Country ID`
+left join risingfast.`Ancestry People` ACW on AM.`Wife ID` = ACW.`Person ID`
+left join risingfast.`Ancestry People` ACH on AM.`Husband ID` = ACH.`Person ID`
+left join risingfast.`Ancestry Countries` ACD on AM.`Divorce Country ID` = ACD.`Country ID`
+order by `Marriage ID` asc
+;
+
+-- Description: dump of References table with foreign key joins
+-- Created:     07-Jun-2022
+-- Log:
+--     07-Jun-2022 started
+select AR.`Person ID`
+     , concat(AP.`First Name`, AP.`Last Name`) as `Person Name`
+     , AR.`Reference ID`
+     , AR.`Reference Name`
+     , AR.`Reference Type`
+     , AR.`Reference Link`
+from risingfast.`Ancestry References` AR
+left join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID`
+order by AR.`Person ID`
+;
+
+-- Description: dump of Residences table with foreign key joins
+-- Created:     07-Jun-2022
+-- Log:
+--     07-Jun-2022 started
+select AR.`Resident ID`
+     , AR.`Person ID`
+     , concat(AP.`First Name`, ' ', AP.`Last Name`) as `Resieent Name`
+     , AR.`Address ID`
+     , concat(AR1.`Address Line 1`, ' ', AR1.`Address City`, ' ', AR1.`Address State`) as `Address`
+	 , date_format(AR.`From`, "%D-%M-%Y") as `From`
+	 , date_format(AR.`To`, "%D-%M-%Y") as `To`
+from risingfast.`Ancestry Residents` AR
+left join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID`
+left join risingfast.`Ancestry Addresses` AR1 on AR.`Address ID` = AR1.`Address ID`
+order by AR.`Person ID` asc
+;

@@ -5,7 +5,6 @@
 /* Log                                                                                                               */
 /*     21-May-2022 - started                                                                                         */
 /*     21-May-2022 - add page-specific styling                                                                       */
-/*     06-Jun-2022 - change borders on text areas                                                                    */
 /*                                                                                                                   */
 
 #heading-div {
@@ -106,7 +105,7 @@
     width:80%;
     background-color: #E5E4E2;
     border-color: #E5E4E2;
-    border-width: 1px;
+    border-width: 0px;
     padding-top: 7px;
     padding-bottom: 7px;
 }
@@ -155,35 +154,8 @@
 #results-textarea {
     width: 80%;
     background-color: #E5E4E2;
-}
-
-#jump-div {
-    position: relative;
-    max-width: 1440px;
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    text-align: left;
-}
-
-#jump-label {
-    width: 100px;
-    font-weight: 600;
-    display: inline-block;
-    margin-left: 10px;
-}
-
-#jump-input {
-    width: 100px;
-    background-color: #E5E4E2;
     border-color: #E5E4E2;
-    border-width: 1px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-}
-
-#jump-button {                                                                                                     478     margin-top: 10px;$
-     margin-bottom: 10px;
+    order-width: 0px;
 }
 
 #message-div {
