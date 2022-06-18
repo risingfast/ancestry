@@ -1,12 +1,11 @@
-//  mcaListResidents.c -- list people living at addresses from the ancestry database as a cgi
+//  mcaListReferences.c -- list references in the mysql ancestry database as a cgi
 //  Author: Geoffrey Jarman
 //  Started: 10-Aug-2021
 //  References:
 //  Log:
 //      10-Aug-2021 started
-//      14-Aug-2021 changed SQL to retrieve residents
-//      24-Aug-2021 eliminate NULL middle names in SQL
-//      13-Jun-2022 move to gjarman2020.com
+//      14-Aug-2021 changed SQL to list references
+//      24-Aug-2021 eliminate NULL's in middle name with COALESCE
 //  Enhancements:
 ///
 
@@ -22,12 +21,10 @@
 
 // global declarations
 
-char *sgServer = "35.188.123.150";                                              // mysqlServer IP address
-// char *sgServer = "192.168.0.13";                                             // mysqlServer IP address$
-char *sgUsername = "root";                                                      // mysqlSerer logon username$
-// char *sgUsername = "gjarman";                                                // mysqlSerer logon username$
-char *sgPassword = "Mpa4egu$";                                                  // password to connect to mysqlserver$
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver$
+char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
+char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
+char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
 
 MYSQL *conn;
 
@@ -40,19 +37,14 @@ int main(int argc, char** argv) {
     MYSQL_RES *res;
     MYSQL_ROW row;
 
-    sprintf(caSQL, "select AR.`Resident ID` "
-            ",      AA.`Address Line 1` "
-            ",      AA.`Address City` "
-            ",      AA.`Address State` "
-            ",      AR.`Person ID` "
+    sprintf(caSQL, "select AR.`Reference ID` "
             ",      AP.`First Name` "
             ",      COALESCE(AP.`Middle Names`, '') "
             ",      AP.`Last Name` "
-            " from risingfast.`Ancestry Residents` AR "
-            " left outer join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID` "
-            " left outer join risingfast.`Ancestry Addresses` AA on AR.`Address ID` = AA.`Address ID` "
-            " order by AR.`Resident ID` ASC ")
-;
+            ",      AR.`Reference Name` "
+            ",      AR.`Reference Link` "
+            "from risingfast.`Ancestry References` AR "
+            "left outer join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID` ");
 
     printf("Content-type: text/html\n\n");
 

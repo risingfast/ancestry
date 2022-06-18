@@ -1,10 +1,9 @@
-//  mcaListFmlPeople.c -- list female people in the mysql ancestry database as a cgi
+//  mcaListBdyPeople.c -- list birthdays of people in the mysql ancestry database as a cgi
 //  Author: Geoffrey Jarman
 //  Started: 10-Aug-2021
 //  References:
 //  Log:
 //      10-Aug-2021 started
-//      13-Jun-2022 move to gjarman2020.com
 //  Enhancements:
 ///
 
@@ -20,12 +19,10 @@
 
 // global declarations
 
-char *sgServer = "35.188.123.150";                                              // mysqlServer IP address
-// char *sgServer = "192.168.0.13";                                             // mysqlServer IP address$
-char *sgUsername = "root";                                                      // mysqlSerer logon username$
-// char *sgUsername = "gjarman";                                                // mysqlSerer logon username$
-char *sgPassword = "Mpa4egu$";                                                  // password to connect to mysqlserver$
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver$
+char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
+char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
+char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
 
 MYSQL *conn;
 
@@ -39,23 +36,27 @@ int main(int argc, char** argv) {
     MYSQL_ROW row;
 
     sprintf(caSQL, "SELECT LPAD(AP.`Person ID`, 4, ' ') as 'ID' "
-                        ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
-                        "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`, ' ',COALESCE(AP.`Suffix`, '')), '  ', ' '), '''''', '') AS `Person` "
-                        ", AP.`Gender` "
-                        ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
-                        ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 1) "
-                        ", ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 1)), '') AS 'Age' "
-                        ", COALESCE(AC.Cohort, '') "
-                        "  FROM risingfast.`Ancestry People` AP "
-                        "  LEFT JOIN risingfast.`Ancestry Cohorts` AC on (AP.`Born On` >= AC.`Start`) "
-                        "  and (AP.`Born On` <= AC.`Finish`) "
-                        "  WHERE AP.`Actual`= TRUE"
-                        "  AND AC.Cohort is not NULL")
-                        ;
+                   ", REPLACE(REPLACE(CONCAT(AP.`First Name`, COALESCE(CONCAT(' ''', AP.`Nick Name`, ''' '), ' '), "
+                   "  COALESCE(AP.`Middle Names`, ''),' ', AP.`Last Name`, ' ',COALESCE(AP.`Suffix`, '')), '  ', ' '), '''''', '') AS `Person` "
+                   ", AP.`Gender` "
+                   ", IF(AP.`Deceased` = 1, 'Deceased', 'Living') AS 'Status' "
+                   ", COALESCE(IF(AP.`Deceased` = 0, ROUND(DATEDIFF(CURRENT_DATE(), AP.`Born On`)/365, 0), "
+                   "  ROUND(DATEDIFF(AP.`Deceased On`, AP.`Born On`)/365, 0)), '') AS 'Current Age' "
+                   ", AP.`Born On` "
+                   ", IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 "
+                   "  - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) 'Mths Away' "
+                   "  FROM risingfast.`Ancestry People` AP "
+                   "  WHERE IF(MONTH(AP.`Born On`) - MONTH(CURRENT_DATE()) < 0, MONTH(AP.`Born On`) + 12 "
+                   "  - MONTH(CURRENT_DATE()) , MONTH(AP.`Born On`) - MONTH(CURRENT_DATE())) < 12 "
+                   "  AND AP.`Deceased` = 0 "
+                   "  AND AP.`Actual`= TRUE"
+                   "  order by IF(MONTH(`Born On`) - MONTH(CURRENT_DATE()) < 0, concat('01', lpad(MONTH(`Born On`), 2, '0'), "
+                   "  lpad(DAY(`Born On`), 2, '0')), concat('00',lpad(MONTH(`Born On`), 2, '0'), lpad(DAY(`Born On`), 2, '0'))) ASC")
+                   ;
 
     printf("Content-type: text/html\n\n");
 
-// Initialize a connection and connect to the database$$
+// Initialize a connection and connect to the database
 
     conn = mysql_init(NULL);
 

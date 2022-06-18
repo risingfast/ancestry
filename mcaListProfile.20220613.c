@@ -19,7 +19,6 @@
 //      26-Aug-2021 add location to ancestor tree list
 //      27-Aug-2021 expand indentations on the tree listing
 //      15-Sep-2021 fix bug selecting father's birthplace in parent query
-//      13-Jun-2022 move to gjarman2020.com
 //  Enhancements:
 
 #include <mysql.h>
@@ -34,12 +33,10 @@
 
 // global declarations
 
-char *sgServer = "35.188.123.150";                                              // mysqlServer IP address
-// char *sgServer = "192.168.0.13";                                             // mysqlServer IP address$
-char *sgUsername = "root";                                                      // mysqlSerer logon username$
-// char *sgUsername = "gjarman";                                                // mysqlSerer logon username$
-char *sgPassword = "Mpa4egu$";                                                  // password to connect to mysqlserver$
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver$
+char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
+char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
+char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
 
 int fPrintParents(long lPersonID, int iLvl);                // recursive function to print both of a person's parents
 
