@@ -46,7 +46,7 @@
 <!--                                                                                                                 -->
 <!-- main page header .............................................................................................. -->
 
-<body onload="fGetAction(); fSetCornerImage()">
+<body onload="fGetAction(); fcSetCornerImage()">
     <div ID="WRAPPER1">
         <div ID="WRAPPER2">
             <header ID="HEADER1">
@@ -87,7 +87,6 @@
                             <input class="radio" TYPE="radio" ID="references-input" NAME="Mode" VALUE="references" onClick=fGetAction()>References
                             <input class="radio" TYPE="radio" ID="cohorts-input" NAME="Mode" VALUE="cohorts" onClick=fGetAction()>Cohorts
                             <input class="radio" TYPE="radio" ID="birthdays-input" NAME="Mode" VALUE="birthdays" onClick=fGetAction()>B'days
-                            <input class="radio" TYPE="radio" ID="options-input" NAME="Mode" VALUE="options" onClick=fSetOptions()>Options
                         <button onclick="fMcaListPeople()" id="options-button">Submit</button>
                     </fieldset>
                 </div>
@@ -192,7 +191,7 @@
 <!-- <ASIDE1> region for change log ................................................................................ -->
 
             <aside ID="ASIDE1">
-                    <h3 ID=ASIDE1H3>Changes 2021</h3>
+                    <h3 ID=ASIDE1H3>Changes 2021-22</h3>
                 <ul ID="ASIDE1UL">
                     <li class="ASIDE1LI">06-Jun: add profile jump to list</li>
                     <li class="ASIDE1LI">05-Jun: focus submit on filter input</li>
