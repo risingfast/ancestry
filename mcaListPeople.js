@@ -20,10 +20,9 @@
 //    15-Sep-2021 fix focus unhiding elements
 //    16-Sep-2021 changes to messages with technical references removed
 //    16-Sep-2021 change error message to red
-//    12-May-2022 change "none" to "" for x.style.display in fShowHelp()
-//    15-May-2022 remove fShowHelp() moved to common.js
 //    31-May-2022 add math.random() to fSetCornerImage()
 //    05-Jun-2022 add fSetFocusOnSubmit();
+//    18-Jun-2022 move fSetCornerImage() to common.js
 
 // Enhancements:
 //
@@ -31,7 +30,6 @@
 'use strict';
 
 const uri = "http://www.risingfast.com/cgi-bin/mcaListPeople.cgi";
-const uri2 = "http://www.risingfast.com/cgi-bin/setCornerImage.cgi";
 
 // function to ajax fetch all people from the server ------------------------------------------------------------------
 
@@ -540,24 +538,6 @@ function fShowAncestryHelp() {
         x.style.display = "block";
     } else {
         x.style.display = "";
-    }
-}
-
-
-// function to ajax fetch the current corner image and captiona
-
-async function fSetCornerImage() {
-    let response = await fetch(uri2);
-    if (response.ok) {
-        let text = await response.text();
-        let array = text.split("\n");
-        array.pop();                      // remove the last element (empty element) created by the split("\n")
-        let intRecords = array.length/3;
-        let intRecordSelected = Math.trunc(Math.random() * intRecords);
-        document.getElementById("ASIDE2IMG").src=array[intRecordSelected * 3]
-        document.getElementById("ASIDE3-PARA").innerHTML=array[(intRecordSelected * 3) + 1];
-    } else {
-        alert("HttpError: " + response.status);
     }
 }
 
