@@ -19,7 +19,6 @@
 //      26-Aug-2021 add location to ancestor tree list
 //      27-Aug-2021 expand indentations on the tree listing
 //      15-Sep-2021 fix bug selecting father's birthplace in parent query
-//      07-Aug-2022 change Birth Place to Birthplace in CASQL0 string
 //  Enhancements:
 
 #include <mysql.h>
@@ -166,7 +165,7 @@ int main(int argc, char** argv) {
     printf("\n");
     printf("  Born On:        %s ", row[8]);
     printf("\n");
-    printf("  Birthplace:     %s ", row[9]);
+    printf("  Birth Place:    %s ", row[9]);
     printf("\n");
     printf("  Age:            %s ", row[10]);
     printf("\n");
