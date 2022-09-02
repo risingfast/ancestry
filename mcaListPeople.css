@@ -162,6 +162,31 @@
     background-color: #E5E4E2;
 }
 
+#portraitsframe-div {
+    max-width: 2000px;
+    margin: 20px auto 0 auto;
+    background-color: #FFF;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: lightgrey;
+  }
+.singleportrait-div {
+    width: 150px;
+    height: 170px;
+    background-color: #fefcfd;
+    color: #000;
+    line-height: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 20px;
+    background-color: lightgrey;
+  }
+
 #jump-div {
     position: relative;
     max-width: 1440px;

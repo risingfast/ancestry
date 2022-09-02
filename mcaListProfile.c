@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
     }
     else if(sscanf(data,"PersonID=%ld",&lPersonID)!=1)
     {
-         printf("Invalid data. Data must be a numberr.");
+         printf("Invalid data. Data must be a number.");
          return 0;
     }
 

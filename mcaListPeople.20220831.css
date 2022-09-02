@@ -1,0 +1,330 @@
+/* mcaListPeople.css - a css for mcaListPeople.html                                                                  */
+/* started - 21-May-2022                                                                                             */
+/* References:                                                                                                       */
+/*         HTML & CSS for Beginners Part 22: How to create a basic layout - the CSS                                  */
+/* Log                                                                                                               */
+/*     21-May-2022 - started                                                                                         */
+/*     21-May-2022 - add page-specific styling                                                                       */
+/*     06-Jun-2022 - change borders on text areas                                                                    */
+/*     29-Jul-2022 - reduce padding on text inputs                                                                   */
+/*     03-Aug-2022 - remove background color on jump-input field                                                     */
+/*                                                                                                                   */
+
+#heading-div {
+    position: relative;
+    width: 80%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 1440px;
+    text-align: center;
+}
+
+#heading-h2 {
+    margin: 30px 0px 30px 0px;
+}
+
+#options-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#options-label {
+    font-weight: 600;
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+
+#options-fieldset {
+    display: inline;
+    margin: auto;
+    width: 80%;
+    background-color: #E5E4E2;
+    border-color: #E5E4E2;
+    border-width: 0px;
+    padding: 0px;
+}
+
+#options-legend {
+    margin: auto;
+    text-align: center;
+}
+
+#options-button {
+    margin:10px 0px 10px 10px;
+}
+
+#people-input {
+    margin: 0px 5px 0px 10px;
+}
+
+#profiles-input {
+    margin: 0px 5px 0px 10px;
+}
+
+#marriages-input {
+    margin: 0px 5px 0px 10px;
+}
+
+#residents-input {
+    margin: 0px 5px 0px 10px;
+}
+
+#references-input {
+    margin: 0px 5px 0px 10px;
+}
+
+#references-div {
+    text-align: left;
+}
+
+#cohorts-input {
+    margin: 0px 5px 0px 10px;
+}
+
+#birthdays-input {
+    margin: 0px 5px 0px 10px;
+}
+
+#filter-div {
+    position :relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align:left;
+}
+
+#filter-label {
+    width: 100px;
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#filter-input {
+    margin: auto;
+    width:80%;
+    border-color: #E5E4E2;
+    border-width: 1px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#personid-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#personid-label {
+    width: 100px;
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#personid-input {
+    width: 100px;
+    background-color: #E5E4E2;
+    border-color: #E5E4E2;
+    border-width: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#results-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#results-label {
+    font-weight: 600;
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+
+#results-textarea {
+    width: 80%;
+    background-color: #E5E4E2;
+}
+
+#portraitsframe-div {
+    max-width: 2000px;
+    margin: 20px auto 0 auto;
+    background-color: #FFF;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: lightgrey;
+  }
+.singleportrait-div {
+    width: 150px;
+    height: 170px;
+    background-color: #fefcfd;
+    color: #000;
+    line-height: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 20px;
+    background-color: lightgrey;
+  }
+
+#jump-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#jump-label {
+    width: 100px;
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#jump-input {
+    width: 100px;
+    border-color: #E5E4E2;
+    border-width: 1px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#jump-button {
+     margin-top: 10px;
+     margin-bottom: 10px;
+}
+
+#message-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#message-label {
+    font-weight: 600;
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+
+#message-input {
+    margin: auto;
+    width:80%;
+    background-color: #E5E4E2;
+    border-color: #E5E4E2;
+    border-width: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#buttons-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    text-align: left;
+}
+
+#buttons-label {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+
+#help-button {
+    margin-left: 0px;
+}
+
+#help-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    display: none;
+}
+
+#help-label {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+
+#help-para {
+    display: inline-block;
+}
+
+#download-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#download-label {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+
+#download-anchor {
+    display: inline-block;
+    width: 600px;
+}
+#internals-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#references-label {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+    font-weight:600
+}
+
+#references-links {
+    margin: 0px 5px 0px 10px;
+    display: inline-block;
+}
+
+#internals-details {
+    display: inline-block;
+}
+
+#internals-label {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
