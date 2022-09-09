@@ -9,6 +9,7 @@
 //      09-Aug-2021 add formatting to delimiters for different fields
 //      18-Aug-2021 add comments and education and maiden name to people listing
 //      24-Aug-2021 fix age calculation logic on people listing and show if DoD or DoB is unknown
+//      06-Sep-2022 add CORS header "Access-Control-Allow-Origin: *"
 //  Enhancements:
 ///
 
@@ -56,7 +57,8 @@ int main(int argc, char** argv) {
                    "  ORDER BY AP.`Person ID` %s", caOrder)
    ;
 
-    printf("Content-type: text/html\n\n");
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // Initialize a connection and connect to the database$$
 

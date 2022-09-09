@@ -376,6 +376,7 @@ function fGetAction() {
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
         document.getElementById("portraits-div").hidden = true; 
+        document.getElementById("portraitpersonid-div").hidden = true; 
         document.getElementById("results-div").hidden = false;
         document.getElementById("filter-div").hidden = false;
         document.getElementById("jump-div").hidden = false; 
@@ -402,9 +403,10 @@ function fGetAction() {
         document.getElementById("personid-input").style.backgroundColor = "lightyellow"
         document.getElementById("results-textarea").value = "";
         document.getElementById("filter-input").value = "";
-        document.getElementById("personid-div").value = "";
         document.getElementById("results-div").hidden = false;
         document.getElementById("portraits-div").hidden = true; 
+        document.getElementById("portraitpersonid-div").hidden = true; 
+        document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = false; 
         document.getElementById("filter-div").hidden = true; 
         document.getElementById("jump-div").hidden = true; 
@@ -430,12 +432,16 @@ function fGetAction() {
         document.getElementById("personid-input").style.backgroundColor = "lightyellow"
         document.getElementById("results-div").hidden = true;
         document.getElementById("personid-div").value = "";
-        document.getElementById("personid-div").hidden = false; 
+        document.getElementById("personid-div").hidden = true; 
         document.getElementById("portraits-div").hidden = false; 
+        document.getElementById("portraitpersonid-div").hidden = false; 
         document.getElementById("filter-div").hidden = true; 
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("references-links").innerHTML="";
         document.getElementById("personid-input").focus();
+        const selectList = document.getElementById("portraitpersonid-select");
+        fRemoveAllChildNodes(selectList);
+        fFetchPortraitPeople();
     } 
     if (document.getElementById("marriages-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -459,6 +465,7 @@ function fGetAction() {
         document.getElementById("personid-div").hidden = true; 
         document.getElementById("results-div").hidden = false;
         document.getElementById("portraits-div").hidden = true; 
+        document.getElementById("portraitpersonid-div").hidden = true; 
         document.getElementById("jump-div").hidden = false; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
@@ -486,6 +493,7 @@ function fGetAction() {
         document.getElementById("personid-div").hidden = true; 
         document.getElementById("results-div").hidden = false;
         document.getElementById("portraits-div").hidden = true; 
+        document.getElementById("portraitpersonid-div").hidden = true; 
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
@@ -513,6 +521,7 @@ function fGetAction() {
         document.getElementById("personid-div").hidden = true; 
         document.getElementById("results-div").hidden = false;
         document.getElementById("portraits-div").hidden = true; 
+        document.getElementById("portraitpersonid-div").hidden = true; 
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
@@ -540,6 +549,7 @@ function fGetAction() {
         document.getElementById("personid-div").hidden = true; 
         document.getElementById("results-div").hidden = false;
         document.getElementById("portraits-div").hidden = true; 
+        document.getElementById("portraitpersonid-div").hidden = true; 
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
@@ -567,6 +577,7 @@ function fGetAction() {
         document.getElementById("personid-div").hidden = true; 
         document.getElementById("results-div").hidden = false;
         document.getElementById("portraits-div").hidden = true; 
+        document.getElementById("portraitpersonid-div").hidden = true; 
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
@@ -598,8 +609,11 @@ function fReset() {
     document.getElementById("filter-input").value = "";
     document.getElementById("personid-div").hidden = true; 
     document.getElementById("filter-div").hidden = false;
+    document.getElementById("portraits-div").hidden = true; 
+    document.getElementById("portraitpersonid-div").hidden = true; 
     document.getElementById("references-links").innerHTML="";
     document.getElementById("results-textarea").rows="30";
+    document.getElementById("results-div").hidden = false;
     document.getElementById("results-textarea").style.width = "80%";
     document.getElementById("message-input").style.color="black";
 }
@@ -650,5 +664,76 @@ function fonclick_jump_submit() {
     fMcaListPeople();
     fGetAction();
 
+}
+
+async function fFetchPortraitPeople() {
+    const uri = "http://www.risingfast.com/cgi-bin/mcaListPortraitPeople.cgi";
+    let response = await fetch(uri);
+    let defaultSelection = '0 Choose';
+    var option = document.createElement("option");
+    option.text = defaultSelection;
+    option.value = '0';
+    var defaultSelect = document.getElementById("portraitpersonid-select");
+    defaultSelect.appendChild(option);
+    if (response.ok) {
+        let text1 = await response.text();
+        const array1 = text1.split("\n");
+        for (let i = 0; i < array1.length - 1; i++) 
+        {
+            let element = JSON.parse(array1[i]);
+            let selection = element['Person ID'] + ' ' + element.Name + ' (' + element.Count + ')';
+            var option = document.createElement("option");
+            option.text = selection;
+            option.value = element['Person ID'];
+            var select = document.getElementById("portraitpersonid-select");
+            select.appendChild(option);
+        }
+        document.getElementById("message-input").value="People with portraits listed - choose to show their portraits";
+        document.getElementById("message-input").style.color= "black";
+    }
+    fFetchPortraits();
+}
+
+function fRemoveAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+// fetch portraits----------------------------------------------------------------------------------------
+
+async function fFetchPortraits() {
+
+    let PersonIDValue = document.getElementById("portraitpersonid-select").value;
+    const portraitDiv = document.getElementById("portraitsframe-div");
+    portraitDiv.innerHTML = '';
+    let text1 = "";
+    if (PersonIDValue.length === 0)
+    {
+        document.getElementById("message-input").value= "A Person ID is required if the Profile option is selected";
+        document.getElementById("message-input").style.color= "red";
+    }
+    const uri = "http://www.risingfast.com/cgi-bin/mcaListPortraits.cgi" + "?PersonID=" + PersonIDValue;
+    let response = await fetch(uri);
+    if (response.ok)
+    {
+        text1 = await response.text();
+        const array1 = text1.split("\n");
+        if (array1.length < 2) {
+            document.getElementById("message-input").value="No portraits found for this person";
+            document.getElementById("message-input").style.color="black";
+        } else {
+            for (let i = 0; i < array1.length - 1; i++) 
+            {
+                let portrait = JSON.parse(array1[i]);
+                portraitDiv.innerHTML = portraitDiv.innerHTML + `<div class = "singleportrait-div">
+                                                                     <img src="${portrait['Portrait Path']}" width="150" height="150"><br>
+                                                                     <figcaption width="150" height="30">${portrait['Portrait Caption']}</figcaption>
+                                                                 </div>`
+            }
+            document.getElementById("message-input").value="Portraits shown - all portraits for a person";
+            document.getElementById("message-input").style.color="black";
+        }
+    }
 }
 

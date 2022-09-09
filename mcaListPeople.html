@@ -48,6 +48,7 @@
 <!--    25-Jul-2022 - add authentication anchor                                                                      -->
 <!--    15-Aug-2022 - add long links                                                                                 -->
 <!--    30-Aug-2022 - add portraits option and division                                                              -->
+<!--    03-Sep-2022 - add drop down list for choosing people with portraits                                          -->
 <!--                                                                                                                 -->
 <!-- main page header .............................................................................................. -->
 
@@ -126,7 +127,7 @@
                         <fieldset id="options-fieldset" DATA-ROLE="controlgroup" DATA-TYPE="horizontal">
                             <legend id="options-legend"></legend>
                                 <input class="radio" TYPE="radio" ID="people-input" NAME="Mode" VALUE="people" CHECKED="checked" onClick=fGetAction()>People
-                                <input class="radio" TYPE="radio" ID="profiles-input" NAME="Mode" VALUE="profiles" onClick=fGetAction()>Profile
+                                <input class="radio" TYPE="radio" ID="profiles-input" NAME="Mode" VALUE="profiles" onClick=fGetAction()>Profiles
                                 <input class="radio" TYPE="radio" ID="portraits-input" NAME="Mode" VALUE="portraits" onClick=fGetAction()>Portraits
                                 <input class="radio" TYPE="radio" ID="marriages-input" NAME="Mode" VALUE="marriages" onClick=fGetAction()>Unions
                                 <input class="radio" TYPE="radio" ID="residents-input" NAME="Mode" VALUE="residents" onClick=fGetAction()>Residents
@@ -136,109 +137,44 @@
                             <button onclick="fMcaListPeople()" id="options-button">Submit</button>
                         </fieldset>
                     </div>
-        
-    <!-- filter input .................................................................................................. -->
-        
+
+<!-- filter input .................................................................................................. -->
+
                     <div  ID="filter-div">
                             <label FOR="filter" id="filter-label">Filter:</label>
                             <input type="text" id="filter-input" name="filter-input" onchange="fSetFocusOnSubmit()" autofocus>
                     </div>
-        
-    <!-- person ID input ............................................................................................... -->
-        
+
+<!-- person ID input ............................................................................................... -->
+
                     <div ID="personid-div">
                         <label id="personid-label" for="personid-input">Person ID:</label>
                         <input id="personid-input" type="text" name="personid-input" size="4" onchange="fSetFocusOnSubmit()">
                     </div>
-        
-    <!-- results div ................................................................................................... -->
-        
+
+<!-- person and count of portraits selection ....................................................................... -->
+
+                    <div id="portraitpersonid-div">
+                        <label id="portraitpersonid-label" for="portraitpersonid-select">Person:</label>
+                        <select id="portraitpersonid-select" type="text" name="portraitpersonname-select" onchange="fFetchPortraits()">
+                            <option value="choose" selected>Choose</option>
+                        </select>
+                    </div>
+
+<!-- results div ................................................................................................... -->
+
                     <div id="results-div">
                         <label id="results-label" ID="resultsLbl" FOR="results">Results:</label>
                         <textarea id="results-textarea" ID="results" NAME="results" WRAP="off" ROWS="30" readonly></textarea>
                     </div>
-        
-    <!-- portraits div ................................................................................................... -->
-        
+
+<!-- portraits div ................................................................................................... -->
+
                     <div id="portraits-div">
                         <p id="portraits-para">
                             Portraits
                         </p>
                         <div id="portraitsframe-div">
-<!--
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20030920.png" width="150" height="150"><br>
-                                <figcaption width="150" height="30">0 Months</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20030930.png" width="150" height="150">
-                                <figcaption width="150" height="30">1 Mnth</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20031201.png" width="150" height="150">
-                                <figcaption width="150" height="30">3 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20040903.png" width="150" height="150">
-                                <figcaption width="150" height="30">1 Years 0 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20041201.png" width="150" height="150">
-                                <figcaption width="150" height="30">1 Years 3 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20050325.png" width="150" height="150">
-                                <figcaption width="150" height="30">1 Years 6 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20080601.png" width="150" height="150">
-                                <figcaption width="150" height="30">4 Years 3 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20090601.png" width="150" height="150">
-                                <figcaption width="150" height="30">5 Years 3 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20100601.png" width="150" height="150">
-                                <figcaption width="150" height="30">6 Years 9 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20141201.png" width="150" height="150">
-                                <figcaption width="150" height="30">11 Years 3 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20160601.png" width="150" height="150">
-                                <figcaption width="150" height="30">12 Years 9 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20170401.png" width="150" height="150">
-                                <figcaption width="150" height="30">13 Years 7 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20180601.png" width="150" height="150">
-                                <figcaption width="150" height="30">14 Years 9 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20190101.png" width="150" height="150">
-                                <figcaption width="150" height="30">15 Years 4 Mths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20200630.png" width="150" height="150">
-                                <figcaption width="150" height="30">16 Years 9 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20211015.png" width="150" height="150">
-                                <figcaption width="150" height="30">18 Years 1 Mnth</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20211215.png" width="150" height="150">
-                                <figcaption width="150" height="30">18 Years 3 Mnths</figcaption>
-                            </div>
-                            <div class="singleportrait-div">
-                                <img src="Portraits/MatildaCook20220401.png" width="150" height="150">
-                                <figcaption width="150" height="30">18 Years 7 Mnths</figcaption>
-                            </div>
--->
                         </div>
                     </div>
         

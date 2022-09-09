@@ -16,12 +16,15 @@ CFLAGS=-g -o
 SQL1FLAGS=-I/usr/include/mysql
 SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -lrt -lssl -lcrypto -ldl -lresolv
 
-all: mysql-c-ancestry mcaListPeople mcaListProfile mcaListCohorts mcaListDcdPeople mcaListBirthdays mcaListMarriages mcaListReferences mcaListResidents mcaListProfRefLinks mcaShowTree mcaListPortraits
+all: mysql-c-ancestry mcaListPeople mcaListPeople.cgi mcaListProfile mcaListCohorts mcaListDcdPeople mcaListBirthdays mcaListMarriages mcaListReferences mcaListResidents mcaListProfRefLinks mcaShowTree mcaListPortraits mcaListPortraitPeople mcaListPortraitPeople.cgi
 
 mysql-c-ancestry: mysql-c-ancestry.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
 
 mcaListPeople: mcaListPeople.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
+
+mcaListPeople.cgi: mcaListPeople.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
 
 mcaListProfile: mcaListProfile.c ../shared/rf50.c ../shared/cs50.c
@@ -54,5 +57,11 @@ mcaShowTree: mcaShowTree.c ../shared/rf50.c ../shared/cs50.c
 mcaListPortraits: mcaListPortraits.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
 
+mcaListPortraitPeople: mcaListPortraitPeople.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
+
+mcaListPortraitPeople.cgi: mcaListPortraitPeople.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
+
 clean:
-	rm -f *.o *.s *.i mysql-c-ancestry mcaListPeople mcaListProfile mcaListCohorts mcaListDcdPeople mcaListBirthdays mcaListProfRefLinks mcaShowTree mcaListPortraits
+	rm -f *.o *.s *.i mysql-c-ancestry mcaListPeople mcaListPeople.cgi mcaListProfile mcaListCohorts mcaListDcdPeople mcaListBirthdays mcaListProfRefLinks mcaShowTree mcaListPortraits mcaListPortraitPeople mcaListPortraitPeople.cgi

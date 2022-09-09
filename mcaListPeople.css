@@ -8,6 +8,7 @@
 /*     06-Jun-2022 - change borders on text areas                                                                    */
 /*     29-Jul-2022 - reduce padding on text inputs                                                                   */
 /*     03-Aug-2022 - remove background color on jump-input field                                                     */
+/*     03-Sep-2022 - add portraitperson styling                                                                      */
 /*                                                                                                                   */
 
 #heading-div {
@@ -134,6 +135,31 @@
 
 #personid-input {
     width: 100px;
+    background-color: #E5E4E2;
+    border-color: #E5E4E2;
+    border-width: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#portraitpersonid-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#portraitpersonid-label {
+    width: 100px;
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#portraitpersonid-select {
+    width: 200px;
     background-color: #E5E4E2;
     border-color: #E5E4E2;
     border-width: 0px;
