@@ -20,6 +20,9 @@
 //      27-Aug-2021 expand indentations on the tree listing
 //      15-Sep-2021 fix bug selecting father's birthplace in parent query
 //      07-Aug-2022 change Birth Place to Birthplace in CASQL0 string
+//      09-Sep-2022 change 'Marriages:' to 'Marriages, Unions and Associations:'
+//      11-Sep-2022 add a listing of a person's timeline of events
+//      11-Sep-2022 add http header Access-Control-Allow-Origin: *
 //  Enhancements:
 
 #include <mysql.h>
@@ -55,7 +58,7 @@ int main(int argc, char** argv) {
     MYSQL_RES *res;
     MYSQL_ROW row;
 
-//    setenv("QUERY_STRING", "PersonID=75", 1);
+// setenv("QUERY_STRING", "PersonID=75", 1);
 
     data = getenv("QUERY_STRING");
     if(data == NULL)
@@ -69,7 +72,10 @@ int main(int argc, char** argv) {
          return 0;
     }
 
-    printf("Content-type: text/html\n\n");
+// print http headers for content-type and CORS
+
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // Initialize a connection and connect to the database$$
 
@@ -189,7 +195,7 @@ int main(int argc, char** argv) {
 
 // print a person's parents
 
-    sprintf(caSQL0, "SELECT LPAD(AM.`Person ID`, 4, ' ') AS 'Parent ID' "
+    sprintf(caSQL0, "SELECT RPAD(AM.`Person ID`, 4, ' ') AS 'Parent ID' "
                       " , 'Mother:' as 'Relation' "
                       " , REPLACE(REPLACE(CONCAT(AM.`First Name`, COALESCE(CONCAT(' ''', AM.`Nick Name`, ''' '), ' '), COALESCE(AM.`Middle Names`, ''),' ', "
                       "   AM.`Last Name`, ' ',COALESCE(AM.`Suffix`, ''), COALESCE(CONCAT('(née ', AM.`Birth Last Name`, ')'))), '  ', ' '), '''''', '') AS `Person` "
@@ -201,7 +207,7 @@ int main(int argc, char** argv) {
                    "WHERE  AP.`Person ID` = %ld "
                    "AND AM.`Actual` = TRUE "
                    "UNION DISTINCT "
-                   "SELECT LPAD(AF.`Person ID`, 4, ' ') AS 'Parent ID' "
+                   "SELECT RPAD(AF.`Person ID`, 4, ' ') AS 'Parent ID' "
                       " , 'Father:' AS 'Relation' "
                       " , REPLACE(REPLACE(CONCAT(AF.`First Name`, COALESCE(CONCAT(' ''', AF.`Nick Name`, ''' '), ' '), "
                       "  COALESCE(AF.`Middle Names`, ''),' ', AF.`Last Name`, ' ',COALESCE(AF.`Suffix`, '')), '  ', ' '), '''''', '') AS `Person` "
@@ -255,7 +261,7 @@ int main(int argc, char** argv) {
 
 // print a person's siblings
 
-    sprintf(caSQL0, "SELECT LPAD(AC.`Person ID`, 4, ' ') AS 'Sibling ID' "
+    sprintf(caSQL0, "SELECT RPAD(AC.`Person ID`, 4, ' ') AS 'Sibling ID' "
                        " , IF(AC.`Gender` = 'Male', 'Brother:', 'Sister: ') "
                        " , REPLACE(REPLACE(CONCAT(AC.`First Name`, COALESCE(CONCAT(' ''', AC.`Nick Name`, ''' '), ' '), "
                        "   COALESCE(AC.`Middle Names`, ''),' ', AC.`Last Name`, ' ',COALESCE(AC.`Suffix`, '')), '  ', ' '), '''''', '') AS `Person` "
@@ -314,7 +320,7 @@ int main(int argc, char** argv) {
 
 // print a person's marriages
 
-    sprintf(caSQL0, "select AP1.`Person ID` "
+    sprintf(caSQL0, "select RPAD(AP1.`Person ID`, 3, ' ') "
                     ", REPLACE(REPLACE(CONCAT(AP1.`First Name`, COALESCE(CONCAT(' ''', AP1.`Nick Name`, ''' '), ' '), "
                     "  COALESCE(AP1.`Middle Names`, ''),' ', AP1.`Last Name`, ' ',COALESCE(AP1.`Suffix`, '')), '  ', ' '), '''''', '') AS `Husband` "
                     " , AP2.`Person ID` "
@@ -356,7 +362,7 @@ int main(int argc, char** argv) {
 // print each row of results
 
     printf("\n\n");
-    printf("Marriages:");
+    printf("Marriages, Unions and Associations:");
 
     while(row = mysql_fetch_row(res))
     {
@@ -369,7 +375,6 @@ int main(int argc, char** argv) {
         printf(" %s", row[5]);
         printf(" %s", row[6]);
     }
-
 
 // print a person's divorces
 
@@ -432,7 +437,7 @@ int main(int argc, char** argv) {
 
 // print a person's children
 
-    sprintf(caSQL0, "SELECT LPAD(AC.`Person ID`, 3, ' ') AS AP"
+    sprintf(caSQL0, "SELECT RPAD(AC.`Person ID`, 3, ' ') AS AP"
                       ", IF(AC.`Gender` = 'Male', 'Son:', 'Dau:') "
                       ", REPLACE(REPLACE(CONCAT(AC.`First Name`, COALESCE(CONCAT(' ''', AC.`Nick Name`, ''' '), ' '), "
                       "  COALESCE(AC.`Middle Names`, ''),' ', AC.`Last Name`, ' ',COALESCE(AC.`Suffix`, '')), '  ', ' '), '''''', '') AS `Person` "
@@ -542,6 +547,49 @@ int main(int argc, char** argv) {
         printf(" %s", row[3]);
     }
 
+// print a person's timeline of life events
+
+    sprintf(caSQL0, " SELECT CONCAT(AE.`Event Date`, ',') "
+                    " , CONCAT(RPAD(AE.`Person Age`, 17, ' '), ',') "
+                    " , AE.`Event Name` "
+                    " , CONCAT('(in ', AE.`Event Place`, ')') "
+                    " FROM risingfast.`Ancestry Events` AE " 
+                    " WHERE AE.`Person ID` = %ld ORDER BY AE.`Event Date` ASC", lPersonID);
+// execute the query and check for no result
+    
+    if(mysql_query(conn, caSQL0) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        return EXIT_FAILURE;
+    }
+
+// store the result of the query
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+
+        mysql_free_result(res);
+        return EXIT_FAILURE;
+    }
+
+// print each row of results
+
+    printf("\n\n");
+    printf("Timeline of Life Events (Date, Age, Event):");
+
+    while(row = mysql_fetch_row(res))
+    {
+        printf("\n  ");
+        printf("%s", row[0]);
+        printf(" %s", row[1]);
+        printf(" %s", row[2]);
+        printf(" %s", row[3]);
+    }
 // print a person's references
 
     sprintf(caSQL0, "SELECT LPAD(AR.`Reference ID`, 4, ' ') "

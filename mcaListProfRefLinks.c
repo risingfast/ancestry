@@ -6,7 +6,7 @@
 //      18-Aug-2021 started
 //      18-Aug-2021 add reference links data
 //      25-Aug-2021 show the reference type (record or picture) in the list of reference links
-//      13-Jun-2022 move to gjarman2020.com
+//      15-Sep-2022 add Access-Control-Allow-Origin: * CORS header
 //  Enhancements:
 ///
 
@@ -22,12 +22,10 @@
 
 // global declarations
 
-char *sgServer = "35.188.123.150";                                              // mysqlServer IP address
-// char *sgServer = "192.168.0.13";                                             // mysqlServer IP address$
-char *sgUsername = "root";                                                      // mysqlSerer logon username$
-// char *sgUsername = "gjarman";                                                // mysqlSerer logon username$
-char *sgPassword = "Mpa4egu$";                                                  // password to connect to mysqlserver$
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver$
+char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
+char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
+char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
 
 MYSQL *conn;
 
@@ -55,7 +53,10 @@ int main(int argc, char** argv) {
          return 0;
     }
 
-    printf("Content-type: text/html\n\n");
+// print http headers for content-type and CORS
+
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // Initialize a connection and connect to the database$$
 

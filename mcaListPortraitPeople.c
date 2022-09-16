@@ -4,6 +4,7 @@
 //  References:
 //  Log:
 //      02-Sep-2022 started and tested
+//      15-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
 //  Enhancements:
 //
 
@@ -37,9 +38,10 @@ int main(int argc, char** argv) {
     MYSQL_RES *res;
     MYSQL_ROW row;
 
-// print HTTP headers
+// print HTTP headers for content-type and CORS
 
-    printf("Content-type: text/html\n\n");
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // define SQL to query the database for portraits in JSON
 

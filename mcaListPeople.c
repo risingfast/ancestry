@@ -57,6 +57,8 @@ int main(int argc, char** argv) {
                    "  ORDER BY AP.`Person ID` %s", caOrder)
    ;
 
+// print http headers for content-type and CORS
+
     printf("Content-type: text/html\n");
     printf("Access-Control-Allow-Origin: *\n\n");
 

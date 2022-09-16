@@ -27,6 +27,9 @@
 //    31-Aug-2022 add portrait logic to read the json file of portraits
 //    01-Sep-2022 remove console log debugs for portraits
 //    01-Sep-2022 add a check for no portraits found
+//    09-Sep-2022 add fPrintProfile()
+//    09-Sep-2022 enable print-button for profiles only
+
 
 // Enhancements:
 //
@@ -383,6 +386,7 @@ function fGetAction() {
         document.getElementById("jump-input").value = ""; 
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
+        document.getElementById("print-button").disabled = true;
     }
     if (document.getElementById("profiles-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -412,6 +416,7 @@ function fGetAction() {
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("references-links").innerHTML="";
         document.getElementById("personid-input").focus();
+        document.getElementById("print-button").disabled = false;
     } 
     if (document.getElementById("portraits-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -439,6 +444,7 @@ function fGetAction() {
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("references-links").innerHTML="";
         document.getElementById("personid-input").focus();
+        document.getElementById("print-button").disabled = true;
         const selectList = document.getElementById("portraitpersonid-select");
         fRemoveAllChildNodes(selectList);
         fFetchPortraitPeople();
@@ -470,6 +476,7 @@ function fGetAction() {
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
+        document.getElementById("print-button").disabled = true;
     }
     if (document.getElementById("residents-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -497,6 +504,7 @@ function fGetAction() {
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
+        document.getElementById("print-button").disabled = true;
         document.getElementById("filter-input").focus();
     }
     if (document.getElementById("references-input").checked === true) {
@@ -526,6 +534,7 @@ function fGetAction() {
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
+        document.getElementById("print-button").disabled = true;
     }
     if (document.getElementById("cohorts-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -554,6 +563,7 @@ function fGetAction() {
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
+        document.getElementById("print-button").disabled = true;
     }
     if (document.getElementById("birthdays-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -582,6 +592,7 @@ function fGetAction() {
         document.getElementById("filter-div").hidden = false;
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
+        document.getElementById("print-button").disabled = true;
     }
 }
 
@@ -616,6 +627,7 @@ function fReset() {
     document.getElementById("results-div").hidden = false;
     document.getElementById("results-textarea").style.width = "80%";
     document.getElementById("message-input").style.color="black";
+    document.getElementById("print-button").disabled = true;
 }
 
 // function to show internal information ------------------------------------------------------------------------------
@@ -737,3 +749,10 @@ async function fFetchPortraits() {
     }
 }
 
+function fPrintProfile() {
+    let profiletext = document.getElementById("results-textarea").value.replaceAll("\n", "<br />\r\n");
+    let restorepage = document.body.innerHTML;
+    document.body.innerHTML = profiletext;
+    window.print();
+    document.body.innerHTML = restorepage;
+}

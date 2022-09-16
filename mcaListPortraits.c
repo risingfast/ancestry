@@ -5,6 +5,7 @@
 //  Log:
 //      31-Aug-2022 started and tested
 //      31-Aug-2022 add sort order on SQL by date
+//      15-Aug-2022 add Access-Control-Allow-Origin: * http header for CORS
 //  Enhancements:
 //
 
@@ -38,9 +39,10 @@ int main(int argc, char** argv) {
     MYSQL_RES *res;
     MYSQL_ROW row;
 
-// print HTTP headers
+// print HTTP headers for content-type and CORS
 
-    printf("Content-type: text/html\n\n");
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 //    setenv("QUERY_STRING", "PersonID=23", 1);
 
