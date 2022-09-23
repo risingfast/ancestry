@@ -30,8 +30,6 @@
 //    09-Sep-2022 add fPrintProfile()
 //    09-Sep-2022 enable print-button for profiles only
 //    16-Sep-2022 change www.risingfast.com to gjarman2020.com
-//    18-Sep-2022 add logic for movies-div
-//    18-Sep-2022 add logic for events
 
 // Enhancements:
 //
@@ -170,41 +168,6 @@ async function fMcaListPeople() {
                 document.getElementById("message-input").style.color="black";
                 document.getElementById("results-textarea").value=text2;
             }
-        }
-    }
-
-// list events if the events option is chosen -------------------------------------------------------------------
-
-    else if (document.getElementById("events-input").checked === true) 
-    {
-        const uri = "http://gjarman2020.com/cgi-bin/mcaListEvents.cgi";
-        let response = await fetch(uri);
-        if (response.ok) {
-            text1 = await response.text();
-            text2 = text1.replace(/\|/g, ", ");
-            text1 = text2;
-            text2 = text1.replace(/, , , /g, ", ");
-            text1 = text2;
-            const array1 = text2.split("\n");
-            text2 = "";
-            filter1 = (document.getElementById("filter-input").value).toUpperCase();
-            if(filter1.length != 0)
-            {
-                 for(i = 0; i < array1.length; i++)
-                 {
-                     if((array1[i]).toUpperCase().indexOf(filter1) != -1)
-                     {
-                         text2 = text2 + array1[i] + "\n";
-                     }
-                 }
-            }
-            else
-            {
-                text2 = text1;
-            }
-            document.getElementById("message-input").value="Marriages and Unions shown - all (or a filtered list of) marriages and unions in the ancestry";
-            document.getElementById("message-input").style.color="black";
-            document.getElementById("results-textarea").value=text2;
         }
     }
 
@@ -415,7 +378,6 @@ function fGetAction() {
         document.getElementById("filter-input").value = "";
         document.getElementById("personid-div").value = "";
         document.getElementById("personid-div").hidden = true; 
-        document.getElementById("personid-input").value = "";
         document.getElementById("portraits-div").hidden = true; 
         document.getElementById("portraitpersonid-div").hidden = true; 
         document.getElementById("results-div").hidden = false;
@@ -425,7 +387,6 @@ function fGetAction() {
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
         document.getElementById("print-button").disabled = true;
-        document.getElementById("movies-div").hidden = true; 
     }
     if (document.getElementById("profiles-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -456,7 +417,6 @@ function fGetAction() {
         document.getElementById("references-links").innerHTML="";
         document.getElementById("personid-input").focus();
         document.getElementById("print-button").disabled = false;
-        document.getElementById("movies-div").hidden = true; 
     } 
     if (document.getElementById("portraits-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -485,7 +445,6 @@ function fGetAction() {
         document.getElementById("references-links").innerHTML="";
         document.getElementById("personid-input").focus();
         document.getElementById("print-button").disabled = true;
-        document.getElementById("movies-div").hidden = true; 
         const selectList = document.getElementById("portraitpersonid-select");
         fRemoveAllChildNodes(selectList);
         fFetchPortraitPeople();
@@ -518,39 +477,6 @@ function fGetAction() {
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
         document.getElementById("print-button").disabled = true;
-        document.getElementById("movies-div").hidden = true; 
-        document.getElementById("personid-input").value = "";
-    }
-    if (document.getElementById("events-input").checked === true) {
-        document.getElementById("people-input").disabled = false;
-        document.getElementById("people-input").required = false;
-        document.getElementById("profiles-input").disabled = false;
-        document.getElementById("profiles-input").required = false;
-        document.getElementById("residents-input").disabled = false;
-        document.getElementById("residents-input").required = false;
-        document.getElementById("references-input").disabled = false;
-        document.getElementById("references-input").required = false;
-        document.getElementById("cohorts-input").disabled = false;
-        document.getElementById("cohorts-input").required = false;
-        document.getElementById("birthdays-input").disabled = false;
-        document.getElementById("birthdays-input").required = false;
-        document.getElementById("options-button").disabled = false;
-        document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "Events action selected - click 'Submit' or set a filter then click 'Submit' to proceed";
-        document.getElementById("results-textarea").value = "";
-        document.getElementById("filter-input").value = "";
-        document.getElementById("personid-div").value = "";
-        document.getElementById("personid-div").hidden = true; 
-        document.getElementById("results-div").hidden = false;
-        document.getElementById("portraits-div").hidden = true; 
-        document.getElementById("portraitpersonid-div").hidden = true; 
-        document.getElementById("jump-div").hidden = false; 
-        document.getElementById("filter-div").hidden = false;
-        document.getElementById("references-links").innerHTML="";
-        document.getElementById("filter-input").focus();
-        document.getElementById("print-button").disabled = true;
-        document.getElementById("movies-div").hidden = true; 
-        document.getElementById("personid-input").value = "";
     }
     if (document.getElementById("residents-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -580,7 +506,6 @@ function fGetAction() {
         document.getElementById("references-links").innerHTML="";
         document.getElementById("print-button").disabled = true;
         document.getElementById("filter-input").focus();
-        document.getElementById("movies-div").hidden = true; 
     }
     if (document.getElementById("references-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -610,7 +535,6 @@ function fGetAction() {
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
         document.getElementById("print-button").disabled = true;
-        document.getElementById("movies-div").hidden = true; 
     }
     if (document.getElementById("cohorts-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -640,7 +564,6 @@ function fGetAction() {
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
         document.getElementById("print-button").disabled = true;
-        document.getElementById("movies-div").hidden = true; 
     }
     if (document.getElementById("birthdays-input").checked === true) {
         document.getElementById("people-input").disabled = false;
@@ -667,37 +590,6 @@ function fGetAction() {
         document.getElementById("portraitpersonid-div").hidden = true; 
         document.getElementById("jump-div").hidden = true; 
         document.getElementById("filter-div").hidden = false;
-        document.getElementById("references-links").innerHTML="";
-        document.getElementById("filter-input").focus();
-        document.getElementById("print-button").disabled = true;
-        document.getElementById("movies-div").hidden = true; 
-    }
-    if (document.getElementById("movies-input").checked === true) {
-        document.getElementById("people-input").disabled = false;
-        document.getElementById("people-input").required = false;
-        document.getElementById("profiles-input").disabled = false;
-        document.getElementById("profiles-input").required = false;
-        document.getElementById("marriages-input").disabled = false;
-        document.getElementById("marriages-input").required = false;
-        document.getElementById("residents-input").disabled = false;
-        document.getElementById("residents-input").required = false;
-        document.getElementById("references-input").disabled = false;
-        document.getElementById("references-input").required = false;
-        document.getElementById("cohorts-input").disabled = false;
-        document.getElementById("cohorts-input").required = false;
-        document.getElementById("options-button").disabled = false;
-        document.getElementById("reset").disabled = false;
-        document.getElementById("message-input").value = "Movies action selected - click a movie link to play a movie";
-        document.getElementById("results-textarea").value = "";
-        document.getElementById("filter-input").value = "";
-        document.getElementById("personid-div").value = "";
-        document.getElementById("personid-div").hidden = true; 
-        document.getElementById("movies-div").hidden = false; 
-        document.getElementById("results-div").hidden = true;
-        document.getElementById("portraits-div").hidden = true; 
-        document.getElementById("portraitpersonid-div").hidden = true; 
-        document.getElementById("jump-div").hidden = true; 
-        document.getElementById("filter-div").hidden = true;
         document.getElementById("references-links").innerHTML="";
         document.getElementById("filter-input").focus();
         document.getElementById("print-button").disabled = true;

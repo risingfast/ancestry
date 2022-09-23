@@ -51,7 +51,6 @@
 <!--    03-Sep-2022 - add drop down list for choosing people with portraits                                          -->
 <!--    09-Sep-2022 - add print                                                                                      -->
 <!--    16-Sep-2022 - change www.risingfast.com to gjarman2020.com                                                   -->
-<!--    18-Sep-2022 - add movies                                                                                     -->
 <!--                                                                                                                 -->
 <!-- main page header .............................................................................................. -->
 
@@ -117,7 +116,7 @@
                     <H3 ID="heading-h3">Cook-Jarman Ancestry</H3>
                 </div>
 
-    <!-- main options .................................................................................................. -->
+<!-- main options .................................................................................................. -->
 
 
                 <div id="unsecured-div">
@@ -132,32 +131,30 @@
                                 <input class="radio" TYPE="radio" ID="people-input" NAME="Mode" VALUE="people" CHECKED="checked" onClick=fGetAction()>People
                                 <input class="radio" TYPE="radio" ID="profiles-input" NAME="Mode" VALUE="profiles" onClick=fGetAction()>Profiles
                                 <input class="radio" TYPE="radio" ID="portraits-input" NAME="Mode" VALUE="portraits" onClick=fGetAction()>Portraits
-                                <input class="radio" TYPE="radio" ID="events-input" NAME="Mode" VALUE="events" onClick=fGetAction()>Events
                                 <input class="radio" TYPE="radio" ID="marriages-input" NAME="Mode" VALUE="marriages" onClick=fGetAction()>Unions
                                 <input class="radio" TYPE="radio" ID="residents-input" NAME="Mode" VALUE="residents" onClick=fGetAction()>Residents
                                 <input class="radio" TYPE="radio" ID="references-input" NAME="Mode" VALUE="references" onClick=fGetAction()>References
                                 <input class="radio" TYPE="radio" ID="cohorts-input" NAME="Mode" VALUE="cohorts" onClick=fGetAction()>Cohorts
                                 <input class="radio" TYPE="radio" ID="birthdays-input" NAME="Mode" VALUE="birthdays" onClick=fGetAction()>B'days
-                                <input class="radio" TYPE="radio" ID="movies-input" NAME="Mode" VALUE="movies" onClick=fGetAction()>Movies
                             <button onclick="fMcaListPeople()" id="options-button">Submit</button>
                         </fieldset>
                     </div>
 
-    <!-- filter input .................................................................................................. -->
+<!-- filter input .................................................................................................. -->
 
                     <div  ID="filter-div">
                             <label FOR="filter" id="filter-label">Filter:</label>
                             <input type="text" id="filter-input" name="filter-input" onchange="fSetFocusOnSubmit()" autofocus>
                     </div>
 
-    <!-- person ID input ............................................................................................... -->
+<!-- person ID input ............................................................................................... -->
 
                     <div ID="personid-div">
                         <label id="personid-label" for="personid-input">Person ID:</label>
                         <input id="personid-input" type="text" name="personid-input" size="4" onchange="fSetFocusOnSubmit()">
                     </div>
 
-    <!-- person and count of portraits selection ....................................................................... -->
+<!-- person and count of portraits selection ....................................................................... -->
 
                     <div id="portraitpersonid-div">
                         <label id="portraitpersonid-label" for="portraitpersonid-select">Person:</label>
@@ -166,14 +163,14 @@
                         </select>
                     </div>
 
-    <!-- results div ............ ..................................................................................... -->
+<!-- results div ................................................................................................... -->
 
                     <div id="results-div">
                         <label id="results-label" ID="resultsLbl" FOR="results">Results:</label>
                         <textarea id="results-textarea" ID="results" NAME="results" WRAP="off" ROWS="30" readonly></textarea>
                     </div>
 
-    <!-- portraits div ................................................................................................. -->
+<!-- portraits div ................................................................................................... -->
 
                     <div id="portraits-div">
                         <p id="portraits-para">
@@ -181,25 +178,6 @@
                         </p>
                         <div id="portraitsframe-div">
                         </div>
-                    </div>
-        
-    <!-- movies div ................................................................................................... -->
-
-                    <div id="movies-div">
-                        <p id="movies-para">
-                            Movies:
-                        </p>
-                        <p id="movielinks-para">
-                            <a href="https://drive.google.com/file/d/1vNU7uxkwoCLsK7IY6jclhdGa4Gnneq0K/view?usp=sharing" target="_blank">Ancestry Signon</a><br>
-                            <a href="https://drive.google.com/file/d/1xqE4sdU-is5JA2RvpIqlpuldOwEhV72F/view?usp=sharing" target="_blank">Ancestry Introduction</a><br>
-                            <a href="https://drive.google.com/file/d/1stoVa9bbKQtVYWM5VvBe1vFwMNXXv5QO/view?usp=sharing" target="_blank">Ancestry Corner Images</a><br>
-                            <a href="https://drive.google.com/file/d/1stoVa9bbKQtVYWM5VvBe1vFwMNXXv5QO/view?usp=sharing" target="_blank">Ancestry Portraits</a><br>
-                            <a href="https://drive.google.com/file/d/1yvqYuWgnNrOi_n8yhQLbuyrDtFlcdGps/view?usp=sharing" target="_blank">Ancestry Events</a><br>
-                            <a href="https://drive.google.com/file/d/1zXOge5Vxe-547LlHFUQ4BSoJkWXKW6LE/view?usp=sharing" target="_blank">Ancestry Events Supplement</a><br>
-                            <a href="https://drive.google.com/file/d/1l-PtcQ_60qzzq_wJpT3GrfQO0kOCPWdx/view?usp=sharing" target="_blank">Ancestry Movies</a><br>
-                            <a href="https://drive.google.com/file/d/1h38cwbEj9yTTO3b_lYxD37Mcn76tDZIB/view?usp=sharing" target="_blank">Ancestry Spreadsheet</a><br>
-                            <a href="https://drive.google.com/file/d/1stoVa9bbKQtVYWM5VvBe1vFwMNXXv5QO/view?usp=sharing" target="_blank">Ancestry Printing</a><br>
-                        </p>
                     </div>
         
     <!-- jump div ...................................................................................................... -->

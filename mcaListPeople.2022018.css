@@ -9,7 +9,6 @@
 /*     29-Jul-2022 - reduce padding on text inputs                                                                   */
 /*     03-Aug-2022 - remove background color on jump-input field                                                     */
 /*     03-Sep-2022 - add portraitperson styling                                                                      */
-/*     18-Sep-2022 - add movies styling                                                                              */
 /*                                                                                                                   */
 
 #heading-div {
@@ -81,36 +80,8 @@
     margin: 0px 5px 0px 10px;
 }
 
-#movies-div {
-    text-align: left;
-}
-
-#movies-para {
-    display: inline-block;
-    width: 100px;
-    margin-left: 10px;
-    font-weight:600
-}
-
-#movielinks-para {
-    margin: 0px 5px 0px 10px;
-    display: inline-block;
-}
-
 #references-div {
     text-align: left;
-}
-
-#references-label {
-    display: inline-block;
-    width: 100px;
-    margin-left: 10px;
-    font-weight:600
-}
-
-#references-links {
-    margin: 0px 5px 0px 10px;
-    display: inline-block;
 }
 
 #cohorts-input {
@@ -360,6 +331,18 @@
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: left;
+}
+
+#references-label {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+    font-weight:600
+}
+
+#references-links {
+    margin: 0px 5px 0px 10px;
+    display: inline-block;
 }
 
 #internals-details {

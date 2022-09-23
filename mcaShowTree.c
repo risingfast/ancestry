@@ -4,6 +4,7 @@
 //  References:
 //  Log:
 //      26-Aug-2021 started
+//      16-Sep-2022 add http header for CORS
 //  Enhancements:
 
 #include <mysql.h>
@@ -49,7 +50,10 @@ int main(int argc, char** argv) {
          return 0;
     }
 
-    printf("Content-type: text/html\n\n");
+// print http headers for content-type and CORS
+
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // Initialize a connection and connect to the database$$
 

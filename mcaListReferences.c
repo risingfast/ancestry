@@ -6,6 +6,7 @@
 //      10-Aug-2021 started
 //      14-Aug-2021 changed SQL to list references
 //      24-Aug-2021 eliminate NULL's in middle name with COALESCE
+//      16-Sep-2022 add CORS http header Access-Control-Allow-Origin: *
 //  Enhancements:
 ///
 
@@ -46,7 +47,10 @@ int main(int argc, char** argv) {
             "from risingfast.`Ancestry References` AR "
             "left outer join risingfast.`Ancestry People` AP on AR.`Person ID` = AP.`Person ID` ");
 
-    printf("Content-type: text/html\n\n");
+// print http headers for content-type and CORS
+
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // Initialize a connection and connect to the database$$
 
